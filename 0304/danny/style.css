@@ -50,6 +50,10 @@ i[class^="icon-"]:before {
   content: "\ea76";
 }
 
+.icon-stack-star:before {
+  content: "\f607";
+}
+
 .module-title {
   background-color: #b0aeae;
   padding: 0.5em;
