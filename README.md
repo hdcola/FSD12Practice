@@ -7,3 +7,4 @@ FSD12 Practices
 * [Icon Font List (Front)](https://hdcola.github.io/FSD12Practice/0304/)
 * [Is palindrome (Back)](https://hdcola.github.io/FSD12Practice/0304b/)
 * [Icon Bar (Front)](https://hdcola.github.io/FSD12Practice/0305/)
+* [Split Navigation Bar (Front)](https://hdcola.github.io/FSD12Practice/0306/)
