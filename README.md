@@ -8,3 +8,4 @@ FSD12 Practices
 * [Is palindrome (Back)](https://hdcola.github.io/FSD12Practice/0304b/)
 * [Icon Bar (Front)](https://hdcola.github.io/FSD12Practice/0305/)
 * [Split Navigation Bar (Front)](https://hdcola.github.io/FSD12Practice/0306/)
+* [Search Bar (Front)](https://hdcola.github.io/FSD12Practice/0307/)
