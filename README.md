@@ -9,3 +9,4 @@ FSD12 Practices
 * [Icon Bar (Front)](https://hdcola.github.io/FSD12Practice/0305/)
 * [Split Navigation Bar (Front)](https://hdcola.github.io/FSD12Practice/0306/)
 * [Search Bar (Front)](https://hdcola.github.io/FSD12Practice/0307/)
+* [Sort an Array (Back)](https://hdcola.github.io/FSD12Practice/0308b/)
