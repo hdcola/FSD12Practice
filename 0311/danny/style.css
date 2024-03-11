@@ -1,0 +1,40 @@
+body {
+  background-color: cadetblue;
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  outline: none;
+  -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(0.5, transparent), to(white));
+  animation: animate 5s linear infinite;
+  color: #0e3742;
+}
+
+@keyframes animate {
+  0%,
+  21%,
+  31%,
+  41%,
+  51%,
+  61%,
+  71%,
+  81%,
+  90%,
+  92% {
+    color: #0e3742;
+  }
+  20%,
+  30%,
+  40%,
+  50%,
+  60%,
+  70%,
+  80%,
+  90%,
+  100% {
+    color: white;
+    text-shadow: 0 0 10px #03bcf4, 0 0 20px #03bcf4, 0 0 30px #03bcf4,
+      0 0 40px #03bcf4;
+  }
+}
