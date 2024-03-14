@@ -11,3 +11,4 @@ FSD12 Practices
 * [Search Bar (Front)](https://hdcola.github.io/FSD12Practice/0307/)
 * [Sort an Array (Back)](https://hdcola.github.io/FSD12Practice/0308b/)
 * [Neon sign blinking (Front)](https://hdcola.github.io/FSD12Practice/0311/)
+* [Add serial numbers to each line (Back)](https://hdcola.github.io/FSD12Practice/0314b/)
