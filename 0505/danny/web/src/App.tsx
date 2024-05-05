@@ -4,7 +4,8 @@ import dataProvider from "@refinedev/simple-rest";
 import { ConfigProvider, App as AntdApp } from "antd";
 import { DoctorTable } from "./doctor-table";
 
-const DEFAULT_API_URL = "http://localhost:5173";
+const DEFAULT_API_URL =
+  "https://hdcola.github.io/FSD12Practice/0505/danny/web/dist/";
 
 export default function App() {
   const [apiUrl, setApiUrl] = useState(DEFAULT_API_URL);
@@ -20,7 +21,7 @@ export default function App() {
             onChange={(e) => setApiUrl(e.target.value)}
           />
         </div>
-        <Refine dataProvider={dataProvider(apiUrl)}>
+        <Refine key={apiUrl} dataProvider={dataProvider(apiUrl)}>
           <DoctorTable />
         </Refine>
       </AntdApp>
