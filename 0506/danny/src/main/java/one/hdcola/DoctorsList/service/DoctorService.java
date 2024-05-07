@@ -12,4 +12,6 @@ public interface DoctorService {
     List<DoctorDto> getAllDoctors();
 
     DoctorDto updateDoctor(Integer id, DoctorDto doctorDto);
+
+    void deleteDoctor(Integer id);
 }

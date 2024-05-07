@@ -55,4 +55,11 @@ public class DoctorServiceImplt implements DoctorService {
         return DoctorMapper.mapToDto(saveDoctor);
     }
 
+    @Override
+    public void deleteDoctor(Integer id) {
+        Doctor doctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor is not exists with given id: " + id));
+        doctorRepository.deleteById(id);
+    }
+
 }

@@ -30,8 +30,6 @@ POST http://localhost:8080/api/doctors HTTP/1.1
 Content-Type: application/json
 
 {
-    "id": 3,
-    "name": "Dr. John Doe",
     "dateOfBirth": "2091-09-06",
     "wrong": "wrong"
 }
@@ -53,7 +51,9 @@ Content-Type: application/json
 }
 
 ### Delete a doctor
-DELETE http://localhost:8080/api/doctors/3 HTTP/1.1
+DELETE http://localhost:8080/api/doctors/11 HTTP/1.1
 
 ### Find Doctors by name
 GET http://localhost:8080/api/doctors/name/Dr. HTTP/1.1
+
+
