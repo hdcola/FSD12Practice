@@ -3,6 +3,7 @@ import { Refine } from "@refinedev/core";
 import dataProvider from "@refinedev/simple-rest";
 import { ConfigProvider, App as AntdApp, Button } from "antd";
 import { DoctorTable } from "./doctor-table";
+import CustomInput from "./components/CustomInput";
 
 const DEFAULT_API_URL =
   "https://hdcola.github.io/FSD12Practice/0505/danny/web/dist/";
@@ -18,13 +19,11 @@ export default function App() {
   return (
     <ConfigProvider>
       <AntdApp>
-        <div>
-          <label>API URL:</label>
-          <input
-            style={{ width: "50%" }}
-            type="text"
-            value={apiUrl}
-            onChange={(e) => setApiUrl(e.target.value)}
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <label style={{ marginRight: "10px" }}>API URL:</label>
+          <CustomInput
+            options={[DEFAULT_API_URL, "http://localhost:8080/api"]}
+            onInputChange={(value: string) => setApiUrl(value)}
           />
           <Button onClick={handleRefresh}>Refresh</Button>
         </div>

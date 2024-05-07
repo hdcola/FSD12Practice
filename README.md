@@ -15,4 +15,4 @@ FSD12 Practices
 * [File IO (Back)](https://hdcola.github.io/FSD12Practice/0402/)
 * [Doctors List](https://hdcola.github.io/FSD12Practice/0504/)
 * [Doctors List Multi-DataSources](https://hdcola.github.io/FSD12Practice/0505/)
-* [Doctors List Edit](https://hdcola.github.io/FSD12Practice/0506/)
+* [Doctors List Select Source component](https://hdcola.github.io/FSD12Practice/0506/)
