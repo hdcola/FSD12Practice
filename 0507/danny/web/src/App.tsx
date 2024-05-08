@@ -1,19 +1,21 @@
-import { Refine } from "@refinedev/core";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import List from "./List";
+import Create from "./create";
+import Edit from "./Edit";
+import Show from "./Show";
 
-import { dataProvider } from "./providers/data-provider";
-
-import { ShowDoctor } from "./pages/doctors/show";
-import { EditDoctor } from "./pages/doctors/edit";
-import { ListDoctors } from "./pages/doctors/list";
-import { CreateDoctor } from "./pages/doctors/create";
-
-export default function App(): JSX.Element {
+function App() {
   return (
-    <Refine dataProvider={dataProvider}>
-      {/* <ShowDoctor /> */}
-      {/* <EditDoctor /> */}
-      <ListDoctors />
-      {/* <CreateDoctor /> */}
-    </Refine>
+    <Router>
+      <Routes>
+        <Route path="/" element={<List />} />
+        <Route path="/create" element={<Create />} />
+        <Route path="/edit" element={<Edit />} />
+        <Route path="/show" element={<Show />} />
+      </Routes>
+    </Router>
   );
 }
+
+export default App;
