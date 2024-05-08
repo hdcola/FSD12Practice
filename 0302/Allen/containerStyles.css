@@ -1,0 +1,56 @@
+#container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: default;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+}
+.header {
+    font-size: 35px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+}
+.dish{
+    width: 1500px;
+    color: white;
+}
+#price {
+    color: rgb(255, 150, 52);
+}
+.content {
+    display: flex;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+}
+.columnPic, .columnIng, .columnInfo, .columnTips {
+    width: 25%;
+    flex: left;
+}
+#pic {
+    border-radius: 10px;
+    box-shadow: 2px 5px rgba(0, 0, 0, 0.5);
+    width: 80%;
+    scale: 95%;
+}
+.content ul {
+    list-style-type: none;
+}
+.content h2, .columnInfo ul {
+    padding: 30px;
+}
+.columnIng li::before {
+    content: "•";
+    color: #ffa500;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+.columnTips p {
+    margin-left: 30px;
+}
+.description h2, .title, .columnTips h2 {
+    color: rgb(255, 150, 52); ;
+}
