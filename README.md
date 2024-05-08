@@ -16,3 +16,4 @@ FSD12 Practices
 * [Doctors List](https://hdcola.github.io/FSD12Practice/0504/)
 * [Doctors List Multi-DataSources](https://hdcola.github.io/FSD12Practice/0505/)
 * [Doctors List Select Source component](https://hdcola.github.io/FSD12Practice/0506/)
+* [Doctors CRUD](https://hdcola.github.io/FSD12Practice/0507/)
