@@ -1,0 +1,48 @@
+.navContainer {
+    z-index: 1;
+}
+.navContainer ul{
+    list-style-type: none;
+    margin: 10;
+    padding: 0;
+    background-color: rgb(0, 0, 0);
+    overflow: hidden;
+    position: fixed;
+    font-size: 20px;
+}
+.navContainer li{
+    float: left;
+}
+.navContainer li a,
+.dropDownBtn {
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 20px 20px;
+    text-decoration: none;
+}
+.dropDownBtn{
+    position: relative;
+}
+.navContainer li a:hover,
+.dropDownBtn:hover,
+.dropDownContent a:hover {
+    background-color: rgb(255, 173, 65, 0.5);
+}
+.dropDown:hover .dropDownContent {
+    display: block;
+}
+.dropDownContent {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    
+}
+.navContainer .dropDownContent a {
+    color: black;
+    display: block;
+    text-align: left;
+}
