@@ -1,31 +1,36 @@
-import { Button, Table } from "react-bootstrap";
+import { Button, Table, InputGroup, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
 function App() {
   const DEFAULT_URL = "http://localhost:8080/api/doctors";
-  const [data, setData] = useState<any | null>(null);
+  const [data, setData] = useState<[iDoctor] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  async function fetchData() {
-    console.log("Fetching data...");
-    setIsLoading(true);
-    try {
-      setData(null);
-      const response = await fetch(DEFAULT_URL);
-      const json = await response.json();
-      setData(json);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  const [apiUrl, setApiUrl] = useState<string>(DEFAULT_URL);
+  const [fetchDataToogle, setFetchDataToogle] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    async function fetchData() {
+      console.log("Fetching data...");
+      setIsLoading(true);
+      try {
+        setData(null);
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const json = await response.json();
+        setData(json);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-  // [{"id":10,"name":"Dr. White","dateOfBirth":"1976-07-08","address":"765 Fir St","postalCode":"G7G 7G7","city":"Victoria","province":"BC","country":"Canada","phoneNumber":"890-123-4567","specialty":"Rheumatology"}]
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchDataToogle]);
+
   return (
     <>
       {isLoading ? (
@@ -65,9 +70,27 @@ function App() {
           </tbody>
         </Table>
       )}
-      <Button variant="primary" onClick={fetchData}>
-        Fetch Data
-      </Button>
+      <InputGroup className="mb-3">
+        <Form.Control
+          placeholder="API URL"
+          aria-label="API URL"
+          aria-describedby="basic-addon2"
+          value={apiUrl}
+          onChange={(e) => setApiUrl(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              setFetchDataToogle(!fetchDataToogle);
+            }
+          }}
+        />
+        <Button
+          variant="outline-secondary"
+          id="button-addon2"
+          onClick={() => setFetchDataToogle(!fetchDataToogle)}
+        >
+          Fetch Data
+        </Button>
+      </InputGroup>
     </>
   );
 }
