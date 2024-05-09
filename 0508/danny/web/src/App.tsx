@@ -2,7 +2,9 @@ import { Button, Table, InputGroup, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
 function App() {
-  const DEFAULT_URL = "http://localhost:8080/api/doctors";
+  // const DEFAULT_URL = "http://localhost:8080/api/doctors";
+  const DEFAULT_URL =
+    "https://hdcola.github.io/FSD12Practice/0508/danny/web/dist/doctors";
   const [data, setData] = useState<[iDoctor] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiUrl, setApiUrl] = useState<string>(DEFAULT_URL);
