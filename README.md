@@ -17,4 +17,5 @@ FSD12 Practices
 * [Doctors List Multi-DataSources](https://hdcola.github.io/FSD12Practice/0505/)
 * [Doctors List Select Source component](https://hdcola.github.io/FSD12Practice/0506/)
 * [Doctors CRUD](https://hdcola.github.io/FSD12Practice/0507/)
-* [Doctors CRUD using Refine](https://hdcola.github.io/FSD12Practice/0508/)
+* [Doctors List React Version](https://hdcola.github.io/FSD12Practice/0508/)
+* [Doctors CRUD React Version](https://hdcola.github.io/FSD12Practice/0509/)
