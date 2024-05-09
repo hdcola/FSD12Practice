@@ -1,5 +1,6 @@
 import { Button, Table, InputGroup, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import CreateModal from "./pages/create";
 
 function App() {
   // const DEFAULT_URL = "http://localhost:8080/api/doctors";
@@ -9,6 +10,7 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiUrl, setApiUrl] = useState<string>(DEFAULT_URL);
   const [fetchDataToogle, setFetchDataToogle] = useState<boolean>(false);
+  const [showCreate, setShowCreate] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -33,8 +35,43 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchDataToogle]);
 
+  const handleCreateDoctor = (data: object) => {
+    // cover data to iDoctor
+    const doctorData = data as iDoctor;
+    // POST to apiUrl
+    fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(doctorData),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((json) => {
+        console.log("Success:", json);
+        setFetchDataToogle(!fetchDataToogle);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    setShowCreate(false);
+  };
+
   return (
     <>
+      <Button variant="primary" onClick={() => setShowCreate(true)}>
+        New Doctor
+      </Button>
+      <CreateModal
+        show={showCreate}
+        handleClose={() => setShowCreate(false)}
+        handleSave={handleCreateDoctor}
+      />
       {isLoading ? (
         <p>Loading...</p>
       ) : (
