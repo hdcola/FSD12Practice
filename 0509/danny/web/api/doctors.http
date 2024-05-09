@@ -1,0 +1,7 @@
+###
+
+GET http://localhost:8080/api/doctors
+
+### DELETE
+
+DELETE http://localhost:8080/api/doctors/1

@@ -1,6 +1,8 @@
 import { Button, Table, InputGroup, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import CreateModal from "./pages/create";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function App() {
   // const DEFAULT_URL = "http://localhost:8080/api/doctors";
@@ -62,6 +64,27 @@ function App() {
     setShowCreate(false);
   };
 
+  const handleDeleteDoctor = (id: number) => {
+    // DELETE to apiUrl
+    fetch(`${apiUrl}/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        // return response text
+        return response.text();
+      })
+      .then((resp) => {
+        console.log("Success:", resp);
+        setFetchDataToogle(!fetchDataToogle);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   return (
     <>
       <Button variant="primary" onClick={() => setShowCreate(true)}>
@@ -88,6 +111,7 @@ function App() {
               <th>Country</th>
               <th>Phone Number</th>
               <th>Specialty</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -104,6 +128,14 @@ function App() {
                   <td>{doctor.country}</td>
                   <td>{doctor.phoneNumber}</td>
                   <td>{doctor.specialty}</td>
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDeleteDoctor(doctor.id)}
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </Button>
+                  </td>
                 </tr>
               ))}
           </tbody>
