@@ -1,8 +1,9 @@
 import { Button, Table, InputGroup, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
-import CreateModal from "./pages/create";
+import CreateModal from "./components/create";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
+import { iDoctor } from "./components/types";
 
 function App() {
   // const DEFAULT_URL = "http://localhost:8080/api/doctors";
@@ -135,6 +136,9 @@ function App() {
                     >
                       <FontAwesomeIcon icon={faTrash} />
                     </Button>
+                    <Button>
+                      <FontAwesomeIcon icon={faEdit} />
+                    </Button>
                   </td>
                 </tr>
               ))}
@@ -164,19 +168,6 @@ function App() {
       </InputGroup>
     </>
   );
-}
-
-interface iDoctor {
-  id: number;
-  name: string;
-  dateOfBirth: string;
-  address: string;
-  postalCode: string;
-  city: string;
-  province: string;
-  country: string;
-  phoneNumber: string;
-  specialty: string;
 }
 
 export default App;

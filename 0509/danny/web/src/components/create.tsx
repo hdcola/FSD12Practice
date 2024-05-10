@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
+import { iDoctor } from "./types";
 
 interface CustomModalProps {
   show: boolean;
   handleClose: () => void;
-  handleSave: (data: object) => void;
+  handleSave: (data: iDoctor) => void;
 }
 
 const CreateModal: React.FC<CustomModalProps> = ({
@@ -12,7 +13,7 @@ const CreateModal: React.FC<CustomModalProps> = ({
   handleClose,
   handleSave,
 }) => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<iDoctor>({
     id: null,
     name: "",
     dateOfBirth: "",
@@ -35,6 +36,18 @@ const CreateModal: React.FC<CustomModalProps> = ({
 
   const handleSubmit = () => {
     handleSave(formData);
+    setFormData({
+      id: null,
+      name: "",
+      dateOfBirth: "",
+      address: "",
+      postalCode: "",
+      city: "",
+      province: "",
+      country: "",
+      phoneNumber: "",
+      specialty: "",
+    });
     handleClose();
   };
 
