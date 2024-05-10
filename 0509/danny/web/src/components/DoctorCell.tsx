@@ -1,4 +1,5 @@
 import React from "react";
+import { Form } from "react-bootstrap";
 
 interface DoctorCellProps {
   name: string;
@@ -16,9 +17,17 @@ const DoctorCell: React.FC<DoctorCellProps> = ({
   return (
     <td>
       {isEditing ? (
-        <input type="text" name={name} value={value} onChange={onChange} />
+        <>
+          <Form.Control
+            type="text"
+            size="sm"
+            name={name}
+            value={value}
+            onChange={onChange}
+          />
+        </>
       ) : (
-        <>{value}</>
+        value
       )}
     </td>
   );

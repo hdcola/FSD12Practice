@@ -77,7 +77,7 @@ function App() {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive size="sm">
           <thead>
             <tr>
               <th>ID</th>
@@ -101,29 +101,6 @@ function App() {
                   onChange={() => setFetchDataToogle(!fetchDataToogle)}
                   apiUrl={apiUrl}
                 />
-                // <tr key={doctor.id}>
-                //   <td>{doctor.id}</td>
-                //   <td>{doctor.name}</td>
-                //   <td>{doctor.dateOfBirth}</td>
-                //   <td>{doctor.address}</td>
-                //   <td>{doctor.postalCode}</td>
-                //   <td>{doctor.city}</td>
-                //   <td>{doctor.province}</td>
-                //   <td>{doctor.country}</td>
-                //   <td>{doctor.phoneNumber}</td>
-                //   <td>{doctor.specialty}</td>
-                //   <td>
-                //     <Button
-                //       variant="danger"
-                //       onClick={() => handleDeleteDoctor(doctor.id)}
-                //     >
-                //       <FontAwesomeIcon icon={faTrash} />
-                //     </Button>
-                //     <Button>
-                //       <FontAwesomeIcon icon={faEdit} />
-                //     </Button>
-                //   </td>
-                // </tr>
               ))}
           </tbody>
         </Table>

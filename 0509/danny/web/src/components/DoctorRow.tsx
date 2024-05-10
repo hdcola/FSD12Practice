@@ -21,7 +21,6 @@ const DoctorRow: React.FC<DoctorRowProps> = ({ doctor, onChange, apiUrl }) => {
       ...prevDoctor,
       [name]: value,
     }));
-    onChange();
   };
 
   const handleDeleteDoctor = (id: number | null) => {
@@ -46,6 +45,32 @@ const DoctorRow: React.FC<DoctorRowProps> = ({ doctor, onChange, apiUrl }) => {
       });
   };
 
+  const handleUpdateDoctor = () => {
+    // PUT to apiUrl
+    fetch(`${apiUrl}/${doctor.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedDoctor),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        // return response text
+        return response.text();
+      })
+      .then((resp) => {
+        console.log("Success:", resp);
+        onChange();
+        setIsEditing(false);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   const onDelete = (id: number | null) => {
     console.log("Deleting doctor with id: ", id);
   };
@@ -55,19 +80,61 @@ const DoctorRow: React.FC<DoctorRowProps> = ({ doctor, onChange, apiUrl }) => {
       <td>{doctor.id}</td>
       <DoctorCell
         name="name"
-        value={doctor.name}
+        value={editedDoctor.name}
         isEditing={isEditing}
         onChange={handleChange}
       />
       <DoctorCell
         name="dateOfBirth"
-        value={doctor.dateOfBirth}
+        value={editedDoctor.dateOfBirth}
+        isEditing={isEditing}
+        onChange={handleChange}
+      />
+      <DoctorCell
+        name="address"
+        value={editedDoctor.address}
+        isEditing={isEditing}
+        onChange={handleChange}
+      />
+      <DoctorCell
+        name="postalCode"
+        value={editedDoctor.postalCode}
+        isEditing={isEditing}
+        onChange={handleChange}
+      />
+      <DoctorCell
+        name="city"
+        value={editedDoctor.city}
+        isEditing={isEditing}
+        onChange={handleChange}
+      />
+      <DoctorCell
+        name="province"
+        value={editedDoctor.province}
+        isEditing={isEditing}
+        onChange={handleChange}
+      />
+      <DoctorCell
+        name="country"
+        value={editedDoctor.country}
+        isEditing={isEditing}
+        onChange={handleChange}
+      />
+      <DoctorCell
+        name="phoneNumber"
+        value={editedDoctor.phoneNumber}
+        isEditing={isEditing}
+        onChange={handleChange}
+      />
+      <DoctorCell
+        name="specialty"
+        value={editedDoctor.specialty}
         isEditing={isEditing}
         onChange={handleChange}
       />
       <td>
         {isEditing ? (
-          <Button className="btn-sm" onClick={() => setIsEditing(false)}>
+          <Button className="btn-sm" onClick={handleUpdateDoctor}>
             Save
           </Button>
         ) : (
