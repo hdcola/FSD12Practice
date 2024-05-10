@@ -1,9 +1,8 @@
 import { Button, Table, InputGroup, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import CreateModal from "./components/create";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { iDoctor } from "./components/types";
+import DoctorRow from "./components/DoctorRow";
 
 function App() {
   // const DEFAULT_URL = "http://localhost:8080/api/doctors";
@@ -65,27 +64,6 @@ function App() {
     setShowCreate(false);
   };
 
-  const handleDeleteDoctor = (id: number) => {
-    // DELETE to apiUrl
-    fetch(`${apiUrl}/${id}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        // return response text
-        return response.text();
-      })
-      .then((resp) => {
-        console.log("Success:", resp);
-        setFetchDataToogle(!fetchDataToogle);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
   return (
     <>
       <Button variant="primary" onClick={() => setShowCreate(true)}>
@@ -118,29 +96,34 @@ function App() {
           <tbody>
             {data &&
               data.map((doctor: iDoctor) => (
-                <tr key={doctor.id}>
-                  <td>{doctor.id}</td>
-                  <td>{doctor.name}</td>
-                  <td>{doctor.dateOfBirth}</td>
-                  <td>{doctor.address}</td>
-                  <td>{doctor.postalCode}</td>
-                  <td>{doctor.city}</td>
-                  <td>{doctor.province}</td>
-                  <td>{doctor.country}</td>
-                  <td>{doctor.phoneNumber}</td>
-                  <td>{doctor.specialty}</td>
-                  <td>
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDeleteDoctor(doctor.id)}
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </Button>
-                    <Button>
-                      <FontAwesomeIcon icon={faEdit} />
-                    </Button>
-                  </td>
-                </tr>
+                <DoctorRow
+                  doctor={doctor}
+                  onChange={() => setFetchDataToogle(!fetchDataToogle)}
+                  apiUrl={apiUrl}
+                />
+                // <tr key={doctor.id}>
+                //   <td>{doctor.id}</td>
+                //   <td>{doctor.name}</td>
+                //   <td>{doctor.dateOfBirth}</td>
+                //   <td>{doctor.address}</td>
+                //   <td>{doctor.postalCode}</td>
+                //   <td>{doctor.city}</td>
+                //   <td>{doctor.province}</td>
+                //   <td>{doctor.country}</td>
+                //   <td>{doctor.phoneNumber}</td>
+                //   <td>{doctor.specialty}</td>
+                //   <td>
+                //     <Button
+                //       variant="danger"
+                //       onClick={() => handleDeleteDoctor(doctor.id)}
+                //     >
+                //       <FontAwesomeIcon icon={faTrash} />
+                //     </Button>
+                //     <Button>
+                //       <FontAwesomeIcon icon={faEdit} />
+                //     </Button>
+                //   </td>
+                // </tr>
               ))}
           </tbody>
         </Table>

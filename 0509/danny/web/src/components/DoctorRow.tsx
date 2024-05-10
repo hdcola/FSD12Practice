@@ -3,64 +3,87 @@ import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { iDoctor } from "./types";
+import DoctorCell from "./DoctorCell";
 
 interface DoctorRowProps {
   doctor: iDoctor;
-  onChange: (id: number) => void;
-  onDelete: (id: number) => void;
+  onChange: () => void;
+  apiUrl: string;
 }
 
-const DoctorRow: React.FC<DoctorRowProps> = ({
-  doctor,
-  onChange,
-  onDelete,
-}) => {
+const DoctorRow: React.FC<DoctorRowProps> = ({ doctor, onChange, apiUrl }) => {
   const [editedDoctor, setEditedDoctor] = useState({ ...doctor });
+  const [isEditing, setIsEditing] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setEditedDoctor((prevDoctor) => ({
       ...prevDoctor,
       [name]: value,
     }));
-    onChange(editedDoctor.id); // 触发 onChange 回调
+    onChange();
+  };
+
+  const handleDeleteDoctor = (id: number | null) => {
+    // DELETE to apiUrl
+    fetch(`${apiUrl}/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        // return response text
+        return response.text();
+      })
+      .then((resp) => {
+        console.log("Success:", resp);
+        onDelete(id);
+        onChange();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const onDelete = (id: number | null) => {
+    console.log("Deleting doctor with id: ", id);
   };
 
   return (
     <tr key={doctor.id}>
       <td>{doctor.id}</td>
+      <DoctorCell
+        name="name"
+        value={doctor.name}
+        isEditing={isEditing}
+        onChange={handleChange}
+      />
+      <DoctorCell
+        name="dateOfBirth"
+        value={doctor.dateOfBirth}
+        isEditing={isEditing}
+        onChange={handleChange}
+      />
       <td>
-        <input
-          type="text"
-          name="name"
-          value={editedDoctor.name}
-          onChange={handleChange}
-        />
-      </td>
-      <td>
-        <input
-          type="date"
-          name="dateOfBirth"
-          value={editedDoctor.dateOfBirth}
-          onChange={handleChange}
-        />
-      </td>
-      <td>
-        <input
-          type="text"
-          name="address"
-          value={editedDoctor.address}
-          onChange={handleChange}
-        />
-      </td>
-      {/* Add other editable fields here */}
-      <td>
-        <Button variant="danger" onClick={() => onDelete(doctor.id)}>
-          <FontAwesomeIcon icon={faTrash} />
-        </Button>
-        <Button>
-          <FontAwesomeIcon icon={faEdit} />
-        </Button>
+        {isEditing ? (
+          <Button className="btn-sm" onClick={() => setIsEditing(false)}>
+            Save
+          </Button>
+        ) : (
+          <div>
+            <Button
+              variant="danger"
+              className="btn-sm"
+              onClick={() => handleDeleteDoctor(doctor.id)}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
+            <Button className="btn-sm" onClick={() => setIsEditing(true)}>
+              <FontAwesomeIcon icon={faEdit} />
+            </Button>
+          </div>
+        )}
       </td>
     </tr>
   );
