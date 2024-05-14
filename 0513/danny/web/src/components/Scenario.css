@@ -1,6 +1,17 @@
-.scenario-button {
-  background-image: url(../img/challenge.png);
-  display: flex;
-  align-items: center;
-  justify-content: "center";
+.overlap-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
+  color: rgb(225, 218, 218);
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.overlap-container {
+  position: relative;
+  text-align: center;
+}
+
+.overlap-container:hover .overlap-text {
+  color: cadetblue;
 }
