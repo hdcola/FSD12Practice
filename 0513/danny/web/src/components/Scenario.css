@@ -1,0 +1,6 @@
+.scenario-button {
+  background-image: url(../img/challenge.png);
+  display: flex;
+  align-items: center;
+  justify-content: "center";
+}
