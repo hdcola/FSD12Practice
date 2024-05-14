@@ -8,7 +8,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("/scenarios");
+        const response = await fetch("scenarios");
         const data = await response.json();
         setScenarios(data.scenarios);
       } catch (error) {
