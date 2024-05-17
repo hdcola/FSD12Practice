@@ -39,8 +39,10 @@ body {
 
 .container .card {
   position: absolute;
-  width: 240px;
-  height: 360px;
+  /* width: 240px;
+  height: 360px; */
+  width: 10vw;
+  height: 30vh;
   background-color: #f7d200;
   border-radius: 8px;
   display: flex;
@@ -50,7 +52,7 @@ body {
   color: rgba(0, 0, 0, 0);
   font-size: 8em;
   font-weight: 700;
-  border: 10px solid rgba(0, 0, 0, 0.1);
+  border: 1vw solid rgba(0, 0, 0, 0.1);
   transition: 0.5s;
   transform-origin: 50% 100%;
   filter: hue-rotate(calc(var(--i) * 60deg));
