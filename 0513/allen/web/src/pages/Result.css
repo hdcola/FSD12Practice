@@ -1,0 +1,65 @@
+.resultPageBlack {
+  background-color: #727272;
+  border: 5px solid #727272;
+}
+.resultPage {
+  background-color: #fcb4b4;
+}
+#title {
+  text-align: center;
+  margin-top: 0%;
+  font-family: "Caveat", cursive;
+  font-weight: 900;
+  font-size: 10rem;
+  cursor: default;
+}
+
+.border {
+  border: 10px solid rgb(221, 0, 0);
+  background-color: #fd5d5d;
+  width: 80%;
+  border-radius: 3rem;
+  margin: 0 auto;
+}
+.borderBlack {
+  border: 10px solid rgb(0, 0, 0);
+  background-color: #3d3d3d;
+  width: 80%;
+  border-radius: 3rem;
+  margin: 0 auto;
+}
+
+.secondColumn {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  height: 50vh;
+  width: 50%;
+}
+
+.metal {
+  scale: 170%;
+}
+
+img {
+  margin: 20%;
+}
+
+.content {
+  width: 80%;
+  margin: 0 auto;
+  height: 50vh;
+  border: 10px solid rgb(221, 0, 0);
+  background-color: #fcb4b4;
+  margin-bottom: 35px;
+  border-radius: 3rem;
+}
+.contentBlack {
+  width: 80%;
+  margin: 0 auto;
+  height: 50vh;
+  border: 10px solid rgb(0, 0, 0);
+  background-color: #727272;
+  margin-bottom: 35px;
+  border-radius: 3rem;
+}
