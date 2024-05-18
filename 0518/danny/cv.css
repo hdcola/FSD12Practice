@@ -68,8 +68,6 @@ body > footer a:active {
 }
 
 .svgicon {
-  width: 2em;
-  height: 2em;
   display: flex;
   justify-content: center;
   align-items: center;
