@@ -20,3 +20,4 @@ FSD12 Practices
 * [Doctors List React Version](https://hdcola.github.io/FSD12Practice/0508/)
 * [Doctors CRUD React Version](https://hdcola.github.io/FSD12Practice/0509/)
 * [Home page of json data source](https://hdcola.github.io/FSD12Practice/0513/)
+* [BootStrap Practice](https://hdcola.github.io/FSD12Practice/0518/)
