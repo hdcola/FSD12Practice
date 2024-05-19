@@ -19,5 +19,6 @@ FSD12 Practices
 * [Doctors CRUD](https://hdcola.github.io/FSD12Practice/0507/)
 * [Doctors List React Version](https://hdcola.github.io/FSD12Practice/0508/)
 * [Doctors CRUD React Version](https://hdcola.github.io/FSD12Practice/0509/)
-* [Home page of json data source](https://hdcola.github.io/FSD12Practice/0513/)
-* [BootStrap Practice](https://hdcola.github.io/FSD12Practice/0518/)
+* [0513 Home page of json data source](https://hdcola.github.io/FSD12Practice/0513/)
+* [0518 BootStrap Practice](https://hdcola.github.io/FSD12Practice/0518/)
+* [0519 Next.js and BootStrap Practice](https://hdcola.github.io/FSD12Practice/0519/)
