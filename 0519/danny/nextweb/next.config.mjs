@@ -2,7 +2,7 @@
 const nextConfig = {
   output: "export",
   basePath: "/FSD12Practice/0519/danny/nextweb/out",
-  assetPrefix: "./",
+  //   assetPrefix: "./",
 };
 
 export default nextConfig;
