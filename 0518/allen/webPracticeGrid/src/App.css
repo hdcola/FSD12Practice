@@ -1,1 +1,72 @@
+.navbar {
+  background-color: #ffe8d6 !important;
+}
 
+#first-row {
+  margin-top: 3%;
+  color: #6b705c;
+  border-bottom: 0.4rem solid #cb997e;
+  background-color: #ffe8d6;
+}
+
+.navbar-nav {
+  margin-left: auto;
+}
+
+#name {
+  /* border-bottom: 0.4rem solid #a5a58d; */
+  font-size: 3.25rem;
+  cursor: default;
+  color: #6b705c;
+}
+
+.nav-link {
+  font-size: 2rem;
+}
+
+.nav-link:hover {
+  scale: 110%;
+  font-weight: 600;
+  color: #6b705c;
+}
+
+.navbar:hover .nav-link:not(:hover) {
+  opacity: 50%;
+}
+
+/* 每个大标题样式 */
+.col-12{
+    font-size: 2.5rem;
+    color: #6b705c;
+    font-weight: 500;
+    margin-top: 3%;
+}
+
+/* 所有内容样式 */
+#about-content, #experience-content{
+    color: #6b705c;
+    font-weight: 500;
+    margin-top: 1.5%;
+    padding-bottom: 2.5%;
+    
+}
+
+#row1, #row2{
+    border-bottom: 0.2rem solid #cb997e7c;
+}
+
+.des{
+    list-style: none;
+}
+
+.c{
+    border-right: 0.15rem solid #cb997e7c;
+}
+
+.text-wrap{
+    overflow-wrap: break-word;
+}
+
+.jd{
+    font-weight: 800;
+}
