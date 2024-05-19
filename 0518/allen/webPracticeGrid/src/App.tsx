@@ -14,7 +14,7 @@ const App: React.FC = () => {
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container" id="first-row">
           <div className="row">
-            <h1 className="navbar-brand" id="name" href="#">
+            <h1 className="navbar-brand" id="name">
               Zhenhao Yang
             </h1>
           </div>
