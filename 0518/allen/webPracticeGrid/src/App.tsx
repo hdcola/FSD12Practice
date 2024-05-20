@@ -1,14 +1,20 @@
 // import 'bootstrap/dist/css/bootstrap.css';
 // import 'bootstrap/dist/css/bootstrap-grid.css';
 import "./App.css";
+import ScrollToTopButton from "./ScrollToTopButton"; // 引入返回顶部按钮组件
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
+      <div className="App">
+        {/* 你的其他组件 */}
+        <ScrollToTopButton />
+      </div>
+
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container" id="first-row">
           <div className="row">
-            <h1 className="navbar-brand" id="name" href="#">
+            <h1 className="navbar-brand" id="name">
               Zhenhao Yang
             </h1>
           </div>
@@ -57,14 +63,22 @@ function App() {
           <div className="col-12" id="About">
             About
           </div>
-          <div className="col" id="about-content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+          <div className="row" id="row-content">
+            <div className="col clearfix" id="about-content">
+              <img
+                src="portrait.png"
+                className="image-fluid float-end"
+                id="portrait"
+                alt="pic"
+              />
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
           </div>
         </div>
       </div>
@@ -103,6 +117,6 @@ function App() {
       </div>
     </>
   );
-}
+};
 
 export default App;
