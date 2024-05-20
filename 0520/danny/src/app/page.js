@@ -1,95 +1,78 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import { useState } from "react";
+import { Button, Form, Container, Row, Col, InputGroup } from "react-bootstrap";
 
 export default function Home() {
+  const [messages, setMessages] = useState("");
+  const [response, setResponse] = useState("");
+  const [apiUrl, setApiUrl] = useState("http://localhost:11434/v1/chat");
+  const [apiToken, setApiToken] = useState("iloveyourapitoken");
+  const [model, setModel] = useState("gemma:7b");
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    <main>
+      <Container fluid>
+        <Row className="my-1">
+          <Col>
+            <InputGroup>
+              <Form.Control
+                as="textarea"
+                rows={2}
+                value={messages}
+                onChange={(e) => setMessages(e.target.value)}
+              />
+              <div>
+                <a className="btn btn-outline-primary m-2" href="#">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-send-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
+                  </svg>
+                </a>
+              </div>
+            </InputGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col md={6} className="my-1">
+            <InputGroup>
+              <InputGroup.Text>API URL</InputGroup.Text>
+              <Form.Control
+                type="text"
+                value={apiUrl}
+                onChange={(e) => setApiUrl(e.target.value)}
+              />
+            </InputGroup>
+          </Col>
+          <Col md={3} className="my-1">
+            <InputGroup>
+              <InputGroup.Text>API Token</InputGroup.Text>
+              <Form.Control
+                type="text"
+                value={apiToken}
+                onChange={(e) => setApiToken(e.target.value)}
+              />
+            </InputGroup>
+          </Col>
+          <Col md={3} className="my-1">
+            <InputGroup>
+              <InputGroup.Text>Model</InputGroup.Text>
+              <Form.Control
+                type="text"
+                value={model}
+                onChange={(e) => setModel(e.target.value)}
+              />
+            </InputGroup>
+          </Col>
+        </Row>
+      </Container>
     </main>
   );
 }
