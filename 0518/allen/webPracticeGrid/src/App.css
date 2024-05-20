@@ -70,3 +70,31 @@
 .jd{
     font-weight: 800;
 }
+
+#portrait{
+  width: 15%;
+}
+
+@media (max-width: 1200px) {
+  #portrait {
+    width: 30%; /* Width for large devices */
+  }
+}
+
+@media (max-width: 992px) {
+  #portrait {
+    width: 60%; /* Width for medium devices */
+  }
+}
+
+@media (max-width: 768px) {
+  #portrait {
+    width: 70%; /* Width for small devices */
+  }
+}
+
+@media (max-width: 576px) {
+  #portrait {
+    width: 80%; /* Width for extra small devices */
+  }
+}
