@@ -22,3 +22,4 @@ FSD12 Practices
 * [0513 Home page of json data source](https://hdcola.github.io/FSD12Practice/0513/)
 * [0518 BootStrap Practice](https://hdcola.github.io/FSD12Practice/0518/)
 * [0519 Next.js and BootStrap Practice](https://hdcola.github.io/FSD12Practice/0519/)
+* [0520 Chat With Bot](https://hdcola.github.io/FSD12Practice/0520/)
