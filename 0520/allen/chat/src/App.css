@@ -1,15 +1,27 @@
-.container{
-  background-color: #295079;
-  border-radius: .5rem;
+.container-fluid {
   border: 0.1rem solid #c4c4c4;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 }
-#header{
+
+.sticky-top {
+  background-color: #295079;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+}
+
+.sticky-bottom{
+  background-color: #295079;
+  border-bottom-left-radius: .5rem !important;
+  border-bottom-right-radius: .5rem !important;
+}
+
+#header {
   color: aliceblue;
 }
-.chat-box{
-  height: 65vh;
+.chat-box {
+  height: 100%;
   background-color: aliceblue;
+  overflow-y: auto;
 }
 
 .chat-messages {
@@ -25,7 +37,7 @@
 .message.user {
   text-align: right;
 }
-.message.bot{
+.message.bot {
   text-align: left;
 }
 .message .text {
