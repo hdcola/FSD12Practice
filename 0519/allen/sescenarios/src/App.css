@@ -6,13 +6,13 @@ h3 {
   padding: 5%;
 }
 
-.card{
+.card {
   margin: 6%;
   background-color: rgb(240, 224, 203);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.h-row{
+.h-row {
   margin-top: 2%;
   margin-bottom: 1%;
 }
@@ -33,4 +33,7 @@ h3 {
   padding-bottom: 5%;
 }
 
-
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
