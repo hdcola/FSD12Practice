@@ -1,0 +1,17 @@
+.user-chat-box,
+.ai-chat-box {
+  background-color: secondary;
+}
+
+.chat-content-area {
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}

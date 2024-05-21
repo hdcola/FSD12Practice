@@ -4,6 +4,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import { useState } from "react";
 import { Form, Container, Row, Col, InputGroup } from "react-bootstrap";
 import OpenAI from "openai";
+import "./page.css";
 
 export default function Home() {
   const [messages, setMessages] = useState("");
@@ -13,40 +14,42 @@ export default function Home() {
   const [model, setModel] = useState("gemma:7b");
 
   return (
-    <main>
-      <div className="my-2 overflow-hidden" style={{ height: "100vh" }}>
+    <main className="h-100">
+      <Container fluid className="fixed-bottom my-2">
         {/* chat */}
-        <div className="overflow-y-auto">
-          <Container fluid>
-            <Row>
-              <Col>
-                <h7 className="text-left">You:</h7>
-                <p>abcd</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <h7 className="text-left">AI:</h7>
-                <p>efgh</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <h7 className="text-left">You:</h7>
-                <p>abcd</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <h7 className="text-left">AI:</h7>
-                <p>efgh</p>
-              </Col>
-            </Row>
-          </Container>
+        <div className="chat-content-area px-2">
+          {/* user chat */}
+          <div className="d-flex flex-row user-chat-box">
+            <div className="chat-icon">
+              <i class="bi bi-person-circle"></i>
+            </div>
+            <div className="chat-text">Hello world.</div>
+          </div>
+          {/* AI response */}
+          <div className="d-flex flex-row ai-chat-box">
+            <div className="chat-icon">
+              <i class="bi bi-robot"></i>
+            </div>
+            <div className="chat-text">
+              Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+              odio. Quisque volutpat mattis eros. Nullam malesuada erat ut
+              turpis. Suspendisse urna nibh viverra non semper suscipit posuere
+              a pede. Donec nec justo eget felis facilisis fermentum. Aliquam
+              porttitor mauris sit amet orci. Aenean dignissim pellentesque
+              felis. Morbi in sem quis dui placerat ornare. Pellentesque odio
+              nisi euismod in pharetra a ultricies in diam. Sed arcu. Cras
+              consequat. Praesent dapibus neque id cursus faucibus tortor neque
+              egestas auguae eu vulputate magna eros eu erat. Aliquam erat
+              volutpat. Nam dui mi tincidunt quis accumsan porttitor facilisis
+              luctus metus. Phasellus ultrices nulla quis nibh. Quisque a
+              lectus. Donec consectetuer ligula vulputate sem tristique cursus.
+              Nam nulla quam gravida non commodo a sodales sit amet nisi.
+            </div>
+          </div>
         </div>
 
         {/* input */}
-        <div className="stick-bottom">
+        <div className="">
           <Container fluid>
             <Row className="my-1">
               <Col>
@@ -108,7 +111,7 @@ export default function Home() {
             </Row>
           </Container>
         </div>
-      </div>
+      </Container>
     </main>
   );
 }
