@@ -1,0 +1,36 @@
+body {
+  background-color: antiquewhite;
+}
+
+h3 {
+  padding: 5%;
+}
+
+.card{
+  margin: 6%;
+  background-color: rgb(240, 224, 203);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.h-row{
+  margin-top: 2%;
+  margin-bottom: 1%;
+}
+
+.btn {
+  padding: 3%;
+  font-weight: 600;
+  color: blue;
+}
+.btn:hover {
+  background-color: antiquewhite;
+  padding: 5%;
+  border: 0;
+}
+
+.description {
+  border-bottom: 0.1rem solid rgba(0, 0, 0, 0.175);
+  padding-bottom: 5%;
+}
+
+
