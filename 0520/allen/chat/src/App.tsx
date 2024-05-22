@@ -12,7 +12,7 @@ function App() {
       <div className="row content-row">
         <div className="chat-box chat-messages">
           <div className="message user">
-            {/* <div className="text">Hello!</div>
+            <div className="text">Hello!</div>
           </div>
           <div className="message bot">
             <div className="text">Hi! How can I help you?</div>
@@ -156,7 +156,7 @@ function App() {
               <br />
               <br />
               希望这段小作文能传达出你对她的深情厚意,祝你们520快乐!
-            </div> */}
+            </div>
           </div>
 
         </div>
