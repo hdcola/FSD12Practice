@@ -9,9 +9,9 @@ function Message({ role, content }) {
     >
       <div className="chat-icon">
         {role === "assistant" ? (
-          <i class="bi bi-robot"></i>
+          <i className="bi bi-robot"></i>
         ) : (
-          <i class="bi bi-person-circle"></i>
+          <i className="bi bi-person-circle"></i>
         )}
       </div>
       <div className="chat-text">{content}</div>
