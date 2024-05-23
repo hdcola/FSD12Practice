@@ -41,12 +41,16 @@ export default function Home() {
       });
   };
 
+  const clearChat = () => {
+    setChat([]);
+  };
+
   return (
     <main className="d-flex flex-column h-100">
       {/* chat */}
       <div className="chat-content-area px-2">
         {chat.map((msg, index) => (
-          <Message key={index} role="msg.role" content={msg.content} />
+          <Message key={index} role={msg.role} content={msg.content} />
         ))}
       </div>
 
@@ -61,6 +65,7 @@ export default function Home() {
         setApiToken={(e) => setApiToken(e.target.value)}
         model={model}
         setModel={(e) => setModel(e.target.value)}
+        clearChat={clearChat}
       />
     </main>
   );

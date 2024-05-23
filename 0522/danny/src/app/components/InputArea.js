@@ -10,6 +10,7 @@ function InputArea({
   setApiToken,
   model,
   setModel,
+  clearChat,
 }) {
   return (
     <div className="input-area">
@@ -19,25 +20,22 @@ function InputArea({
             <InputGroup>
               <Form.Control
                 as="textarea"
-                rows={2}
+                rows={3}
                 value={message}
                 onChange={setMessage}
               />
-              <div>
+              <div className="d-flex flex-column">
                 <button
                   className="btn btn-outline-primary m-2"
                   onClick={sendMessage}
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-send-fill"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z" />
-                  </svg>
+                  <i className="bi bi-send-fill"></i>
+                </button>
+                <button
+                  className="btn btn-outline-primary m-2"
+                  onClick={clearChat}
+                >
+                  <i class="bi bi-x-octagon"></i>
                 </button>
               </div>
             </InputGroup>
