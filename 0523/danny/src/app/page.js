@@ -21,6 +21,7 @@ export default function Home() {
       content: message,
     };
 
+    setMessage("");
     setChat([...chat, prompt]);
 
     await fetch(apiUrl, {

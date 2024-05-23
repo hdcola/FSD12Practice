@@ -1,5 +1,5 @@
 import { Form, Container, Row, Col, InputGroup } from "react-bootstrap";
-
+import { useState } from "react";
 function InputArea({
   message,
   setMessage,
@@ -12,6 +12,17 @@ function InputArea({
   setModel,
   clearChat,
 }) {
+  const handleChange = (event) => {
+    if (event.key === "Enter") {
+      if (event.shiftKey) {
+        return;
+      } else {
+        event.preventDefault();
+        sendMessage();
+      }
+    }
+  };
+
   return (
     <div className="input-area">
       <Container fluid>
@@ -23,6 +34,7 @@ function InputArea({
                 rows={3}
                 value={message}
                 onChange={setMessage}
+                onKeyDown={handleChange}
               />
               <div className="d-flex flex-column">
                 <button
@@ -45,7 +57,12 @@ function InputArea({
           <Col md={6} className="my-1">
             <InputGroup>
               <InputGroup.Text>API URL</InputGroup.Text>
-              <Form.Control type="text" value={apiUrl} onChange={setApiUrl} />
+              <Form.Control
+                type="text"
+                list="api-url-list"
+                value={apiUrl}
+                onChange={setApiUrl}
+              />
               <datalist id="api-url-list">
                 <option value="https://api.openai.com/v1/chat/completions" />
                 <option value="http://localhost:11434/v1/chat/completions" />
@@ -65,7 +82,19 @@ function InputArea({
           <Col md={3} className="my-1">
             <InputGroup>
               <InputGroup.Text>Model</InputGroup.Text>
-              <Form.Control type="text" value={model} onChange={setModel} />
+              <Form.Control
+                type="text"
+                list="model-list"
+                value={model}
+                onChange={setModel}
+              />
+              <datalist id="model-list">
+                <option value="gpt-3.5-turbo" />
+                <option value="gpt-4-turbo" />
+                <option value="gpt-4o" />
+                <option value="gemma:7b" />
+                <option value="llama3:8b" />
+              </datalist>
             </InputGroup>
           </Col>
         </Row>
