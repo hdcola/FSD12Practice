@@ -2,20 +2,17 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useState } from "react";
-import { Form, Container, Row, Col, InputGroup } from "react-bootstrap";
 import "./page.css";
-import React from "react";
 import Message from "./components/Message";
 import InputArea from "./components/InputArea";
 
 export default function Home() {
   const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [response, setResponse] = useState("");
+  const [chat, setChat] = useState([]);
   const [apiUrl, setApiUrl] = useState(
     "http://localhost:11434/v1/chat/completions"
   );
-  const [apiToken, setApiToken] = useState("iloveyourapitoken");
+  const [apiToken, setApiToken] = useState("iloveyourtoken");
   const [model, setModel] = useState("gemma:7b");
 
   const sendMessage = async () => {
@@ -24,7 +21,7 @@ export default function Home() {
       content: message,
     };
 
-    setMessages([...messages, prompt]);
+    setChat([...chat, prompt]);
 
     await fetch(apiUrl, {
       method: "POST",
@@ -33,30 +30,23 @@ export default function Home() {
         Authorization: `Bearer ${apiToken}`,
       },
       body: JSON.stringify({
-        messages: [...messages, prompt],
+        messages: [...chat, prompt],
         model: model,
       }),
     })
       .then((data) => data.json())
       .then((data) => {
-        console.log(data);
-        setResponse(data.choices[0].message.content);
+        setChat([...chat, prompt, data.choices[0].message]);
+        console.log(chat);
       });
   };
-
-  const chatContent = Array(1).fill(null);
 
   return (
     <main className="d-flex flex-column h-100">
       {/* chat */}
       <div className="chat-content-area px-2">
-        {chatContent.map((_, index) => (
-          <React.Fragment key={index}>
-            {/* user chat */}
-            <Message role="user" content={message} />
-            {/* AI response */}
-            <Message role="assistant" content={response} />
-          </React.Fragment>
+        {chat.map((msg, index) => (
+          <Message key={index} role="msg.role" content={msg.content} />
         ))}
       </div>
 
