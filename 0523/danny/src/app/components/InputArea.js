@@ -35,7 +35,7 @@ function InputArea({
                   className="btn btn-outline-primary m-2"
                   onClick={clearChat}
                 >
-                  <i class="bi bi-x-octagon"></i>
+                  <i className="bi bi-x-octagon"></i>
                 </button>
               </div>
             </InputGroup>
@@ -46,6 +46,10 @@ function InputArea({
             <InputGroup>
               <InputGroup.Text>API URL</InputGroup.Text>
               <Form.Control type="text" value={apiUrl} onChange={setApiUrl} />
+              <datalist id="api-url-list">
+                <option value="https://api.openai.com/v1/chat/completions" />
+                <option value="http://localhost:11434/v1/chat/completions" />
+              </datalist>
             </InputGroup>
           </Col>
           <Col md={3} className="my-1">
