@@ -1,0 +1,56 @@
+.container-fluid {
+  border: 0.1rem solid #c4c4c4;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+
+
+.sticky-top {
+  background-color: aliceblue;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+}
+
+.sticky-bottom{
+  background-color: aliceblue;
+  border-bottom-left-radius: .5rem !important;
+  border-bottom-right-radius: .5rem !important;
+}
+
+#header {
+  color: rgb(0, 0, 0);
+}
+.chat-box {
+  height: 100vh;
+  background-color: aliceblue;
+  
+}
+
+.chat-messages {
+  flex-grow: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+}
+
+.message {
+  margin-bottom: 10px;
+}
+.message.user {
+  text-align: right;
+}
+.message.bot {
+  text-align: left;
+}
+.message .text {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 15px;
+}
+.message.user .text {
+  background-color: #295079;
+  color: white;
+}
+
+.message.bot .text {
+  background-color: #dfe4e9;
+}
