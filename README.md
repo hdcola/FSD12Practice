@@ -23,3 +23,5 @@ FSD12 Practices
 * [0518 BootStrap Practice](https://hdcola.github.io/FSD12Practice/0518/)
 * [0519 Next.js and BootStrap Practice](https://hdcola.github.io/FSD12Practice/0519/)
 * [0520 Chat With Bot](https://hdcola.github.io/FSD12Practice/0520/)
+* [0522 Chat With Bot React Version](https://hdcola.github.io/FSD12Practice/0522/)
+* [0523 Chat With Bot Stream Version](https://hdcola.github.io/FSD12Practice/0523/)

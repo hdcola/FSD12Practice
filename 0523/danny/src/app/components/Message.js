@@ -1,3 +1,6 @@
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
 function Message({ role, content }) {
   return (
     <div
@@ -14,7 +17,9 @@ function Message({ role, content }) {
           <i className="bi bi-person-circle"></i>
         )}
       </div>
-      <div className="chat-text mx-1">{content}</div>
+      <Markdown remarkPlugins={[remarkGfm]} className="chat-text mx-1">
+        {content}
+      </Markdown>
     </div>
   );
 }
