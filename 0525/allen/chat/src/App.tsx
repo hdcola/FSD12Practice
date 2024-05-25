@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
 
-// Define a type for the messages in the chat
+
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
 function App() {
-  // Use the Message interface for initializing the state
   const [messages, setMessages] = useState<Message[]>([]);
   const [userInput, setUserInput] = useState("");
   const [api, setApi] = useState(
@@ -17,8 +16,27 @@ function App() {
   const [token, setToken] = useState("whateveryoulike");
   const [model, setModel] = useState("gemma:7b");
 
+  const compliments = [
+    "你不仅聪明，有着出色的编程技能，还非常善于解决问题。",
+    "你的知识面广泛，涉猎多种编程语言和技术，而且对工作充满热情。",
+    "你认真细致，对每一个项目都付出极大的努力和心血。",
+    "你善于思考，总能找到最优的解决方案。",
+    "更重要的是，你乐于学习和分享，时刻保持谦虚和进取的心态。",
+    "你不仅在技术方面卓越，还在领导能力和团队合作上表现出色。",
+    "你的沟通能力让你能够轻松地与他人合作，推动项目顺利进行。",
+    "你有着独特的创意思维，总能在关键时刻提出创新的解决方案。",
+    "你的责任心和敬业精神让你在工作中备受尊敬和信赖。",
+    "你对细节的关注和追求完美使得每一个你参与的项目都达到高标准。",
+    "你的幽默感和友善让你在人际关系中如鱼得水，成为大家心目中的重要伙伴和朋友。",
+    "继续保持这种积极向上的态度和追求卓越的精神，你一定会在事业和生活中取得更多的成功和快乐！"
+  ];
+
+  const fetchAIResponse = async (input: string) => {
+    const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
+    return randomCompliment;
+  };
+
   const handleSendMessage = async () => {
-    //这行代码检查用户输入（userInput）是否为空（或只包含空格）。使用 .trim() 方法去除前后的空白字符，如果结果为空字符串，则 if 条件为真，函数将执行 return 语句，即直接返回而不继续执行后面的代码。这是为了防止发送空消息。
     if (!userInput.trim()) return;
     const newMessage: Message = { role: "user", content: userInput };
     setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -29,49 +47,6 @@ function App() {
     const botMessage: Message = { role: "assistant", content: response };
     setMessages((prevMessages) => [...prevMessages, botMessage]);
   };
-
-  
-  const fetchAIResponse = async (input: string) => {
-    const requestBody = JSON.stringify({
-      model: model,
-      prompt: input,
-      messages: [
-        {
-          role: "user", // 为假设的历史消息添加角色
-          content: input
-        }
-      ] // 假设的历史消息，包括角色和内容
-    });
-  
-    console.log("Complete Request Body:", requestBody); // 打印完整的请求体内容
-  
-    try {
-      const response = await fetch(api, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: requestBody,
-      });
-  
-      console.log("Response Status:", response.status); // 打印响应状态码
-  
-      if (!response.ok) {
-        const errorResponse = await response.text(); // 尝试获取错误响应体
-        console.error("Error Response Body:", errorResponse); // 打印错误响应体
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-  
-      const data = await response.json();
-      return data.choices[0].message.content;
-    } catch (error) {
-      console.error("Error during fetch:", (error as Error).message);
-      return `Error fetching response: ${(error as Error).message}`;
-    }
-  };
-   
-  
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserInput(event.target.value);
