@@ -1,140 +1,141 @@
+import React, { useState } from "react";
 import "./App.css";
-import React, { useState } from 'react';
 
-// 定义 Message 接口
+// Define a type for the messages in the chat
 interface Message {
-  sender: 'user' | 'bot';
+  type: "user" | "bot";
   text: string;
 }
 
-// Header 组件
-function Header() {
-  return (
-    <div className="row sticky-top">
-      <div className="col m-2" id="header">
-        <h1>Chat Box</h1>
-      </div>
-    </div>
-  );
-}
-
-// ChatMessages 组件
-interface ChatMessagesProps {
-  messages: Message[];
-}
-
-function ChatMessages(props: ChatMessagesProps) {
-  return (
-    <div className="row content-row">
-      <div className="chat-box chat-messages">
-        {props.messages.map((message, index) => (
-          <div key={index} className={`message ${message.sender}`}>
-            <div className="text">{message.text}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// UserInput 组件
-interface UserInputProps {
-  userInput: string;
-  setUserInput: React.Dispatch<React.SetStateAction<string>>;
-  handleSend: () => void;
-}
-
-function UserInput(props: UserInputProps) {
-  return (
-    <div className="row sticky-bottom">
-      <div className="col m-2">
-        <div className="input-group">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Type your message here..."
-            value={props.userInput}
-            onChange={(e) => props.setUserInput(e.target.value)}
-          />
-          <button className="btn btn-primary" type="button" onClick={props.handleSend}>
-            Send
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ApiSettings 组件
-interface ApiSettingsProps {
-  apiUrl: string;
-  // setApiUrl: React.Dispatch<React.SetStateAction<string>>;
-  apiToken: string;
-  // setApiToken: React.Dispatch<React.SetStateAction<string>>;
-}
-
-function ApiSettings(props: ApiSettingsProps) {
-  return (
-    <div className="row">
-      <div className="col m-2">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="API URL"
-          value={props.apiUrl}
-          onChange={(e) => props.setApiUrl(e.target.value)}
-        />
-        <input
-          type="text"
-          className="form-control"
-          placeholder="API Token"
-          value={props.apiToken}
-          onChange={(e) => props.setApiToken(e.target.value)}
-        />
-      </div>
-    </div>
-  );
-}
-
-// App 组件
 function App() {
-  const [apiUrl, setApiUrl] = useState<string>('');
-  const [apiToken, setApiToken] = useState<string>('');
-  const [userInput, setUserInput] = useState<string>('');
+  // Use the Message interface for initializing the state
   const [messages, setMessages] = useState<Message[]>([]);
+  const [userInput, setUserInput] = useState("");
+  const [api, setApi] = useState(
+    "http://100.89.152.5:11434/v1/chat/completions"
+  );
+  const [token, setToken] = useState("whateveryoulike");
+  const [model, setModel] = useState("gemma:7b");
 
-  const handleSend = async () => {
-    if (!userInput) return;
-  
-    const newMessages: Message[] = [...messages, { sender: 'user', text: userInput }];
-    setMessages(newMessages);
-    setUserInput('');
-  
+  const handleSendMessage = async () => {
+    //这行代码检查用户输入（userInput）是否为空（或只包含空格）。使用 .trim() 方法去除前后的空白字符，如果结果为空字符串，则 if 条件为真，函数将执行 return 语句，即直接返回而不继续执行后面的代码。这是为了防止发送空消息。
+    if (!userInput.trim()) return;
+    const newMessage: Message = { type: "user", text: userInput };
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+    setUserInput("");
+
+    const response = await fetchAIResponse(userInput);
+    const botMessage: Message = { type: "bot", text: response };
+    setMessages((prevMessages) => [...prevMessages, botMessage]);
+  };
+
+  const fetchAIResponse = async (input: string) => {
     try {
-      const response = await fetch(apiUrl, {
-        method: 'POST',
+      const response = await fetch(api, {
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${apiToken}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ message: userInput, model: 'gemma:7b' }),
+        body: JSON.stringify({ model: model, prompt: input }),
       });
-  
       const data = await response.json();
-      const botReply = data.reply || 'Sorry, I did not understand that.';
-      setMessages([...newMessages, { sender: 'bot', text: botReply }]);
+      return data.message; // Adjust according to the API response structure
     } catch (error) {
-      setMessages([...newMessages, { sender: 'bot', text: 'Error communicating with the API.' }]);
+      return "Error fetching response";
     }
   };
-  
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUserInput(event.target.value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSendMessage();
+    }
+  };
 
   return (
     <div className="container-fluid text-center">
-      <Header />
-      <ApiSettings apiUrl={apiUrl} setApiUrl={setApiUrl} apiToken={apiToken} setApiToken={setApiToken} />
-      <ChatMessages messages={messages} />
-      <UserInput userInput={userInput} setUserInput={setUserInput} handleSend={handleSend} />
+      <div className="row sticky-top">
+        <div className="col m-2" id="header">
+          <h1>Chat Box</h1>
+        </div>
+      </div>
+
+      <div className="row content-row">
+        <div className="chat-box chat-messages">
+          {messages.map((msg, index) => (
+            <div key={index} className={`message ${msg.type}`}>
+              <div className="text">{msg.text}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="row sticky-bottom">
+        <div className="col m-2">
+          <div className="input-group">
+            <div className="form-floating">
+              <input
+                type="text"
+                className="form-control"
+                id="floatingInput"
+                placeholder=""
+                value={userInput}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+              />
+              <label htmlFor="floatingInput">Type your message here...</label>
+            </div>
+
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={handleSendMessage}
+            >
+              Send
+            </button>
+          </div>
+        </div>
+
+        <div className="col-12">
+          <div className="row">
+            <div className="col-6">
+              <div className="form-floating">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="API"
+                  value={api}
+                  onChange={(e) => setApi(e.target.value)}
+                />
+                <label htmlFor="floatingInput">API</label>
+              </div>
+            </div>
+            <div className="col-6 d-flex align-items-center">
+              <span className="input-group-text">Token:</span>
+              <input
+                type="text"
+                className="form-control flex-grow-1"
+                placeholder="Token"
+                value={token}
+                onChange={(e) => setToken(e.target.value)}
+              />
+              <span className="input-group-text">Model:</span>
+              <input
+                type="text"
+                className="form-control flex-grow-1"
+                placeholder="Model"
+                value={model}
+                onChange={(e) => setModel(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
