@@ -1,0 +1,5 @@
+POST http://100.89.152.5:11434/v1/chat/completions
+Authorization: Bearer sdasdada
+Content-Type: application/json
+
+{"model": "gemma:7b", "messages":[{"role":"user", "content":"what can you do"}]}
