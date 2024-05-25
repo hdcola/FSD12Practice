@@ -15,14 +15,21 @@ export default function Home() {
   const [apiToken, setApiToken] = useState("iloveyourtoken");
   const [model, setModel] = useState("gemma:7b");
 
+  async function scrollToBottom() {
+    const chatContentArea = document.querySelector(".chat-content-area");
+    chatContentArea.scrollTop = chatContentArea.scrollHeight;
+    // chatContentArea.scrollIntoView();
+  }
+
   const sendMessage = async () => {
+    const chatContentArea = document.querySelector(".chat-content-area");
     const prompt = {
       role: "user",
       content: message,
     };
-
     setMessage("");
     setChat([...chat, prompt]);
+    chatContentArea.scrollTop = chatContentArea.scrollHeight;
 
     await fetch(apiUrl, {
       method: "POST",
@@ -38,7 +45,9 @@ export default function Home() {
       .then((data) => data.json())
       .then((data) => {
         setChat([...chat, prompt, data.choices[0].message]);
-        console.log(chat);
+        setTimeout(() => {
+          chatContentArea.scrollTop = chatContentArea.scrollHeight;
+        }, 0.5);
       });
   };
 
