@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import { useState } from "react";
 import "./page.css";
-import Message from "./components/Message";
+import ChatContentArea from "./components/ChatContentArea";
 import InputArea from "./components/InputArea";
 
 export default function Home() {
@@ -15,12 +15,6 @@ export default function Home() {
   const [apiToken, setApiToken] = useState("iloveyourtoken");
   const [model, setModel] = useState("gemma:7b");
 
-  async function scrollToBottom() {
-    const chatContentArea = document.querySelector(".chat-content-area");
-    chatContentArea.scrollTop = chatContentArea.scrollHeight;
-    // chatContentArea.scrollIntoView();
-  }
-
   const sendMessage = async () => {
     const chatContentArea = document.querySelector(".chat-content-area");
     const prompt = {
@@ -29,7 +23,6 @@ export default function Home() {
     };
     setMessage("");
     setChat([...chat, prompt]);
-    chatContentArea.scrollTop = chatContentArea.scrollHeight;
 
     await fetch(apiUrl, {
       method: "POST",
@@ -45,9 +38,6 @@ export default function Home() {
       .then((data) => data.json())
       .then((data) => {
         setChat([...chat, prompt, data.choices[0].message]);
-        setTimeout(() => {
-          chatContentArea.scrollTop = chatContentArea.scrollHeight;
-        }, 0.5);
       });
   };
 
@@ -58,11 +48,7 @@ export default function Home() {
   return (
     <main className="d-flex flex-column h-100">
       {/* chat */}
-      <div className="chat-content-area px-2">
-        {chat.map((msg, index) => (
-          <Message key={index} role={msg.role} content={msg.content} />
-        ))}
-      </div>
+      <ChatContentArea chat={chat} />
 
       {/* input */}
       <InputArea
