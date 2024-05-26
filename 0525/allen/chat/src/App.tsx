@@ -31,7 +31,7 @@ function App() {
     "继续保持这种积极向上的态度和追求卓越的精神，你一定会在事业和生活中取得更多的成功和快乐！"
   ];
 
-  const fetchAIResponse = async (input: string) => {
+  const fetchAIResponse = async () => {
     const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
     return randomCompliment;
   };
@@ -43,7 +43,7 @@ function App() {
 
     setUserInput("");
 
-    const response = await fetchAIResponse(userInput);
+    const response = await fetchAIResponse();
     const botMessage: Message = { role: "assistant", content: response };
     setMessages((prevMessages) => [...prevMessages, botMessage]);
   };
