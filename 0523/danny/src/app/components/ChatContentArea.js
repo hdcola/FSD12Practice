@@ -8,6 +8,7 @@ function ChatContentArea({ chat }) {
   const [isAutoScroll, setIsAutoScroll] = useState(true);
   const [showScrollDownArrow, setShowScrollDownArrow] = useState(false);
   const [showInfo, setShowInfo] = useState("");
+  const [isInputScrolling, setIsInputScrolling] = useState(false);
 
   const scrollToBottom = () => {
     // if autoscroll is enabled, scroll to the bottom of the chat content area
@@ -17,23 +18,38 @@ function ChatContentArea({ chat }) {
   };
 
   const handleScroll = () => {
-    if (isAutoScroll) return;
+    // console.log("scroll", isInputScrolling);
+    // if (isInputScrolling) {
+    //   console.log("autoscroll");
+    //   setIsAutoScroll(false);
+    //   return;
+    // }
     if (chatContainerRef.current) {
-      const { scrollTop, clientHeight, scrollHeight } =
-        chatContainerRef.current;
-      // if chatContentArea is scrolled up, disable autoscroll
-      setIsAutoScroll(scrollHeight - scrollTop < clientHeight + 10);
-      setShowInfo(
-        scrollHeight +
-          "," +
-          scrollTop +
-          "," +
-          (scrollHeight - scrollTop) +
-          "," +
-          clientHeight
-      );
-      // show scroll down arrow if chatContentArea when distances greater than 100
-      setShowScrollDownArrow(scrollHeight - scrollTop > clientHeight + 10);
+      //   const { scrollTop, clientHeight, scrollHeight } =
+      //     chatContainerRef.current;
+      //   // if chatContentArea is scrolled up, disable autoscroll
+      //   setIsAutoScroll(scrollHeight - scrollTop < clientHeight + 15);
+      //   console.log(
+      //     "setIsAutoScroll",
+      //     scrollHeight - scrollTop < clientHeight + 15
+      //   );
+      //   // show scroll down arrow if chatContentArea when distances greater than 100
+      setShowScrollDownArrow(scrollHeight - scrollTop > clientHeight + 15);
+      //   setShowInfo(
+      //     scrollHeight +
+      //       "," +
+      //       scrollTop +
+      //       "," +
+      //       (scrollHeight - scrollTop) +
+      //       "," +
+      //       clientHeight
+      //   );
+      //   console.log(
+      //     scrollHeight,
+      //     scrollTop,
+      //     scrollHeight - scrollTop,
+      //     clientHeight
+      //   );
     }
   };
 
@@ -44,8 +60,9 @@ function ChatContentArea({ chat }) {
   useEffect(() => {
     if (isAutoScroll) {
       scrollToBottom();
+      setIsInputScrolling(true);
     }
-  }, [chat, isAutoScroll]);
+  }, [chat, isAutoScroll, isInputScrolling]);
 
   return (
     <div
