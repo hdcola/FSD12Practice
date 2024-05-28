@@ -6,7 +6,6 @@
 }
 
 .chat-content-area {
-  flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -24,4 +23,25 @@ body {
 
 .ai-chat-box {
   background-color: #d6d2d2;
+}
+
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+.scrool-button {
+  position: sticky;
+  bottom: 0;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+.chat-list {
+  flex: 1;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
