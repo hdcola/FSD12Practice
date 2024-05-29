@@ -26,3 +26,4 @@ FSD12 Practices
 * [0522 Chat With Bot React Version](https://hdcola.github.io/FSD12Practice/0522/)
 * [0523 Chat With Bot Stream Version](https://hdcola.github.io/FSD12Practice/0523/)
 * [0528 Function Practice](https://hdcola.github.io/FSD12Practice/0528/)
+* [0529 Next.js/TailWindcss/Tauri Scenarios List](https://hdcola.github.io/FSD12Practice/0529/)
