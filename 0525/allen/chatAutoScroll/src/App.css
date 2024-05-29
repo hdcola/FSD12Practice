@@ -1,0 +1,95 @@
+.container-fluid {
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+html,body{
+  background-color: #252525 ;
+}
+
+#header {
+  color: rgb(255, 255, 255);
+  background-color: #252525;
+}
+
+.chat-box {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  overflow-y: auto;
+  background-color: #252525;
+}
+
+.message {
+  margin-bottom: 10px;
+}
+
+.message.user {
+  text-align: right;
+}
+
+.message.assistant {
+  text-align: left;
+}
+
+.message .text {
+  display: inline-block;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.message.user .text {
+  background-color: #1d1d1d;
+  color: aliceblue;
+}
+
+.message.assistant .text {
+  color: aliceblue;
+  background-color: #ffffff00;
+}
+
+.form-control{
+  /* background-color: #2c2c2c; */
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  outline: none;
+}
+
+
+
+/* 定制滚动条样式 */
+.chat-box::-webkit-scrollbar {
+  width: 10px; /* 设置滚动条的宽度 */
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* 设置滑块的背景颜色为半透明 */
+  border-radius: 6px; /* 设置滑块的圆角 */
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* 设置滑块在悬停时的背景颜色 */
+}
+
+.chat-box::-webkit-scrollbar-track {
+  background-color: transparent; /* 设置轨道的背景颜色为透明 */
+  border-radius: 6px; /* 设置轨道的圆角 */
+}
+
+.chat-box::-webkit-scrollbar-button {
+  display: none; 
+}
+
+.input{
+  width: 500px;
+}
+
+/* .chat-box::-webkit-scrollbar-track-piece {
+  height: calc(100% - 400px); 
+  margin-top: 200px; 
+  margin-bottom: 200px; 
+} */
