@@ -27,7 +27,6 @@ export default function Home() {
       chatRef.current = newChat;
       return newChat;
     });
-    console.log(chatRef.current);
 
     const response = await fetch(apiUrl, {
       method: "POST",
@@ -56,7 +55,6 @@ export default function Home() {
       }
 
       const chunk = decoder.decode(value, { stream: true });
-      console.log(chunk);
 
       // split chunk into lines
       const lines = chunk.split("\n");
@@ -67,7 +65,6 @@ export default function Home() {
         if (cleanMessage === "[DONE]") {
           return;
         } else if (cleanMessage.length > 0) {
-          console.log(cleanMessage);
           const data = JSON.parse(cleanMessage + "\n");
 
           // if last chat message is not from user, append result to chat
@@ -79,7 +76,6 @@ export default function Home() {
             });
           } else {
             // append content to last chat message
-            console.log("append:", data.choices[0].delta.content);
             chatRef.current[chatRef.current.length - 1].content +=
               data.choices[0].delta.content;
             setChat([...chatRef.current]);
