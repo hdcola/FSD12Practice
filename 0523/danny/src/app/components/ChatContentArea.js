@@ -25,8 +25,8 @@ function ChatContentArea({ chat }) {
     //   return;
     // }
     if (chatContainerRef.current) {
-      //   const { scrollTop, clientHeight, scrollHeight } =
-      //     chatContainerRef.current;
+      const { scrollTop, clientHeight, scrollHeight } =
+        chatContainerRef.current;
       //   // if chatContentArea is scrolled up, disable autoscroll
       //   setIsAutoScroll(scrollHeight - scrollTop < clientHeight + 15);
       //   console.log(
@@ -74,7 +74,6 @@ function ChatContentArea({ chat }) {
         <Message key={index} role={msg.role} content={msg.content} />
       ))}
       <div className="scrool-button">
-        <p>{showInfo + isAutoScroll}</p>
         {showScrollDownArrow && (
           <Button
             className="rounded-pill btn-secondary"

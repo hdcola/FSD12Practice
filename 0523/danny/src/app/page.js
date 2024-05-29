@@ -1,7 +1,7 @@
 "use client";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import "./page.css";
 import ChatContentArea from "./components/ChatContentArea";
 import InputArea from "./components/InputArea";
@@ -14,17 +14,22 @@ export default function Home() {
   );
   const [apiToken, setApiToken] = useState("iloveyourtoken");
   const [model, setModel] = useState("gemma:7b");
+  const chatRef = useRef(chat);
 
   const sendMessage = async () => {
-    const chatContentArea = document.querySelector(".chat-content-area");
     const prompt = {
       role: "user",
       content: message,
     };
     setMessage("");
-    setChat([...chat, prompt]);
+    setChat((currentChat) => {
+      const newChat = [...currentChat, prompt];
+      chatRef.current = newChat;
+      return newChat;
+    });
+    console.log(chatRef.current);
 
-    await fetch(apiUrl, {
+    const response = await fetch(apiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,12 +38,59 @@ export default function Home() {
       body: JSON.stringify({
         messages: [...chat, prompt],
         model: model,
+        stream: true,
       }),
-    })
-      .then((data) => data.json())
-      .then((data) => {
-        setChat([...chat, prompt, data.choices[0].message]);
+    });
+
+    if (!response.ok) {
+      console.error("Failed to send message");
+      return;
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+
+    const processChunk = ({ done, value }) => {
+      if (done) {
+        return;
+      }
+
+      const chunk = decoder.decode(value, { stream: true });
+      console.log(chunk);
+
+      // split chunk into lines
+      const lines = chunk.split("\n");
+      // if line is "data: [DONE]" then return
+      lines.forEach((dataString) => {
+        // remove "data: " from string
+        const cleanMessage = dataString.replace("data: ", "");
+        if (cleanMessage === "[DONE]") {
+          return;
+        } else if (cleanMessage.length > 0) {
+          console.log(cleanMessage);
+          const data = JSON.parse(cleanMessage + "\n");
+
+          // if last chat message is not from user, append result to chat
+          if (chatRef.current[chatRef.current.length - 1].role === "user") {
+            setChat((currentChat) => {
+              const newChat = [...currentChat, data.choices[0].delta];
+              chatRef.current = newChat;
+              return newChat;
+            });
+          } else {
+            // append content to last chat message
+            console.log("append:", data.choices[0].delta.content);
+            chatRef.current[chatRef.current.length - 1].content +=
+              data.choices[0].delta.content;
+            setChat([...chatRef.current]);
+          }
+        }
       });
+
+      return reader.read().then(processChunk);
+    };
+
+    reader.read().then(processChunk);
   };
 
   const clearChat = () => {
