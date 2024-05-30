@@ -1,4 +1,4 @@
-function ContentBox({ content, handleTranslate }) {
+function ContentBox({ content, handleChange, handleTranslate }) {
   return (
     <form className="w-full flex flex-col">
       <div className="flex flex-col flex-1 mb-4 border border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
@@ -11,6 +11,8 @@ function ContentBox({ content, handleTranslate }) {
             rows="4"
             className="flex-1 w-full px-0 resize-none text-sm text-gray-900 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400"
             placeholder="Write a comment..."
+            value={content}
+            onChange={handleChange}
           ></textarea>
         </div>
         <div className="flex items-center justify-between px-3 py-2 border-t dark:border-gray-600">

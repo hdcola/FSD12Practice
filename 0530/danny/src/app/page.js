@@ -31,7 +31,6 @@ export default function Home() {
 
   const handleTranslate = async () => {
     const result = await translate(clipboardText);
-    console.log(result);
     setTranslatedText(result);
   };
 
@@ -45,9 +44,18 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-0">
       <StickyBanner />
       <div className="flex w-full flex-1">
-        <ContentBox content={clipboardText} handleTranslate={handleTranslate} />
+        <ContentBox
+          content={clipboardText}
+          handleChange={(envent) => {
+            setClipboardText(envent.target.value);
+          }}
+          handleTranslate={handleTranslate}
+        />
         <ContentBox
           content={translatedText}
+          handleChange={(envent) => {
+            setTranslatedText(envent.target.value);
+          }}
           handleTranslate={switchAndTranslate}
         />
       </div>
