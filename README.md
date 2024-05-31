@@ -28,3 +28,4 @@ FSD12 Practices
 * [0528 Function Practice](https://hdcola.github.io/FSD12Practice/0528/)
 * [0529 Next.js/TailWindcss/Tauri Scenarios List](https://hdcola.github.io/FSD12Practice/0529/)
 * [0530 Tranlate Application](https://hdcola.github.io/FSD12Practice/0530/)
+* [0531 Tic Tac Toe Game](https://hdcola.github.io/FSD12Practice/0531/)
