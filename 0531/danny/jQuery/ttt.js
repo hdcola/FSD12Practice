@@ -32,6 +32,8 @@ function handleCellClick() {
   board[index] = currentPlayer;
   $(this).text(currentPlayer).addClass("disabled");
 
+  renderInformation();
+
   if (checkWinner()) {
     $("#message").text("Player " + currentPlayer + " wins!");
     gameActive = false;
@@ -44,8 +46,19 @@ function handleCellClick() {
   }
 
   currentPlayer = currentPlayer === "X" ? "O" : "X";
+  $("#message").text("Next Player: " + currentPlayer);
 }
 
+function renderInformation() {}
+
 $(document).ready(function () {
+  for (let i = 0; i < 9; i++) {
+    $("#board").append(
+      "<div class='cell bg-gray-100 aspect-square flex items-center justify-center cursor-pointer text-2xl disabled:bg-gray-200 disabled:cursor-not-allowed' data-index='" +
+        i +
+        "' ></div>"
+    );
+  }
   $(".cell").on("click", handleCellClick);
+  $("#message").text("Next Player: " + currentPlayer);
 });
