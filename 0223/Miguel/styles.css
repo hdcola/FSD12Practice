@@ -1,0 +1,72 @@
+.container {
+    width: 460px;
+    background-color: white;
+    padding-left: 40px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+}
+
+.title {
+    color: #555;
+    border-bottom: 1px solid #555;
+    margin-bottom: 8px;
+}
+
+.table-header {
+    background-color: orange;
+    padding: 4px 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.table-header h3, .table-header p {
+    color: white;
+}
+
+.activity-table {
+    margin-top: 0px;
+    background-color: white;
+    width: 100%;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.activity-table td {
+    font-size: small;
+    padding: 10px;
+    vertical-align: middle;
+    border-bottom: 1px solid #ddd;
+    border-collapse: separate;
+}
+
+.activity-table .item-title {
+    font-weight: bold;
+    color: #555;
+    vertical-align: text-top;
+}
+
+.activity-table .item-subtitle {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.activity-table .item-status {
+    color: #999;
+    text-align: right;
+}
+
+.activity-table .item-href {
+    text-align: right;
+}
+
+.activity-table .item-count {
+    background-color: white;
+    color: black;
+    text-align: right;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+}
