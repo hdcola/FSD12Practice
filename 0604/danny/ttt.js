@@ -39,22 +39,28 @@ function handleCellClick() {
   this.classList.add("disabled");
   currentMove++;
   historyInformation[currentMove] = board.slice();
+  for (let i = currentMove + 1; i < historyInformation.length; i++) {
+    historyInformation[i] = null;
+  }
 
   renderInformation();
 
   if (checkWinner()) {
-    $("#message").text("Player " + currentPlayer + " wins!");
+    document.querySelector("#message").textContent =
+      "Player " + currentPlayer + " wins!";
     gameActive = false;
     return;
   }
 
   if (!board.includes("")) {
-    $("#message").text("Game ends in a draw!");
+    document.querySelector("#message").textContent = "It's a draw!";
+    gameActive = false;
     return;
   }
 
   currentPlayer = currentPlayer === "X" ? "O" : "X";
-  $("#message").text("Next Player: " + currentPlayer);
+  document.querySelector("#message").textContent =
+    "Next Player: " + currentPlayer;
 }
 
 function resetGame() {
@@ -113,7 +119,6 @@ function handleHistoryClick() {
 }
 
 window.onload = function () {
-  console.log("window.onload");
   const boardElement = document.getElementById("board");
   for (let i = 0; i < 9; i++) {
     const cell = document.createElement("div");
