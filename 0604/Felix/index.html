@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic-Tac-Toe Game</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="tic-tac-toe-board">
+      <div class="row">
+        <div class="cell" id="cell-1"></div>
+        <div class="cell" id="cell-2"></div>
+        <div class="cell" id="cell-3"></div>
+      </div>
+      <div class="row">
+        <div class="cell" id="cell-4"></div>
+        <div class="cell" id="cell-5"></div>
+        <div class="cell" id="cell-6"></div>
+      </div>
+      <div class="row">
+        <div class="cell" id="cell-7"></div>
+        <div class="cell" id="cell-8"></div>
+        <div class="cell" id="cell-9"></div>
+      </div>
+    </div>
+    <div id="gameMessage" class="game-message"></div>
+    <button id="resetButton">Reset Game</button>
+    <script src="script.js"></script>
+    <div>
+      <p id="showGameOrder0"></p>
+      <div id="historical0" class="historical">
+        <div class="hrow">
+          <div class="hcell" id="hcell-1"></div>
+          <div class="hcell" id="hcell-2"></div>
+          <div class="hcell" id="hcell-3"></div>
+        </div>
+        <div class="hrow">
+          <div class="hcell" id="hcell-4"></div>
+          <div class="hcell" id="hcell-5"></div>
+          <div class="hcell" id="hcell-6"></div>
+        </div>
+        <div class="hrow">
+          <div class="hcell" id="hcell-7"></div>
+          <div class="hcell" id="hcell-8"></div>
+          <div class="hcell" id="hcell-9"></div>
+        </div>
+      </div>
+      <p id="showGameOrder1"></p>
+      <script>
+        var myVariable = loadFromLocalStorage();
+        var myOrder0 = [];
+        var myOrder1 = [];
+        if (myVariable.length > 1 && myVariable[0].length > 3) {
+          for (var i = 0; i < myVariable[0].length; i++) {
+            if (i % 2 == 0) {
+              myOrder0.push("X:" + myVariable[0][i]);
+            } else {
+              myOrder0.push("O:" + myVariable[0][i]);
+            }
+          }
+          dispalyHistoricalOrder(myVariable[0]);
+        }
+
+        document.getElementById("showGameOrder0").textContent =
+          myOrder0.join(", ");
+
+        if (myVariable.length > 1 && myVariable[1].length > 3) {
+          for (var i = 0; i < myVariable[1].length; i++) {
+            if (i % 2 == 0) {
+              myOrder1.push("X:" + myVariable[1][i]);
+            } else {
+              myOrder1.push("O:" + myVariable[1][i]);
+            }
+          }
+        }
+        document.getElementById("showGameOrder1").textContent =
+          myOrder1.join(", ");
+      </script>
+    </div>
+  </body>
+</html>
