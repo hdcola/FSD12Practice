@@ -1,0 +1,5 @@
+POST https://libretranslate.com/translate
+Authorization: Bearer sdasdada
+Content-Type: application/json
+
+{"messages":[{"target":"zh", "q":"what can you do","format":"text","source":"auto"}]}
