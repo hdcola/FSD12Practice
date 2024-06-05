@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Snake</title>
+  </head>
+  <link rel="stylesheet" href="style.css" />
+  <style></style>
+  <body>
+    <div>
+      <h1>Welcome to the Snake Game</h1>
+    </div>
+
+    <div class="container" id="gameConsole">
+      <div>
+        <canvas id="gameBoard" width="500" height="500"
+          >Should use a browser support the canvas tag.</canvas
+        >
+        <img
+          src="assets/ComfyUI_09455_r_.png"
+          alt="cake food"
+          id="foodImage"
+          height="49"
+          width="49"
+          style="display: none"
+        />
+        <div id="comboText" class="overlayText"></div>
+      </div>
+      <div id="scoreDisplay">
+        <p>Your score :&nbsp;</p>
+        <span id="score">0</span>
+      </div>
+      <div id="hiScoreDisplay">
+        <p>High score :&nbsp;</p>
+        <span id="hiScore">&nbsp;</span>
+      </div>
+      <div id="btnSpace">
+        <button id="restartBtn">Click To Start</button>
+        <button id="pauseBtn">Pause</button>
+      </div>
+    </div>
+    <script src="game.js"></script>
+  </body>
+</html>
