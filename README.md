@@ -30,3 +30,4 @@ FSD12 Practices
 * [0530 Tranlate Application](https://hdcola.github.io/FSD12Practice/0530/)
 * [0531 Tic Tac Toe Game jQuery Version](https://hdcola.github.io/FSD12Practice/0531/)
 * [0604 Tic Tac Toe Game JavaScript Version](https://hdcola.github.io/FSD12Practice/0604/)
+* [0605 Table generator JavaScript Version](https://hdcola.github.io/FSD12Practice/0605/)
