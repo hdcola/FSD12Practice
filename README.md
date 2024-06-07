@@ -31,3 +31,4 @@ FSD12 Practices
 * [0531 Tic Tac Toe Game jQuery Version](https://hdcola.github.io/FSD12Practice/0531/)
 * [0604 Tic Tac Toe Game JavaScript Version](https://hdcola.github.io/FSD12Practice/0604/)
 * [0605 Table generator JavaScript Version](https://hdcola.github.io/FSD12Practice/0605/)
+* [0606 Snake JavaScript Version](https://hdcola.github.io/FSD12Practice/0606/)
