@@ -1,85 +1,86 @@
-let currentPlayer = 'X'; // Player X always starts
-let gameBoard = ['', '', '', '', '', '', '', '', '']; // 3x3 game board 
+let currentPlayer = "X"; // Player X always starts
+let gameBoard = ["", "", "", "", "", "", "", "", ""]; // 3x3 game board
 let gameOrder = [];
 let gameActive = true;
 
 function saveToLocalStorage(key, array) {
-  // 将二维数组转换为 JSON 字符串
+  // transform the array into a string
   const arrayString = JSON.stringify(array);
-  // 使用提供的键将字符串保存到 Local Storage
+  // use the key to save the string in local storage
   localStorage.setItem(key, arrayString);
   console.log(`Saved to Local Storage: ${key} => ${arrayString}`);
 }
 
 function loadFromLocalStorage() {
-  // 从 Local Storage 获取数据
-  var allItems = getAllLocalStorageItems(); 
+  // load the string from local storage using the key
+  var allItems = getAllLocalStorageItems();
   if (Object.keys(allItems).length === 0) {
     return [];
-  } 
-  // 将键值对按照键名排序
-  else { let keys = Object.keys(allItems);
-  keys.sort();
-  console.log(keys);
-  console.log(allItems);
-  
-  // 如果只有一个键值对，返回该值
-  if (Object.keys(allItems).length === 1) {
-    return JSON.parse(Object.values(allItems)[0]);
   }
-  // 如果有多个键值对，返回最后两个
-  else {     
-    var lastKey = keys[keys.length - 1];
-    var secondLastKey = keys[keys.length - 2];
-    var lastItem = JSON.parse(allItems[lastKey]);
-    var secondLastItem = JSON.parse(allItems[secondLastKey]);
-    return [lastItem, secondLastItem];
+  // sort the return with the key
+  else {
+    let keys = Object.keys(allItems);
+    keys.sort();
+
+    // if there is only one key-value pair, return the value
+    if (Object.keys(allItems).length === 1) {
+      var key = keys[0];
+      var item = JSON.parse(allItems[key]);
+      return [item];
+    }
+    // if there are more than one key-value pairs, return the last two values
+    else {
+      var lastKey = keys[keys.length - 1];
+      var secondLastKey = keys[keys.length - 2];
+      var lastItem = JSON.parse(allItems[lastKey]);
+      var secondLastItem = JSON.parse(allItems[secondLastKey]);
+      return [lastItem, secondLastItem];
+    }
   }
-}
 }
 
 function getAllLocalStorageItems() {
-  let items = {}; // 创建一个空对象来存储键值对
+  let items = {}; // create an empty object to store the key-value pairs
   for (let i = 0; i < localStorage.length; i++) {
-    // 获取每个键
+    // get the key at index i
     let key = localStorage.key(i);
-    // 获取键对应的值
+    // get the value of the key
     let value = localStorage.getItem(key);
-    // 将键值对添加到对象中
+    // add the key-value pair to the object
     items[key] = value;
   }
   return items;
 }
 
 function handlePlayerTurn(clickedCellIndex) {
-  if (gameBoard[clickedCellIndex] !== '' || !gameActive) {
-      return;
+  if (gameBoard[clickedCellIndex] !== "" || !gameActive) {
+    return;
   }
   updateGameOrder(clickedCellIndex);
   gameBoard[clickedCellIndex] = currentPlayer;
   checkForWinOrDraw();
-  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
 }
 
 function cellClicked(clickedCellEvent) {
   const clickedCell = clickedCellEvent.target;
-  const clickedCellIndex = parseInt(clickedCell.id.replace('cell-', '')) - 1;
-  if (gameBoard[clickedCellIndex] !== '' || !gameActive) {
-      return;
+  const clickedCellIndex = parseInt(clickedCell.id.replace("cell-", "")) - 1;
+  if (gameBoard[clickedCellIndex] !== "" || !gameActive) {
+    return;
   }
   handlePlayerTurn(clickedCellIndex);
-  updateUI();  
+  updateUI();
 }
 
-const cells = document.querySelectorAll('.cell');
+const cells = document.querySelectorAll(".cell");
 
-cells.forEach(cell => {
-  cell.addEventListener('click', cellClicked, false);
+cells.forEach((cell) => {
+  cell.addEventListener("click", cellClicked, false);
 });
 
 function updateUI() {
   for (let i = 0; i < cells.length; i++) {
-      cells[i].innerText = gameBoard[i];
+    cells[i].innerText = gameBoard[i];
   }
 }
 
@@ -87,9 +88,8 @@ function updateGameOrder(clickedCellIndex) {
   gameOrder.push(clickedCellIndex);
 }
 
-
 function announceWinner(player) {
-  const messageElement = document.getElementById('gameMessage');
+  const messageElement = document.getElementById("gameMessage");
   messageElement.innerText = `Player ${player} Wins!`;
   const timestamp = new Date().getTime();
   var timestampStr = timestamp.toString();
@@ -97,11 +97,8 @@ function announceWinner(player) {
 }
 
 function announceDraw() {
-  const messageElement = document.getElementById('gameMessage');
-  messageElement.innerText = 'Game Draw!';
-  // const timestamp = new Date().getTime();
-  // var timestampStr = timestamp.toString();
-  // saveToLocalStorage(timestampStr, gameOrder);
+  const messageElement = document.getElementById("gameMessage");
+  messageElement.innerText = "Game Draw!";
 }
 
 const winConditions = [
@@ -112,58 +109,61 @@ const winConditions = [
   [1, 4, 7], // Middle column
   [2, 5, 8], // Right column
   [0, 4, 8], // Left-to-right diagonal
-  [2, 4, 6]  // Right-to-left diagonal
+  [2, 4, 6], // Right-to-left diagonal
 ];
 
 function checkForWinOrDraw() {
   let roundWon = false;
 
   for (let i = 0; i < winConditions.length; i++) {
-      const [a, b, c] = winConditions[i];
-      if (gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c]) {
-          roundWon = true;
-          break;
-      }
+    const [a, b, c] = winConditions[i];
+    if (
+      gameBoard[a] &&
+      gameBoard[a] === gameBoard[b] &&
+      gameBoard[a] === gameBoard[c]
+    ) {
+      roundWon = true;
+      break;
+    }
   }
 
   if (roundWon) {
-      announceWinner(currentPlayer);
-      gameActive = false;
-      return;
+    announceWinner(currentPlayer);
+    gameActive = false;
+    return;
   }
 
-  let roundDraw = !gameBoard.includes('');
+  let roundDraw = !gameBoard.includes("");
   if (roundDraw) {
-      announceDraw();
-      gameActive = false;
-      return;
+    announceDraw();
+    gameActive = false;
+    return;
   }
 }
 
 function resetGame() {
-  gameBoard = ['', '', '', '', '', '', '', '', ''];
+  gameBoard = ["", "", "", "", "", "", "", "", ""];
   gameActive = true;
-  currentPlayer = 'X';
-  cells.forEach(cell => {
-      cell.innerText = '';
+  currentPlayer = "X";
+  cells.forEach((cell) => {
+    cell.innerText = "";
   });
-  document.getElementById('gameMessage').innerText = '';
+  document.getElementById("gameMessage").innerText = "";
   gameOrder = [];
   location.reload();
 }
 
-window.onload = function() {
-  //先排个序
+window.onload = function () {
+  // sortLocalStorage();
   sortLocalStorage();
-  // 从 Local Storage 加载游戏数据
+  // get the last two game orders from local storage
   let gameOrder = loadFromLocalStorage();
-  // console.log(gameOrder);
 };
 
 function sortLocalStorage() {
-  // 获取所有的键值对
+  // get all items from Local Storage
   let allItems = getAllLocalStorageItems();
-  // 将键值对按照键名排序
+  // sort the keys
   let keys = Object.keys(allItems);
   for (let i = 0; i < keys.length; i++) {
     keys[i] = parseInt(keys[i]);
@@ -172,37 +172,35 @@ function sortLocalStorage() {
   for (let i = 0; i < keys.length; i++) {
     keys[i] = keys[i].toString();
   }
-  
-  // 创建一个新对象来存储排序后的键值对
+
+  // create a new object to store the sorted items
   let sortedItems = {};
-  // 将排序后的键值对添加到新对象中
-  keys.forEach(key => {
+  // add the sorted items to the new object
+  keys.forEach((key) => {
     sortedItems[key] = allItems[key];
   });
-  // 清空 Local Storage
+  // clear the Local Storage
   localStorage.clear();
-  // 将排序后的键值对添加到 Local Storage
+  // save the sorted items to Local Storage
   for (let key in sortedItems) {
     localStorage.setItem(key, sortedItems[key]);
-  }  
+  }
 }
 
-function dispalyHistoricalOrder(interfaceGameOrder) {
-  const hcells = document.querySelectorAll('.hcell');
+function dispalyHistoricalOrder(queryClass, interfaceGameOrder) {
+  const hcells = document.querySelectorAll("." + queryClass);
   let temp = [];
   for (let i = 0; i < interfaceGameOrder.length; i++) {
-    if( i % 2 === 0){
-      hcells[interfaceGameOrder[i]].className = "hcell x-img";
-      hcells[interfaceGameOrder[i]].innerText = i+1-temp.length;
+    if (i % 2 === 0) {
+      hcells[interfaceGameOrder[i]].className = queryClass + " x-img";
+      hcells[interfaceGameOrder[i]].innerText = i + 1 - temp.length;
       temp.push(i);
+    } else {
+      hcells[interfaceGameOrder[i]].className = queryClass + " o-img";
+      hcells[interfaceGameOrder[i]].innerText = i + 1 - temp.length;
     }
-    else{
-      hcells[interfaceGameOrder[i]].className = "hcell o-img";      
-      hcells[interfaceGameOrder[i]].innerText = i+1-temp.length;      
-    }
-}
+  }
 }
 
-
-const resetButton = document.getElementById('resetButton');
-resetButton.addEventListener('click', resetGame, false);
+const resetButton = document.getElementById("resetButton");
+resetButton.addEventListener("click", resetGame, false);
