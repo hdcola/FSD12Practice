@@ -26,4 +26,11 @@ public class GlobalControllerExceptionHandler {
         ErrorDto errorDto = new ErrorDto("internal server error");
         return new ResponseEntity<>(errorDto, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(ToDoException.class)
+    public ResponseEntity<ErrorDto> handleToDoException(ToDoException e){
+        log.error("to do exception",e);
+        ErrorDto errorDto = new ErrorDto(e.getMessage());
+        return new ResponseEntity<>(errorDto,HttpStatus.BAD_REQUEST);
+    }
 }
