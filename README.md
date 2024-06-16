@@ -32,4 +32,4 @@ FSD12 Practices
 * [0604 Tic Tac Toe Game JavaScript Version](https://hdcola.github.io/FSD12Practice/0604/)
 * [0605 Table generator JavaScript Version](https://hdcola.github.io/FSD12Practice/0605/)
 * [0606 Snake JavaScript Version](https://hdcola.github.io/FSD12Practice/0606/)
-* [0610 Next.js Routing Practice](https://hdcola.github.io/FSD12Practice/0610/)
+* [0615 ToDo List](https://hdcola.github.io/FSD12Practice/0615/)
