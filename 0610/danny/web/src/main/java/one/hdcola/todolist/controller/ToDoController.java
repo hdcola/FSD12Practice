@@ -2,6 +2,7 @@ package one.hdcola.todolist.controller;
 
 import one.hdcola.todolist.dto.CreateToDoDto;
 import one.hdcola.todolist.dto.ToDoDto;
+import one.hdcola.todolist.dto.UpdateToDoDto;
 import one.hdcola.todolist.service.ToDoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,5 +33,21 @@ public class ToDoController {
         }else{
             return toDoService.getTodos();
         }
+    }
+
+    @GetMapping("/{id}")
+    public ToDoDto getToDoById(@PathVariable Long id) {
+        return toDoService.getTodoById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ToDoDto updateToDo(@PathVariable Long id, @RequestBody UpdateToDoDto updateToDo) {
+        return toDoService.updateToDo(id, updateToDo);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteToDoById(@PathVariable Long id) {
+        toDoService.deleteToDo(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
