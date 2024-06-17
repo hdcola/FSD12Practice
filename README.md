@@ -33,3 +33,4 @@ FSD12 Practices
 * [0605 Table generator JavaScript Version](https://hdcola.github.io/FSD12Practice/0605/)
 * [0606 Snake JavaScript Version](https://hdcola.github.io/FSD12Practice/0606/)
 * [0615 ToDo List](https://hdcola.github.io/FSD12Practice/0615/)
+* [0617 Weather](https://hdcola.github.io/FSD12Practice/0617/)
