@@ -23,19 +23,27 @@ export default function ToDoList() {
   };
 
   return (
-    <ul>
-      {todos.map((todo) => (
-        <li key={todo.id} className="flex items-center">
-          <input
-            type="checkbox"
-            checked={todo.completed}
-            onChange={(e) => handleSetToDoCompleted(todo, e.target.checked)}
-          />
-          <span className={clsx("pl-1", { "line-through": todo.completed })}>
-            {todo.name}
-          </span>
-        </li>
-      ))}
-    </ul>
+    <div>
+      <input type="text" placeholder="Add a new todo" />{" "}
+      <button className="btn btn-primary btn-xs">Add</button>
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id} className="flex items-center justify-between">
+            <div>
+              <input
+                type="checkbox"
+                checked={todo.completed}
+                onChange={(e) => handleSetToDoCompleted(todo, e.target.checked)}
+              />
+              <span
+                className={clsx("pl-1", { "line-through": todo.completed })}
+              >
+                {todo.name}
+              </span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
