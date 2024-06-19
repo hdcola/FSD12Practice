@@ -25,4 +25,14 @@ public class WeatherController {
     public GeoCodeDto[] getGeoCode(@RequestParam String q) {
         return weatherService.getGeoCode(q);
     }
+
+    @GetMapping("/reverse")
+    public GeoCodeDto getReverseGeoCode(@RequestParam Double lat, @RequestParam Double lon) {
+        return weatherService.getReverseGeoCode(lat, lon);
+    }
+
+    @GetMapping("/forecast")
+    public String getForecast(@RequestParam Double lat, @RequestParam Double lon) {
+        return weatherService.getForecast(lat, lon);
+    }
 }

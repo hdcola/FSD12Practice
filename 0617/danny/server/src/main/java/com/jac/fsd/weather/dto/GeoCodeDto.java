@@ -10,7 +10,4 @@ public class GeoCodeDto {
     private String name;
     @JsonProperty("display_name")
     private String displayName;
-    @JsonProperty("class")
-    private String placeClass;
-    private String type;
 }

@@ -25,4 +25,12 @@ public class WeatherService {
     public GeoCodeDto[] getGeoCode(String query) {
         return nominatimGeoCodeAdapter.getGeoCode(query);
     }
+
+    public GeoCodeDto getReverseGeoCode(double lat, double lon) {
+        return nominatimGeoCodeAdapter.getReverseGeoCode(lat, lon);
+    }
+
+    public String getForecast(Double lat, Double lon) {
+        return openWeatherAdapter.getForecast(lat, lon);
+    }
 }

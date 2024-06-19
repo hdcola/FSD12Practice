@@ -10,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 @Component
 public class NominatimGeoCodeAdapter {
-    private final String apiUrl = "https://nominatim.openstreetmap.org/search";
+    private final String apiUrl = "https://nominatim.openstreetmap.org/";
 
     private RestTemplate restTemplate;
 
@@ -21,8 +21,13 @@ public class NominatimGeoCodeAdapter {
 
     public GeoCodeDto[] getGeoCode(String query) {
         String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
-        String url = apiUrl + "?q=" + encodedQuery + "&format=json";
+        String url = apiUrl + "search?q=" + encodedQuery + "&format=json";
         return restTemplate.getForObject(url, GeoCodeDto[].class);
+    }
+
+    public GeoCodeDto getReverseGeoCode(double lat, double lon) {
+        String url = apiUrl + "reverse?lat=" + lat + "&lon=" + lon + "&format=json&zoom=13";
+        return restTemplate.getForObject(url, GeoCodeDto.class);
     }
 
 }

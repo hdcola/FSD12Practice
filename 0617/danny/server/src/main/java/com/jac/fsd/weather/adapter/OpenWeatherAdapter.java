@@ -26,4 +26,9 @@ public class OpenWeatherAdapter {
         String url = apiUrl + "weather" + "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
         return restTemplate.getForObject(url, CurrentWeatherDto.class);
     }
+
+    public String getForecast(Double lat, Double lon) {
+        String url = apiUrl + "forecast" + "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
+        return restTemplate.getForObject(url, String.class);
+    }
 }
