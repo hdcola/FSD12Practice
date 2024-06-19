@@ -1,6 +1,7 @@
 package com.jac.fsd.weather.controller;
 
 import com.jac.fsd.weather.dto.CurrentWeatherDto;
+import com.jac.fsd.weather.dto.ForecastDto;
 import com.jac.fsd.weather.dto.GeoCodeDto;
 import com.jac.fsd.weather.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class WeatherController {
     }
 
     @GetMapping("/forecast")
-    public String getForecast(@RequestParam Double lat, @RequestParam Double lon) {
+    public ForecastDto getForecast(@RequestParam Double lat, @RequestParam Double lon) {
         return weatherService.getForecast(lat, lon);
     }
 }

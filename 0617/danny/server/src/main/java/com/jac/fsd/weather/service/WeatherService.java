@@ -3,6 +3,7 @@ package com.jac.fsd.weather.service;
 import com.jac.fsd.weather.adapter.NominatimGeoCodeAdapter;
 import com.jac.fsd.weather.adapter.OpenWeatherAdapter;
 import com.jac.fsd.weather.dto.CurrentWeatherDto;
+import com.jac.fsd.weather.dto.ForecastDto;
 import com.jac.fsd.weather.dto.GeoCodeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,7 @@ public class WeatherService {
         return nominatimGeoCodeAdapter.getReverseGeoCode(lat, lon);
     }
 
-    public String getForecast(Double lat, Double lon) {
+    public ForecastDto getForecast(Double lat, Double lon) {
         return openWeatherAdapter.getForecast(lat, lon);
     }
 }

@@ -1,6 +1,7 @@
 package com.jac.fsd.weather.adapter;
 
 import com.jac.fsd.weather.dto.CurrentWeatherDto;
+import com.jac.fsd.weather.dto.ForecastDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -27,8 +28,8 @@ public class OpenWeatherAdapter {
         return restTemplate.getForObject(url, CurrentWeatherDto.class);
     }
 
-    public String getForecast(Double lat, Double lon) {
+    public ForecastDto getForecast(Double lat, Double lon) {
         String url = apiUrl + "forecast" + "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
-        return restTemplate.getForObject(url, String.class);
+        return restTemplate.getForObject(url, ForecastDto.class);
     }
 }
