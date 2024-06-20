@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class GeoCodeDto {
+    private Long id;
     private Double lat;
     private Double lon;
     private String name;
@@ -17,6 +18,7 @@ public class GeoCodeDto {
     private Long displayOrder = null;
 
     public GeoCodeDto(City city) {
+        this.id = city.getId();
         this.lat = city.getLat();
         this.lon = city.getLon();
         this.name = city.getName();

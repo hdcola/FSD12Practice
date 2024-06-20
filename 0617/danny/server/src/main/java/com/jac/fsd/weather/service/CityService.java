@@ -5,9 +5,11 @@ import com.jac.fsd.weather.entity.City;
 import com.jac.fsd.weather.dto.GeoCodeDto;
 import com.jac.fsd.weather.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CityService {
@@ -19,7 +21,7 @@ public class CityService {
     }
 
     public List<GeoCodeDto> getAllCities() {
-        List<City> cities =  cityRepository.findAll();
+        List<City> cities =  cityRepository.findAll(Sort.by("displayOrder"));
         return cities.stream().map(GeoCodeDto::new).toList();
     }
 
@@ -32,5 +34,18 @@ public class CityService {
         newCity.setDisplayOrder(city.getDisplayOrder());
         City savedCity = cityRepository.save(newCity);
         return new GeoCodeDto(savedCity);
+    }
+
+    public List<GeoCodeDto> updateCity(List<GeoCodeDto> cities) {
+        long order = 1;
+        for (GeoCodeDto city : cities) {
+            Optional<City> optionalCity = cityRepository.findById(city.getId());
+            if (optionalCity.isPresent()) {
+                City updatedCity = optionalCity.get();
+                updatedCity.setDisplayOrder(order++);
+                cityRepository.save(updatedCity);
+            }
+        }
+        return getAllCities();
     }
 }

@@ -27,4 +27,9 @@ public class CityController {
     public List<GeoCodeDto> getAllCities() {
         return cityService.getAllCities();
     }
+
+    @PatchMapping
+    public List<GeoCodeDto> updateCity(@RequestBody List<GeoCodeDto> cities) {
+        return cityService.updateCity(cities);
+    }
 }
