@@ -1,7 +1,6 @@
 package one.hdcola.todolist.model;
 
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Data;
 
 @Entity
