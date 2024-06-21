@@ -5,6 +5,8 @@ import com.jac.fsd.weather.dto.ForecastDto;
 import com.jac.fsd.weather.dto.GeoCodeDto;
 import com.jac.fsd.weather.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +20,8 @@ public class WeatherController {
     private WeatherService weatherService;
 
     @GetMapping("/weather")
-    public CurrentWeatherDto getWeather(@RequestParam Double lat, @RequestParam Double lon) {
-        return weatherService.getWeather(lat, lon);
+    public ResponseEntity<CurrentWeatherDto> getWeather(@RequestParam Double lat, @RequestParam Double lon) {
+        return new ResponseEntity<>(weatherService.getWeather(lat, lon), HttpStatus.OK);
     }
 
     @GetMapping("/direct")

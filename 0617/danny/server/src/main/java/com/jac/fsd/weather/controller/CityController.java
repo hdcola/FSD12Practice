@@ -32,4 +32,9 @@ public class CityController {
     public List<GeoCodeDto> updateCity(@RequestBody List<GeoCodeDto> cities) {
         return cityService.updateCity(cities);
     }
+
+    @DeleteMapping
+    public void deleteCity(@RequestParam Long id) {
+        cityService.deleteCity(id);
+    }
 }

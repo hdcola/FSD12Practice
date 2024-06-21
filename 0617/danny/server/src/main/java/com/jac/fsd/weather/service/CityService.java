@@ -48,4 +48,8 @@ public class CityService {
         }
         return getAllCities();
     }
+
+    public void deleteCity(Long id) {
+        cityRepository.deleteById(id);
+    }
 }
