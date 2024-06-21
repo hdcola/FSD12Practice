@@ -1,5 +1,3 @@
-
-
 create table cities (
   id bigint auto_increment primary key,
   name varchar(255) not null,
@@ -8,8 +6,6 @@ create table cities (
   lon double not null,
   display_order int not null
 );
-
-create sequence cities_seq start with 1 increment by 1;
 
 insert into cities (name, display_name, lat, lon, display_order)
 values ('Kirkland', 'Kirkland, Agglomération de Montréal, Montréal (région administrative), Québec, Canada', 45.4529194, -73.8647559, 1);

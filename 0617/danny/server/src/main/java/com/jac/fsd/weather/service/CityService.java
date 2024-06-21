@@ -3,9 +3,11 @@ package com.jac.fsd.weather.service;
 import com.jac.fsd.weather.entity.City;
 
 import com.jac.fsd.weather.dto.GeoCodeDto;
+import com.jac.fsd.weather.exception.WeatherException;
 import com.jac.fsd.weather.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,6 +52,11 @@ public class CityService {
     }
 
     public void deleteCity(Long id) {
-        cityRepository.deleteById(id);
+        if (cityRepository.existsById(id)){
+            cityRepository.deleteById(id);
+        }else{
+            throw new WeatherException(HttpStatus.NOT_FOUND, "City not found");
+        }
+
     }
 }

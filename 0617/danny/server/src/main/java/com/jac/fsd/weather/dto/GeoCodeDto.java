@@ -15,6 +15,7 @@ public class GeoCodeDto {
     private String name;
     @JsonProperty("display_name")
     private String displayName = null;
+    @JsonProperty("display_order")
     private Long displayOrder = null;
 
     public GeoCodeDto(City city) {

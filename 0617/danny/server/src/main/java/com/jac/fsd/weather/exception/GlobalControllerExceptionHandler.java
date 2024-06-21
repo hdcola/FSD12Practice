@@ -18,4 +18,12 @@ public class GlobalControllerExceptionHandler {
                 new ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR.value(),"internal server error"),
                 HttpStatus.INTERNAL_SERVER_ERROR );
     }
+
+    @ExceptionHandler(WeatherException.class)
+    public ResponseEntity<ErrorDto> handleWeatherException(WeatherException e){
+        log.error("weather exception",e);
+        return new ResponseEntity<>(
+                new ErrorDto(e.getStatus().value(),e.getMessage()),
+                e.getStatus());
+    }
 }

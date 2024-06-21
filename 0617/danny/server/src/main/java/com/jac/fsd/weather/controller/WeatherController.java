@@ -25,17 +25,17 @@ public class WeatherController {
     }
 
     @GetMapping("/direct")
-    public GeoCodeDto[] getGeoCode(@RequestParam String q) {
-        return weatherService.getGeoCode(q);
+    public ResponseEntity<GeoCodeDto[]> getGeoCode(@RequestParam String q) {
+        return new ResponseEntity<>(weatherService.getGeoCode(q), HttpStatus.OK);
     }
 
     @GetMapping("/reverse")
-    public GeoCodeDto getReverseGeoCode(@RequestParam Double lat, @RequestParam Double lon) {
-        return weatherService.getReverseGeoCode(lat, lon);
+    public ResponseEntity<GeoCodeDto> getReverseGeoCode(@RequestParam Double lat, @RequestParam Double lon) {
+        return new ResponseEntity<>(weatherService.getReverseGeoCode(lat, lon), HttpStatus.OK);
     }
 
     @GetMapping("/forecast")
-    public ForecastDto getForecast(@RequestParam Double lat, @RequestParam Double lon) {
-        return weatherService.getForecast(lat, lon);
+    public ResponseEntity<ForecastDto> getForecast(@RequestParam Double lat, @RequestParam Double lon) {
+        return new ResponseEntity<>(weatherService.getForecast(lat, lon), HttpStatus.OK);
     }
 }
