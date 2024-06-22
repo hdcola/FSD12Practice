@@ -11,8 +11,13 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(name = "display_name")
     private String displayName;
     private Double lat;
     private Double lon;
+    @Column(name = "display_order")
     private Long displayOrder;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }
