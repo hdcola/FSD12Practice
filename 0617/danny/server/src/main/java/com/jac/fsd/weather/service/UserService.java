@@ -4,9 +4,11 @@ import com.jac.fsd.weather.dto.GeoCodeDto;
 import com.jac.fsd.weather.dto.UserDto;
 import com.jac.fsd.weather.dto.UserLoginDto;
 import com.jac.fsd.weather.entity.User;
+import com.jac.fsd.weather.exception.WeatherException;
 import com.jac.fsd.weather.repository.UserRepository;
 import com.jac.fsd.weather.util.TokenGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public class UserService {
 
     public UserDto login(UserLoginDto user) {
         User loginedUser = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword())
-                .orElseThrow(() -> new RuntimeException("Invalid username or password"));
+                .orElseThrow(() -> new WeatherException(HttpStatus.UNAUTHORIZED, "Invalid username or password"));
         String token = TokenGenerator.generateToken();
         loginedUser.setToken(token);
         userRepository.save(loginedUser);
