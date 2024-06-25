@@ -1,0 +1,11 @@
+
+{
+  "overrides": [
+    {
+      "files": "*.http",
+      "options": {
+        "parser": "markdown"
+      }
+    }
+  ]
+}

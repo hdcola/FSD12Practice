@@ -1,0 +1,38 @@
+{
+  "coord": { "lon": -73.5983, "lat": 45.5092 },
+  "weather": [
+    {
+      "id": 802,
+      "main": "Clouds",
+      "description": "scattered clouds",
+      "icon": "03n"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 301.21,
+    "pressure": 1020,
+    "humidity": 68,
+    "feels_like": 303.67,
+    "temp_min": 297.44,
+    "temp_max": 301.42,
+    "sea_level": 0,
+    "grnd_level": 0
+  },
+  "visibility": 10000,
+  "wind": { "speed": 4.12, "deg": 240, "gust": 0.0 },
+  "rain": null,
+  "clouds": { "all": 40 },
+  "dt": 1718765267,
+  "sys": {
+    "type": 1,
+    "id": 498,
+    "country": "CA",
+    "sunrise": 1718701513,
+    "sunset": 1718757965
+  },
+  "timezone": -14400,
+  "id": 6077243,
+  "name": "Montreal",
+  "cod": 200
+}
