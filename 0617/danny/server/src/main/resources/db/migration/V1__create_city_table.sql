@@ -1,12 +1,12 @@
 create table users (
     id bigint auto_increment primary key,
-    username varchar(255) not null,
+    username varchar(255) not null unique,
     password varchar(255) not null,
     token varchar(255)
 );
 
-insert into users (username, password)
-values ('admin', 'admin');
+insert into users (username, password, token)
+values ('admin', 'admin', 'P2GhOMApUHJpqYFLdiJnIpPqmBr_YcfO');
 
 create table cities (
     id bigint auto_increment primary key,
