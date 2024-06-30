@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
-import { CurrentWeatherData } from "../types/CurrentWeatherData";
-import { fetchCurrentWeatherData } from "../utils/CurrentWeather";
+import { CurrentWeatherData } from "../lib/types/CurrentWeatherData";
+import { fetchCurrentWeatherData } from "../lib/utils/CurrentWeather";
 
 const weatherApiUrl = "http://localhost:8080/api/weather";
 
