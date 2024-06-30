@@ -77,4 +77,23 @@ public class CurrentWeatherDto {
         private long sunrise;
         private long sunset;
     }
+
+    public static CurrentWeatherDto mockCurrentWeatherDto() {
+        CurrentWeatherDto currentWeatherDto = new CurrentWeatherDto();
+        currentWeatherDto.setCoord(new Coord());
+        currentWeatherDto.setWeather(new Weather[]{new Weather()});
+        currentWeatherDto.setBase("base");
+        currentWeatherDto.setMain(new Main());
+        currentWeatherDto.setVisibility(1000);
+        currentWeatherDto.setWind(new Wind());
+        currentWeatherDto.setRain(new Rain());
+        currentWeatherDto.setClouds(new Clouds());
+        currentWeatherDto.setDt(1000);
+        currentWeatherDto.setSys(new Sys());
+        currentWeatherDto.setTimezone(1000);
+        currentWeatherDto.setId(1000);
+        currentWeatherDto.setName("name");
+        currentWeatherDto.setCod(1000);
+        return currentWeatherDto;
+    }
 }

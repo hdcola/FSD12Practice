@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 
 @ControllerAdvice
 @Log4j2
@@ -25,5 +26,13 @@ public class GlobalControllerExceptionHandler {
         return new ResponseEntity<>(
                 new ErrorDto(e.getStatus().value(),e.getMessage()),
                 e.getStatus());
+    }
+
+    @ExceptionHandler(HttpClientErrorException.TooManyRequests.class)
+    public ResponseEntity<ErrorDto> handleTooManyRequests(HttpClientErrorException.TooManyRequests e){
+        log.error("too many requests",e);
+        return new ResponseEntity<>(
+                new ErrorDto(HttpStatus.TOO_MANY_REQUESTS.value(),"too many requests"),
+                HttpStatus.TOO_MANY_REQUESTS);
     }
 }

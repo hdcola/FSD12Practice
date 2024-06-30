@@ -24,12 +24,12 @@ public class OpenWeatherAdapter {
     }
 
     public CurrentWeatherDto getWeather(Double lat, Double lon) {
-        String url = apiUrl + "weather" + "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
+        String url = apiUrl + "weather" + "?lat=" + lat + "&lon=" + lon + "&units=metric&appid=" + apiKey;
         return restTemplate.getForObject(url, CurrentWeatherDto.class);
     }
 
     public ForecastDto getForecast(Double lat, Double lon) {
-        String url = apiUrl + "forecast" + "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
+        String url = apiUrl + "forecast" + "?lat=" + lat + "&lon=" + lon + "&units=metric&&appid=" + apiKey;
         return restTemplate.getForObject(url, ForecastDto.class);
     }
 }
