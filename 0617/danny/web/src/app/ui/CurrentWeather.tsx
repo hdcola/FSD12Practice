@@ -51,6 +51,25 @@ const CurrentWeatherSummary = ({
   }
 };
 
+const CurrentTemperatureInCityCard = ({
+  weatherData,
+}: {
+  weatherData: null | undefined | CurrentWeatherData;
+}) => {
+  if (weatherData === null || weatherData === undefined) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <div className="">
+        <p>{weatherData.main.temp}</p>
+        <p>
+          H:{weatherData.main.temp_max} L:{weatherData.main.temp_min}
+        </p>
+      </div>
+    );
+  }
+};
+
 const CurrentVisibility = ({
   weatherData,
 }: {
@@ -91,4 +110,4 @@ const CurrentVisibility = ({
 };
 
 export default CurrentWeather;
-export { CurrentWeatherSummary };
+export { CurrentWeatherSummary, CurrentTemperatureInCityCard };

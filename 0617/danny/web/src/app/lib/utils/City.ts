@@ -2,7 +2,7 @@ import { CityData } from "../types/CityData";
 
 const weatherApiUrl = "http://localhost:8080/api/cities";
 
-async function fetchCityData(): Promise<CityData[] | null> {
+async function fetchCityData(): Promise<CityData[]> {
 
     try {
         const response = await fetch(weatherApiUrl);
@@ -14,7 +14,7 @@ async function fetchCityData(): Promise<CityData[] | null> {
     } catch (error) {
         console.error(error);
     }
-    return null;
+    return [];
 }
 
 export { fetchCityData };
