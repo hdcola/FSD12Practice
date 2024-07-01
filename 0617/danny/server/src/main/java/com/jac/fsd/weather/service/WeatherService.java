@@ -24,7 +24,12 @@ public class WeatherService {
     }
 
     public GeoCodeDto[] getGeoCode(String query) {
-        return nominatimGeoCodeAdapter.getGeoCode(query);
+        // put order in id field
+        GeoCodeDto[] geoCodeDtos = nominatimGeoCodeAdapter.getGeoCode(query);
+        for (int i = 0; i < geoCodeDtos.length; i++) {
+            geoCodeDtos[i].setId((long) i);
+        }
+        return geoCodeDtos;
     }
 
     public GeoCodeDto getReverseGeoCode(double lat, double lon) {
