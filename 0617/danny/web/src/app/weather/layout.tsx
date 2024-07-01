@@ -10,10 +10,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [cities, setCities] = useState<CityData[]>([]);
 
   useEffect(() => {
+    const current: CityData = {
+      id: 0,
+      lat: 45.509194531492966,
+      lon: -73.59832566263219,
+      name: "Montreal",
+      display_name: "Montreal",
+      display_order: 0,
+      currentweather: null,
+    };
+
+    const fetchCities: CityData[] = [current];
+
     async function fetchDataAndUpdateState() {
       const data = await fetchCityData();
       if (data !== null) {
-        const fetchCities = data;
+        fetchCities.push(...data);
         setCities(fetchCities);
         // Fetch weather data for each city
         for (let i = 0; i < fetchCities.length; i++) {

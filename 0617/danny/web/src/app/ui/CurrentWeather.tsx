@@ -28,29 +28,6 @@ const CurrentWeather = ({ lat, lon }: { lat: number; lon: number }) => {
   );
 };
 
-const CurrentWeatherSummary = ({
-  weatherData,
-}: {
-  weatherData: null | CurrentWeatherData;
-}) => {
-  if (weatherData === null) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <div className="card bg-primary text-primary-content w-100">
-        <div className="card-body">
-          <h1 className="card-title">{weatherData.name}</h1>
-          <p>{weatherData.main.temp}</p>
-          <p>{weatherData.weather[0].description}</p>
-          <p>
-            H:{weatherData.main.temp_max} L:{weatherData.main.temp_min}
-          </p>
-        </div>
-      </div>
-    );
-  }
-};
-
 const CurrentTemperatureInCityCard = ({
   weatherData,
 }: {
@@ -70,12 +47,52 @@ const CurrentTemperatureInCityCard = ({
   }
 };
 
+const CurrentWeatherDataSummary = ({
+  weatherData,
+}: {
+  weatherData: null | undefined | CurrentWeatherData;
+}) => {
+  if (weatherData === null) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <div className="flex flex-row gap-1">
+        <CurrentWeatherSummary weatherData={weatherData} />
+        <CurrentVisibility weatherData={weatherData} />
+      </div>
+    );
+  }
+};
+
+const CurrentWeatherSummary = ({
+  weatherData,
+}: {
+  weatherData: null | undefined | CurrentWeatherData;
+}) => {
+  if (weatherData === null || weatherData === undefined) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <div className="card bg-primary text-primary-content w-100">
+        <div className="card-body">
+          <h1 className="card-title">{weatherData.name}</h1>
+          <p>{weatherData.main.temp}</p>
+          <p>{weatherData.weather[0].description}</p>
+          <p>
+            H:{weatherData.main.temp_max} L:{weatherData.main.temp_min}
+          </p>
+        </div>
+      </div>
+    );
+  }
+};
+
 const CurrentVisibility = ({
   weatherData,
 }: {
-  weatherData: null | CurrentWeatherData;
+  weatherData: null | undefined | CurrentWeatherData;
 }) => {
-  if (weatherData === null) {
+  if (weatherData === null || weatherData === undefined) {
     return <div>Loading...</div>;
   } else {
     const visibility = weatherData.visibility;
@@ -110,4 +127,9 @@ const CurrentVisibility = ({
 };
 
 export default CurrentWeather;
-export { CurrentWeatherSummary, CurrentTemperatureInCityCard };
+export {
+  CurrentWeatherDataSummary,
+  CurrentWeatherSummary,
+  CurrentVisibility,
+  CurrentTemperatureInCityCard,
+};
