@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Weather from "./ui/components/WeatherHead";
+import Weather from "./ui/WeatherHead";
 import { fetchWeather } from "./lib/fetchWeather";
-import Sidebar from "./ui/components/sidebar";
-import HourlyForecast from "./ui/components/HourlyForecast";
+import Sidebar from "./ui/sidebar";
+import HourlyForecast from "./ui/HourlyForecast";
 
 const Page = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -62,76 +62,22 @@ const Page = () => {
         tempMax={weatherData.tempMax}
       />
 
-      <div className="bg-gray-900 text-white p-4 md:p-6 min-h-screen">
-        <div className="max-w-7xl mx-auto">
-          {/* Header */}
-          <div className="mb-4">今天天气很好</div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {/* Main Content Area */}
-            <div className="lg:col-span-2 space-y-4">
-              {/* Hourly Forecast */}
-              <div className="bg-gray-800 rounded-lg p-4 overflow-x-auto">
-                <div className="flex space-x-4 min-w-max">
-                  <HourlyForecast forecast={weatherData.hourlyForecast || []} />
-                </div>
-              </div>
-
-              {/* Daily Forecast */}
-              <div className="bg-gray-800 rounded-lg p-4">
-                {/* Add your daily forecast content here */}
-              </div>
-            </div>
-
-            {/* Sidebar */}
-            <div className="space-y-4">
-              {/* Map */}
-              <div className="bg-gray-800 rounded-lg p-4 h-64 md:h-80">
-                {/* Add map component here */}
-              </div>
-
-              {/* Air Quality */}
-              <div className="bg-gray-800 rounded-lg p-4">
-                {/* Add air quality content here */}
-              </div>
-
-              {/* Other Weather Details */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-2 gap-4">
-                {/* UV Index */}
-                <div className="bg-gray-800 rounded-lg p-4">
-                  {/* Add UV index content */}
-                </div>
-                {/* Sunrise/Sunset */}
-                <div className="bg-gray-800 rounded-lg p-4">
-                  {/* Add sunrise/sunset content */}
-                </div>
-                {/* Wind */}
-                <div className="bg-gray-800 rounded-lg p-4">
-                  {/* Add wind information content */}
-                </div>
-                {/* Precipitation */}
-                <div className="bg-gray-800 rounded-lg p-4">
-                  {/* Add precipitation content */}
-                </div>
-                {/* Feel-like Temperature */}
-                <div className="bg-gray-800 rounded-lg p-4">
-                  {/* Add feel-like temperature content */}
-                </div>
-                {/* Humidity */}
-                <div className="bg-gray-800 rounded-lg p-4">
-                  {/* Add humidity content */}
-                </div>
-                {/* Visibility */}
-                <div className="bg-gray-800 rounded-lg p-4">
-                  {/* Add visibility content */}
-                </div>
-                {/* Pressure */}
-                <div className="bg-gray-800 rounded-lg p-4">
-                  {/* Add pressure content */}
-                </div>
-              </div>
-            </div>
+      <div className="bg-gray-900 text-white p-4 md:p-6 min-h-screen ">
+        <div className="max-w-7xl mx-auto gap-5">
+          <div className="bg-gray-800 rounded-lg p-4">
+            <HourlyForecast forecast={weatherData.hourlyForecast || []} />
           </div>
+          <div className="bg-gray-800 rounded-lg p-4">地图</div>
+          <div className="bg-gray-800 rounded-lg p-4">每日天气预报</div>
+          <div className="bg-gray-800 rounded-lg p-4">空气质量</div>
+          <div className="bg-gray-800 rounded-lg p-4">紫外线指数</div>
+          <div className="bg-gray-800 rounded-lg p-4">日出</div>
+          <div className="bg-gray-800 rounded-lg p-4">风</div>
+          <div className="bg-gray-800 rounded-lg p-4">降水强度</div>
+          <div className="bg-gray-800 rounded-lg p-4">体感温度</div>
+          <div className="bg-gray-800 rounded-lg p-4">湿度</div>
+          <div className="bg-gray-800 rounded-lg p-4">能见度</div>
+          <div className="bg-gray-800 rounded-lg p-4">气压</div>
         </div>
       </div>
     </>

@@ -43,7 +43,7 @@ const HourlyForecast = ({ forecast }) => {
   }
 
   return (
-    <div className="hourly-forecast">
+    <div className="hourly-forecast z-40">
       <h2 className="text-center text-lg font-bold mb-4">每小时天气预报</h2>
       <Slider {...settings}>
         {forecast.map((item, index) => (
