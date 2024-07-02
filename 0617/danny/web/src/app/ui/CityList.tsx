@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
 export default function CityList() {
-  const cities = useContext(CitiesContext);
+  const { cities } = useContext(CitiesContext);
 
   const pathname = usePathname();
 
@@ -31,7 +31,6 @@ export default function CityList() {
               )}
             >
               <h1>{city.name}</h1>
-              <p>{city.display_order}</p>
               <CurrentTemperatureInCityCard weatherData={city.currentweather} />
             </div>
           </Link>

@@ -1,6 +1,6 @@
 "use client";
-import { CurrentWeatherDataSummary } from "../ui/CurrentWeather";
-import CitiesContext from "../lib/CiitesContext";
+import { CurrentWeatherDataSummary } from "../../ui/CurrentWeather";
+import CitiesContext from "../../lib/CiitesContext";
 import { useContext } from "react";
 
 export default function Page() {

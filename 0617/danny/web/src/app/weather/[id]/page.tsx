@@ -8,7 +8,7 @@ export default function Page({ params }: { params: { id: string } }) {
   // convert id to number
   const cityId = parseInt(id, 10);
   // get city data from context
-  const cities = useContext(CitiesContext);
+  const { cities } = useContext(CitiesContext);
   const city = cities.find((c) => c.display_order === cityId);
   if (city === undefined) {
     return <div>City not found</div>;

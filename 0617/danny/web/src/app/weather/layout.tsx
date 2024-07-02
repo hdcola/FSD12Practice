@@ -3,12 +3,21 @@ import SideNav from "../ui/sidenav";
 import { useEffect, useState } from "react";
 import { fetchCityData } from "../lib/utils/City";
 import { CityData } from "../lib/types/CityData";
-import CitiesContext from "../lib/CiitesContext";
+import { CitiesContext, SearchContext } from "../lib/CiitesContext";
 import { fetchCurrentWeatherData } from "../lib/utils/CurrentWeather";
 import Search from "../ui/Search";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [cities, setCities] = useState<CityData[]>([]);
+  const [searchedCity, setSearchedCity] = useState<CityData | null>(null);
+
+  const updateSearchedCity = (city: CityData | null) => {
+    setSearchedCity(city);
+  };
+
+  const updateCities = (cities: CityData[]) => {
+    setCities(cities);
+  };
 
   useEffect(() => {
     const current: CityData = {
@@ -45,17 +54,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
     fetchDataAndUpdateState();
   }, []);
+
   return (
-    <CitiesContext.Provider value={cities}>
-      <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-        <div className="w-full flex-none md:w-64">
-          <SideNav />
+    <CitiesContext.Provider value={{ cities, updateCities }}>
+      <SearchContext.Provider value={{ searchedCity, updateSearchedCity }}>
+        <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+          <div className="w-full flex-none md:w-64">
+            <SideNav />
+          </div>
+          <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+            <Search />
+            {children}
+          </div>
         </div>
-        <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
-          <Search />
-          {children}
-        </div>
-      </div>
+      </SearchContext.Provider>
     </CitiesContext.Provider>
   );
 }

@@ -1,13 +1,32 @@
 "use client";
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, use, useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { searchCitiesByName } from "../lib/utils/City";
 import { CityData } from "../lib/types/CityData";
+import { CitiesContext, SearchContext } from "../lib/CiitesContext";
+import { useContext } from "react";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+import { fetchCurrentWeatherData } from "../lib/utils/CurrentWeather";
 
 const Search: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [suggestions, setSuggestions] = useState<CityData[]>([]);
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
+  const { searchedCity, updateSearchedCity } = useContext(SearchContext);
+  const { cities, updateCities } = useContext(CitiesContext);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (searchedCity !== null) {
+      setInputValue(searchedCity.name);
+    }
+    if (pathname !== "/weather/addcity") {
+      setInputValue("");
+      updateSearchedCity(null);
+    }
+  }, [searchedCity, pathname, updateSearchedCity]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -23,21 +42,19 @@ const Search: React.FC = () => {
   };
 
   const handleSuggestionClick = (suggestion: CityData) => {
-    setInputValue(suggestion.name);
+    // setInputValue(suggestion.name);
     setShowSuggestions(false);
     performSearch(suggestion);
+    router.push("/weather/addcity");
   };
 
   const performSearch = (query: CityData) => {
-    console.log("Searching for:", query);
-    // 在这里添加你的搜索逻辑
+    updateSearchedCity(query);
   };
 
   const fetchSuggestions = useDebouncedCallback((query: string) => {
-    console.log("Fetching suggestions for:", query);
     searchCitiesByName(query)
       .then((data) => {
-        console.log("Fetched data:", data);
         setSuggestions(data);
       })
       .catch((error) => {
@@ -46,9 +63,36 @@ const Search: React.FC = () => {
       });
   }, 300);
 
+  const handleAddCity = (city: CityData) => {
+    console.log("Adding city:", city);
+    city.display_order = cities.length + 1;
+    const newCities = [...cities, city];
+    updateCities(newCities);
+    updateSearchedCity(null);
+    setInputValue("");
+    const weatherData = fetchCurrentWeatherData({
+      lat: city.lat,
+      lon: city.lon,
+    }).then((data) => {
+      if (data !== null) {
+        city.currentweather = data;
+        updateCities(newCities);
+      }
+    });
+  };
+
   return (
-    <div className="search-component">
-      <label className="input input-bordered flex items-center gap-2">
+    <div className="absolute top-2 right-5 flex gap-2">
+      {searchedCity !== null && (
+        <button
+          onClick={() => handleAddCity(searchedCity)}
+          className="btn btn-xs "
+        >
+          Add
+        </button>
+      )}
+
+      <label className="input input-bordered input-xs flex items-center gap-2 max-w-xs">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"
@@ -71,12 +115,12 @@ const Search: React.FC = () => {
       </label>
 
       {showSuggestions && (
-        <ul className="absolute w-3/6 border border-gray-300 bg-white max-h-36 overflow-y-auto m-0 p-0 list-none">
+        <ul className="absolute w-200 border border-gray-300 bg-white max-h-36 overflow-y-auto m-0 mt-6 p-0 list-none">
           {suggestions.map((suggestion) => (
             <li
               key={suggestion.id}
               onClick={() => handleSuggestionClick(suggestion)}
-              className="p-2 cursor-pointer hover:bg-gray-200"
+              className="p-2 cursor-pointer hover:bg-gray-200 text-xs"
             >
               {suggestion.display_name}
             </li>
