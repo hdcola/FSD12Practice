@@ -1,3 +1,22 @@
+export async function fetchCoordinates(city) {
+  try {
+    const res = await fetch(
+      `http://100.89.152.5:8080/api/coordinates?city=${city}`
+    );
+    if (!res.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await res.json();
+    return {
+      lat: data.lat,
+      lon: data.lon,
+    };
+  } catch (error) {
+    console.error("Failed to fetch coordinates:", error);
+    return null;
+  }
+}
+
 export async function fetchWeather(lat, lon) {
   try {
     // Fetch current weather data
@@ -19,9 +38,9 @@ export async function fetchWeather(lat, lon) {
     const dataForecast = await resForecast.json();
 
     // Convert temperature from Kelvin to Celsius
-    const currentTemp = dataCurrent.main.temp - 273.15;
-    const tempMin = dataCurrent.main.temp_min - 273.15;
-    const tempMax = dataCurrent.main.temp_max - 273.15;
+    const currentTemp = dataCurrent.main.temp;
+    const tempMin = dataCurrent.main.temp_min;
+    const tempMax = dataCurrent.main.temp_max;
 
     return {
       location: dataCurrent.name,
@@ -39,9 +58,9 @@ export async function fetchWeather(lat, lon) {
     const data = await res.json();
 
     // Convert temperature from Kelvin to Celsius
-    const currentTemp = data.main.temp - 273.15;
-    const tempMin = data.main.temp_min - 273.15;
-    const tempMax = data.main.temp_max - 273.15;
+    const currentTemp = data.main.temp;
+    const tempMin = data.main.temp_min;
+    const tempMax = data.main.temp_max;
 
     return {
       location: data.name,
@@ -53,4 +72,3 @@ export async function fetchWeather(lat, lon) {
     };
   }
 }
-

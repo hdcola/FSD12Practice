@@ -49,7 +49,7 @@ const HourlyForecast = ({ forecast }) => {
         {forecast.map((item, index) => (
           <div key={index} className="forecast-item p-2">
             <div>{new Date(item.dt * 1000).getHours()}h</div>
-            <div>{Math.round(item.main.temp - 273.15)}°C</div>
+            <div>{Math.round(item.main.temp)}°C</div>
             <div className="justify-center items-center flex">
               <img
                 src={`http://openweathermap.org/img/wn/${item.weather[0].icon}.png`}

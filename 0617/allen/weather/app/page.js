@@ -2,13 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 import Weather from "./ui/WeatherHead";
-import { fetchWeather } from "./lib/fetchWeather";
+import { fetchWeather, fetchCoordinates } from "./lib/fetchWeather";
 import Sidebar from "./ui/sidebar";
 import HourlyForecast from "./ui/HourlyForecast";
 
 const Page = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [location, setLocation] = useState(null);
+  const [cities, setCities] = useState(["City 1", "City 2"]); // Initialize with default cities
 
   useEffect(() => {
     const getLocation = () => {
@@ -46,13 +47,28 @@ const Page = () => {
     }
   }, [location]);
 
+  const addCity = (city) => {
+    setCities((prevCities) => [...prevCities, city]);
+  };
+
+  const handleCityClick = async (city) => {
+    const coordinates = await fetchCoordinates(city);
+    if (coordinates) {
+      setLocation(coordinates);
+    }
+  };
+
   if (!weatherData) {
     return <div className="animate-pulse">Loading...</div>;
   }
 
   return (
     <>
-      <Sidebar />
+      <Sidebar
+        cities={cities}
+        addCity={addCity}
+        onCityClick={handleCityClick}
+      />
       <Weather
         className="bg-gray-900"
         location={weatherData.location}

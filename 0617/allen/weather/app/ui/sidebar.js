@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 
-const Sidebar = () => {
+const Sidebar = ({ cities = [], addCity, onCityClick }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [newCity, setNewCity] = useState("");
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+  };
+
+  const handleAddCity = () => {
+    if (newCity.trim() !== "") {
+      addCity(newCity.trim());
+      setNewCity("");
+    }
   };
 
   return (
@@ -31,9 +39,14 @@ const Sidebar = () => {
         <div className="form-control w-full max-w-xs">
           <input
             type="text"
+            value={newCity}
+            onChange={(e) => setNewCity(e.target.value)}
             placeholder="Search..."
             className="input input-bordered"
           />
+          <button onClick={handleAddCity} className="btn btn-primary mt-2">
+            Add City
+          </button>
         </div>
       </div>
       <div className="drawer-side">
@@ -43,13 +56,12 @@ const Sidebar = () => {
           className="drawer-overlay"
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-          {/* Sidebar content here */}
-          <li>
-            <a>City 1</a>
-          </li>
-          <li>
-            <a>City 2</a>
-          </li>
+          {/* Render the list of cities */}
+          {cities.map((city, index) => (
+            <li key={index}>
+              <a onClick={() => onCityClick(city)}>{city}</a>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
