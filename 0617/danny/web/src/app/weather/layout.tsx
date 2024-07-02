@@ -39,7 +39,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         setCities(fetchCities);
         // Fetch weather data for each city
         for (let i = 0; i < fetchCities.length; i++) {
-          await new Promise((r) => setTimeout(r, 1000));
           const weatherData = await fetchCurrentWeatherData({
             lat: fetchCities[i].lat,
             lon: fetchCities[i].lon,
