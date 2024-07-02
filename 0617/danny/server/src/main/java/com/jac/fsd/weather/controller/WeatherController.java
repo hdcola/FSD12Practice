@@ -4,6 +4,7 @@ import com.jac.fsd.weather.dto.CurrentWeatherDto;
 import com.jac.fsd.weather.dto.ForecastDto;
 import com.jac.fsd.weather.dto.GeoCodeDto;
 import com.jac.fsd.weather.service.WeatherService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
+@Log4j2
 public class WeatherController {
 
     @Autowired
@@ -21,6 +23,8 @@ public class WeatherController {
 
     @GetMapping("/weather")
     public ResponseEntity<CurrentWeatherDto> getWeather(@RequestParam Double lat, @RequestParam Double lon) {
+        log.info("weather request for lat: {} lon: {}", lat, lon);
+//        return new ResponseEntity<>(CurrentWeatherDto.mockCurrentWeatherDto(), HttpStatus.OK);
         return new ResponseEntity<>(weatherService.getWeather(lat, lon), HttpStatus.OK);
     }
 

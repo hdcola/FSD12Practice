@@ -1,4 +1,4 @@
-package com.jac.fsd.weather;
+package com.jac.fsd.weather.config;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +19,9 @@ public class ServerConfig {
             @Override
             public void addCorsMappings(@NotNull org.springframework.web.servlet.config.annotation.CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE","PATCH")
                         .allowedOrigins("*")
+//                        .allowedOrigins("http://localhost:3000")
                         .allowedHeaders("*");
             }
         };
