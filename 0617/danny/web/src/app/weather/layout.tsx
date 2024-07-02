@@ -43,6 +43,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             lat: fetchCities[i].lat,
             lon: fetchCities[i].lon,
           });
+          console.log(weatherData);
           if (weatherData !== null) {
             fetchCities[i].currentweather = weatherData;
             setCities(fetchCities);
