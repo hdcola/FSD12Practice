@@ -5,6 +5,7 @@ import { fetchCityData } from "../lib/utils/City";
 import { CityData } from "../lib/types/CityData";
 import CitiesContext from "../lib/CiitesContext";
 import { fetchCurrentWeatherData } from "../lib/utils/CurrentWeather";
+import Search from "../ui/Search";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [cities, setCities] = useState<CityData[]>([]);
@@ -51,6 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <SideNav />
         </div>
         <div className="flex-grow p-6 md:overflow-y-auto md:p-12">
+          <Search />
           {children}
         </div>
       </div>
