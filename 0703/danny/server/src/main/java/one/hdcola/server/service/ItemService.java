@@ -63,8 +63,7 @@ public class ItemService {
         itemRespository.deleteById(id);
     }
 
-    public byte[] getItemImage(Long id) {
-        Item item = itemRespository.findById(id).orElseThrow(() -> new RuntimeException("Item not found"));
-        return item.getImage();
+    public Item getItemEntity(Long id) {
+        return itemRespository.findById(id).orElseThrow(() -> new RuntimeException("Item not found"));
     }
 }
