@@ -35,4 +35,28 @@ async function searchCitiesByName(name: string): Promise<CityData[]> {
     return [];
 };
 
-export { fetchCityData, searchCitiesByName };
+async function addCity(city: CityData): Promise<CityData | null> {
+    try {
+        const response = await fetch(citiesApiUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(city),
+        });
+
+        if (!response.ok) {
+            return null;
+        }
+
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error(error);
+    }
+
+    return null;
+}
+
+export { fetchCityData, searchCitiesByName, addCity };

@@ -19,12 +19,11 @@ export default function CityList() {
   return (
     <div className="flex h-full flex-col">
       {cities.map((city) => {
-        const linkurl =
-          city.display_order === 0 ? "/weather" : `/weather/${city.id}`;
+        const linkurl = city.id === 0 ? "/weather" : `/weather/${city.id}`;
         return (
-          <Link key={city.display_order} href={linkurl}>
+          <Link key={city.id} href={linkurl}>
             <div
-              key={city.display_order}
+              key={city.id}
               className={clsx(
                 "flex h-[48px] w-full gap-2 bg-gray-50  hover:bg-sky-100",
                 { "bg-sky-100 text-blue-600": pathname === linkurl }

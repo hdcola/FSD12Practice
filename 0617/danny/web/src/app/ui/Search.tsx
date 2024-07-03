@@ -1,7 +1,7 @@
 "use client";
 import { useState, ChangeEvent, use, useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { searchCitiesByName } from "../lib/utils/City";
+import { searchCitiesByName, addCity } from "../lib/utils/City";
 import { CityData } from "../lib/types/CityData";
 import { CitiesContext, SearchContext } from "../lib/CiitesContext";
 import { useContext } from "react";
@@ -64,21 +64,27 @@ const Search: React.FC = () => {
   }, 300);
 
   const handleAddCity = (city: CityData) => {
-    console.log("Adding city:", city);
     city.display_order = cities.length + 1;
-    const newCities = [...cities, city];
-    updateCities(newCities);
-    updateSearchedCity(null);
-    setInputValue("");
-    const weatherData = fetchCurrentWeatherData({
-      lat: city.lat,
-      lon: city.lon,
-    }).then((data) => {
+    addCity(city).then((data) => {
       if (data !== null) {
-        city.currentweather = data;
+        city = data;
+        const newCities = [...cities, city];
         updateCities(newCities);
+        updateSearchedCity(null);
+        setInputValue("");
+        const weatherData = fetchCurrentWeatherData({
+          lat: city.lat,
+          lon: city.lon,
+        }).then((data) => {
+          if (data !== null) {
+            city.currentweather = data;
+            updateCities(newCities);
+          }
+        });
       }
     });
+    updateSearchedCity(null);
+    setInputValue("");
   };
 
   return (

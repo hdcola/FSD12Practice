@@ -18,6 +18,6 @@ public class City {
     @Column(name = "display_order")
     private Long displayOrder;
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 }

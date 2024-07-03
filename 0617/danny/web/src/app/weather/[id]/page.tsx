@@ -9,7 +9,7 @@ export default function Page({ params }: { params: { id: string } }) {
   const cityId = parseInt(id, 10);
   // get city data from context
   const { cities } = useContext(CitiesContext);
-  const city = cities.find((c) => c.display_order === cityId);
+  const city = cities.find((c) => c.id === cityId);
   if (city === undefined) {
     return <div>City not found</div>;
   }
