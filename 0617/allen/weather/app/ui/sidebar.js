@@ -1,18 +1,36 @@
 import React, { useState } from "react";
+import { search } from "../lib/search";
 
-const Sidebar = ({ cities = [], addCity, onCityClick }) => {
+const Sidebar = ({ onCityClick }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [newCity, setNewCity] = useState("");
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [cities, setCities] = useState([]);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
 
-  const handleAddCity = () => {
-    if (newCity.trim() !== "") {
-      addCity(newCity.trim());
-      setNewCity("");
+  const handleInputChange = async (event) => {
+    const input = event.target.value;
+    setQuery(input);
+
+    if (input.trim() !== "") {
+      const searchResults = await search(input);
+      if (searchResults) {
+        setResults(searchResults);
+      } else {
+        setResults([]);
+      }
+    } else {
+      setResults([]);
     }
+  };
+
+  const handleAddCity = (city) => {
+    setCities([...cities, city.display_name]);
+    setQuery("");
+    setResults([]);
   };
 
   return (
@@ -39,12 +57,24 @@ const Sidebar = ({ cities = [], addCity, onCityClick }) => {
         <div className="form-control w-full max-w-xs">
           <input
             type="text"
-            value={newCity}
-            onChange={(e) => setNewCity(e.target.value)}
+            value={query}
+            onChange={handleInputChange}
             placeholder="Search..."
             className="input input-bordered"
           />
-          <button onClick={handleAddCity} className="btn btn-primary mt-2">
+          {results.length > 0 && (
+            <ul className="dropdown">
+              {results.map((result) => (
+                <li key={result.id} onClick={() => handleAddCity(result)}>
+                  {result.display_name}
+                </li>
+              ))}
+            </ul>
+          )}
+          <button
+            onClick={() => handleAddCity({ display_name: query })}
+            className="btn btn-primary mt-2"
+          >
             Add City
           </button>
         </div>
