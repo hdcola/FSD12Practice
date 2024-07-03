@@ -34,3 +34,4 @@ FSD12 Practices
 * [0606 Snake JavaScript Version](https://hdcola.github.io/FSD12Practice/0606/)
 * [0615 ToDo List](https://hdcola.github.io/FSD12Practice/0615/)
 * [0617 Weather](https://hdcola.github.io/FSD12Practice/0617/)
+* [0703 Pizza Order001](https://hdcola.github.io/FSD12Practice/0703/)
