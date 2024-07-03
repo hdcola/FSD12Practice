@@ -15,7 +15,7 @@ create table cities (
     lat double not null,
     lon double not null,
     display_order int not null,
-    user_id bigint not null,
+    user_id bigint,
     foreign key (user_id) references users(id)
 );
 
