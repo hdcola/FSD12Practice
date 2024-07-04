@@ -1,0 +1,17 @@
+### GET all items of menu
+
+GET http://100.89.152.5:8080/api/items
+
+### POST Create a new item of menu
+
+POST http://100.89.152.5:8080/api/items HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"Pizza",
+    "description":"Delisious pizza.",
+    "price":25.99
+}
+
+### DELETE Delete an item of menu
+DELETE  http://100.89.152.5:8080/api/items/2
