@@ -43,13 +43,13 @@ const HourlyForecast = ({ forecast }) => {
   }
 
   return (
-    <div className="hourly-forecast">
+    <div className="hourly-forecast z-40">
       <h2 className="text-center text-lg font-bold mb-4">每小时天气预报</h2>
       <Slider {...settings}>
         {forecast.map((item, index) => (
           <div key={index} className="forecast-item p-2">
             <div>{new Date(item.dt * 1000).getHours()}h</div>
-            <div>{Math.round(item.main.temp - 273.15)}°C</div>
+            <div>{Math.round(item.main.temp)}°C</div>
             <div className="justify-center items-center flex">
               <img
                 src={`http://openweathermap.org/img/wn/${item.weather[0].icon}.png`}
