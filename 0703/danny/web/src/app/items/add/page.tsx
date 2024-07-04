@@ -2,6 +2,7 @@
 import { ItemType } from "@/app/lib/data/definitions";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { addItem, State } from "@/app/lib/data/item";
 
 export default function Page() {
   const [name, setName] = useState("");
@@ -9,36 +10,29 @@ export default function Page() {
   const [price, setPrice] = useState("");
   const router = useRouter();
 
-  const addItem = async (item: ItemType): Promise<ItemType> => {
-    const response = await fetch("/api/items", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(item),
-    });
-    if (!response.ok) {
-      throw new Error("Failed to add item");
-    }
-    return await response.json();
-  };
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const item: ItemType = {
-      id: 0,
-      name: name,
-      description: description,
-      price: Number(price),
-    };
-    router.push("");
+    const formData = new FormData(event.target as HTMLFormElement);
+    try {
+      const item = await addItem(formData);
+      router.push(`/items`);
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+      <form
+        className="rounded-md bg-gray-50 p-4 md:p-6"
+        onSubmit={handleSubmit}
+      >
         <div>
-          <label className="label label-text">Name</label>
+          <label htmlFor="name" className="label label-text">
+            Name
+          </label>
           <input
+            id="name"
+            name="name"
             className="input input-bordered flex items-center"
             type="text"
             placeholder="Enter name of item"
@@ -47,8 +41,12 @@ export default function Page() {
           />
         </div>
         <div>
-          <label className="label label-text">Description</label>
+          <label htmlFor="description" className="label label-text">
+            Description
+          </label>
           <input
+            id="description"
+            name="description"
             className="input input-bordered flex items-center"
             type="text"
             placeholder="Enter description of item"
@@ -57,8 +55,12 @@ export default function Page() {
           />
         </div>
         <div>
-          <label className="label label-text">Price</label>
+          <label htmlFor="price" className="label label-text">
+            Price
+          </label>
           <input
+            id="price"
+            name="price"
             className="input input-bordered flex items-center"
             type="number"
             placeholder="Enter price of item"
