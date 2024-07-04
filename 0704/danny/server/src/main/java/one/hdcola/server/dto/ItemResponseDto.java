@@ -1,5 +1,6 @@
 package one.hdcola.server.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
@@ -18,16 +19,15 @@ public class ItemResponseDto {
     private String name;
     private String description;
     private Float price;
-    private String imageType;
-    private String imageFileName;
+    @JsonProperty("image_url")
+    private String imageUrl;
 
     public ItemResponseDto(Item item) {
         this.id = item.getId();
         this.name = item.getName();
         this.description = item.getDescription();
         this.price = item.getPrice();
-        this.imageType = item.getImageType();
-        this.imageFileName = item.getImageFileName();
+        this.imageUrl = item.getImageUrl();
     }
 
     public static List<ItemResponseDto> fromItems(List<Item> items) {

@@ -5,14 +5,13 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "item")
-public class Item {
+@Table(name = "image")
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
-    private String name;
-    private String description;
-    private Float price;
-    private String imageUrl;
+    @Lob
+    private byte[] image;
+    private String imageType;
+    private String imageFileName;
 }
