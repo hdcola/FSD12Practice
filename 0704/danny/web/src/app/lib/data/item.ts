@@ -28,9 +28,10 @@ export async function addItem(formData: FormData): Promise<ItemType> {
         name: formData.get("name") as string,
         description: formData.get("description") as string,
         price: Number(formData.get("price")),
+        image_url: formData.get("image_url") as string,
     };
 
-    const response = await fetch(`${api_url}/items`, {
+    const response = await fetch(`${api_url}/api/items`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -44,7 +45,7 @@ export async function addItem(formData: FormData): Promise<ItemType> {
 }
 
 export async function getItems(): Promise<ItemType[]> {
-    const response = await fetch(`${api_url}/items`);
+    const response = await fetch(`${api_url}/api/items`);
     if (!response.ok) {
         throw new Error("Failed to fetch items");
     }
@@ -52,7 +53,7 @@ export async function getItems(): Promise<ItemType[]> {
 }
 
 export async function getItem(id: number): Promise<ItemType> {
-    const response = await fetch(`${api_url}/items/${id}`);
+    const response = await fetch(`${api_url}/api/items/${id}`);
     if (!response.ok) {
         throw new Error("Failed to fetch item");
     }
@@ -65,9 +66,10 @@ export async function updateItem(formData: FormData, id: number): Promise<ItemTy
         name: formData.get("name") as string,
         description: formData.get("description") as string,
         price: Number(formData.get("price")),
+        image_url: formData.get("image_url") as string,
     };
 
-    const response = await fetch(`${api_url}/items/${id}`, {
+    const response = await fetch(`${api_url}/api/items/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -81,10 +83,22 @@ export async function updateItem(formData: FormData, id: number): Promise<ItemTy
 }
 
 export async function deleteItem(id: number): Promise<void> {
-    const response = await fetch(`${api_url}/items/${id}`, {
+    const response = await fetch(`${api_url}/api/items/${id}`, {
         method: "DELETE",
     });
     if (!response.ok) {
         throw new Error("Failed to delete item");
     }
+}
+
+export async function uploadImage(formData: FormData): Promise<string> {
+    const response = await fetch(`${api_url}/api/images`, {
+        method: "POST",
+        body: formData,
+    });
+    if (!response.ok) {
+        throw new Error("Failed to upload image");
+    }
+    const responseJson = await response.json();
+    return responseJson.image_url;
 }

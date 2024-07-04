@@ -22,6 +22,6 @@ public class ImageResponseDto {
         this.id = image.getId();
         this.imageType = image.getImageType();
         this.imageFileName = image.getImageFileName();
-        this.imageUrl = "/api/image/" + image.getId();
+        this.imageUrl = "/api/images/" + image.getId();
     }
 }

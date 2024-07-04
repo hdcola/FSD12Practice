@@ -47,6 +47,7 @@ public class ItemService {
         item.setName(itemRequestDto.getName());
         item.setDescription(itemRequestDto.getDescription());
         item.setPrice(itemRequestDto.getPrice());
+        item.setImageUrl(itemRequestDto.getImageUrl());
         Item newItem = itemRespository.save(item);
         return new ItemResponseDto(newItem);
     }
