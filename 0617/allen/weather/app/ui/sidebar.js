@@ -1,10 +1,36 @@
 import React, { useState } from "react";
+import { search } from "../lib/search";
 
-const Sidebar = () => {
+const Sidebar = ({ onCityClick }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [cities, setCities] = useState([]);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
+  };
+
+  const handleInputChange = async (event) => {
+    const input = event.target.value;
+    setQuery(input);
+
+    if (input.trim() !== "") {
+      const searchResults = await search(input);
+      if (searchResults) {
+        setResults(searchResults);
+      } else {
+        setResults([]);
+      }
+    } else {
+      setResults([]);
+    }
+  };
+
+  const handleAddCity = (city) => {
+    setCities([...cities, city.display_name]);
+    setQuery("");
+    setResults([]);
   };
 
   return (
@@ -31,9 +57,26 @@ const Sidebar = () => {
         <div className="form-control w-full max-w-xs">
           <input
             type="text"
+            value={query}
+            onChange={handleInputChange}
             placeholder="Search..."
             className="input input-bordered"
           />
+          {results.length > 0 && (
+            <ul className="dropdown">
+              {results.map((result) => (
+                <li key={result.id} onClick={() => handleAddCity(result)}>
+                  {result.display_name}
+                </li>
+              ))}
+            </ul>
+          )}
+          <button
+            onClick={() => handleAddCity({ display_name: query })}
+            className="btn btn-primary mt-2"
+          >
+            Add City
+          </button>
         </div>
       </div>
       <div className="drawer-side">
@@ -43,13 +86,12 @@ const Sidebar = () => {
           className="drawer-overlay"
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
-          {/* Sidebar content here */}
-          <li>
-            <a>City 1</a>
-          </li>
-          <li>
-            <a>City 2</a>
-          </li>
+          {/* Render the list of cities */}
+          {cities.map((city, index) => (
+            <li key={index}>
+              <a onClick={() => onCityClick(city)}>{city}</a>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
