@@ -77,3 +77,12 @@ export async function updateItem(formData: FormData, id: number): Promise<ItemTy
     }
     return await response.json();
 }
+
+export async function deleteItem(id: number): Promise<void> {
+    const response = await fetch(`http://localhost:8080/api/items/${id}`, {
+        method: "DELETE",
+    });
+    if (!response.ok) {
+        throw new Error("Failed to delete item");
+    }
+}
