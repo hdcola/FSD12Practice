@@ -29,7 +29,7 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ItemResponseDto> getItem(@RequestParam Long id) {
+    public ResponseEntity<ItemResponseDto> getItem(@PathVariable Long id) {
         return ResponseEntity.ok(itemService.getItem(id));
     }
 

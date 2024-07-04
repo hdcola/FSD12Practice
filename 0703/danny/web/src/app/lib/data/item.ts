@@ -48,3 +48,32 @@ export async function getItems(): Promise<ItemType[]> {
     }
     return await response.json();
 }
+
+export async function getItem(id: number): Promise<ItemType> {
+    const response = await fetch(`http://localhost:8080/api/items/${id}`);
+    if (!response.ok) {
+        throw new Error("Failed to fetch item");
+    }
+    return await response.json();
+}
+
+export async function updateItem(formData: FormData, id: number): Promise<ItemType> {
+    const item: ItemType = {
+        id: id,
+        name: formData.get("name") as string,
+        description: formData.get("description") as string,
+        price: Number(formData.get("price")),
+    };
+
+    const response = await fetch(`http://localhost:8080/api/items/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(item),
+    });
+    if (!response.ok) {
+        throw new Error("Failed to update item");
+    }
+    return await response.json();
+}
