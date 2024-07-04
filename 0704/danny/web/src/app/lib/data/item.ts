@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { ItemType } from '@/app/lib/data/definitions';
 
+const api_url = process.env.NEXT_PUBLIC_API_URL;
+
 const FormSchema = z.object({
     id: z.number(),
     name: z.string({ message: 'Name is required', required_error: 'Name is required' }),
@@ -28,7 +30,7 @@ export async function addItem(formData: FormData): Promise<ItemType> {
         price: Number(formData.get("price")),
     };
 
-    const response = await fetch("http://localhost:8080/api/items", {
+    const response = await fetch(`${api_url}/items`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -42,7 +44,7 @@ export async function addItem(formData: FormData): Promise<ItemType> {
 }
 
 export async function getItems(): Promise<ItemType[]> {
-    const response = await fetch("http://localhost:8080/api/items");
+    const response = await fetch(`${api_url}/items`);
     if (!response.ok) {
         throw new Error("Failed to fetch items");
     }
@@ -50,7 +52,7 @@ export async function getItems(): Promise<ItemType[]> {
 }
 
 export async function getItem(id: number): Promise<ItemType> {
-    const response = await fetch(`http://localhost:8080/api/items/${id}`);
+    const response = await fetch(`${api_url}/items/${id}`);
     if (!response.ok) {
         throw new Error("Failed to fetch item");
     }
@@ -65,7 +67,7 @@ export async function updateItem(formData: FormData, id: number): Promise<ItemTy
         price: Number(formData.get("price")),
     };
 
-    const response = await fetch(`http://localhost:8080/api/items/${id}`, {
+    const response = await fetch(`${api_url}/items/${id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -79,7 +81,7 @@ export async function updateItem(formData: FormData, id: number): Promise<ItemTy
 }
 
 export async function deleteItem(id: number): Promise<void> {
-    const response = await fetch(`http://localhost:8080/api/items/${id}`, {
+    const response = await fetch(`${api_url}/items/${id}`, {
         method: "DELETE",
     });
     if (!response.ok) {
