@@ -35,3 +35,4 @@ FSD12 Practices
 * [0615 ToDo List](https://hdcola.github.io/FSD12Practice/0615/)
 * [0617 Weather](https://hdcola.github.io/FSD12Practice/0617/)
 * [0703 Pizza Order001](https://hdcola.github.io/FSD12Practice/0703/)
+* [0704 Pizza Order002](https://hdcola.github.io/FSD12Practice/0703/)
