@@ -3,8 +3,6 @@ export interface Item {
   name: string;
   description: string;
   price: number;
-  imageType: string | null;
-  imageFileName: string | null;
 }
 
 export const fetchItems = async (): Promise<Item[]> => {

@@ -1,24 +1,24 @@
 "use client";
 
 import { Delete } from "@/app/ui/deleteBtn";
-import { Edit } from "@/app/ui/editBtn";
 import React, { useState, useEffect } from "react";
 import { Item, fetchItems } from "@/app/lib/actions";
+import Link from "next/link";
 
 export function Card() {
   const [items, setItems] = useState<Item[]>([]);
 
-  useEffect(() => {
-    const getItems = async () => {
-      try {
-        const fetchedItems = await fetchItems();
-        setItems(fetchedItems);
-      } catch (error) {
-        console.error("Failed to fetch items:", error);
-      }
-    };
+  const fetchAndSetItems = async () => {
+    try {
+      const fetchedItems = await fetchItems();
+      setItems(fetchedItems);
+    } catch (error) {
+      console.error("Failed to fetch items:", error);
+    }
+  };
 
-    getItems();
+  useEffect(() => {
+    fetchAndSetItems();
   }, []);
 
   return (
@@ -36,8 +36,10 @@ export function Card() {
             <p>{item.description}</p>
             <span>${item.price}</span>
             <div className="card-actions justify-end">
-              <Edit />
-              <Delete />
+              <Link href={`/items/${item.id}`} className="btn btn-primary">
+                Edit
+              </Link>
+              <Delete id={item.id} onDelete={fetchAndSetItems} />
             </div>
           </div>
         </div>
