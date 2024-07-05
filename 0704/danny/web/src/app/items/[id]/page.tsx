@@ -19,6 +19,7 @@ export default function Page({ params }: { params: { id: number } }) {
         setName(item.name);
         setDescription(item.description);
         setPrice(item.price.toString());
+        setImageUrl(item.image_url);
       })
       .catch((error) => console.error(error));
   }, [params.id]);
@@ -62,7 +63,7 @@ export default function Page({ params }: { params: { id: number } }) {
           <input
             id="name"
             name="name"
-            className="input input-bordered flex items-center"
+            className="input input-bordered flex w-full items-center"
             type="text"
             placeholder="Enter name of item"
             value={name}
@@ -76,13 +77,14 @@ export default function Page({ params }: { params: { id: number } }) {
           <input
             id="description"
             name="description"
-            className="input input-bordered flex items-center"
+            className="input input-bordered flex w-full items-center"
             type="text"
             placeholder="Enter description of item"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
+
         <div>
           <label htmlFor="image" className="label label-text">
             Image
@@ -90,7 +92,7 @@ export default function Page({ params }: { params: { id: number } }) {
           <input
             id="image"
             name="image"
-            className="input input-bordered flex items-center"
+            className="file-input file-input-bordered w-full max-w-xs"
             type="file"
             onChange={handleImageChange}
           />
@@ -105,6 +107,7 @@ export default function Page({ params }: { params: { id: number } }) {
           )}
         </div>
         <input type="hidden" name="image_url" value={image_url} />
+
         <div>
           <label htmlFor="price" className="label label-text">
             Price
@@ -112,7 +115,7 @@ export default function Page({ params }: { params: { id: number } }) {
           <input
             id="price"
             name="price"
-            className="input input-bordered flex items-center"
+            className="input input-bordered flex w-full items-center"
             type="number"
             placeholder="Enter price of item"
             value={price}
