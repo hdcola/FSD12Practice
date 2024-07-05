@@ -31,7 +31,7 @@ public class ImageController {
         Image image = imageService.getImageEntity(id);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(image.getImageType()))
-                .header("Content-Disposition", "attachment; filename=\"" + image.getImageFileName() + "\"")
+                .header("Content-Disposition", "inline; filename=\"" + image.getImageFileName() + "\"")
                 .body(image.getImage());
     }
 
