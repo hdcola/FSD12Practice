@@ -15,3 +15,6 @@ Content-Type: application/json
 
 ### DELETE Delete an item of menu
 DELETE  http://100.89.152.5:8080/api/items/2
+
+### Get the image of item
+http://100.89.152.5:8080/api/items/4

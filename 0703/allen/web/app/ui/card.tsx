@@ -11,6 +11,7 @@ export function Card() {
   const fetchAndSetItems = async () => {
     try {
       const fetchedItems = await fetchItems();
+      console.log("Fetched items:", fetchedItems); // 调试：打印设置的items
       setItems(fetchedItems);
     } catch (error) {
       console.error("Failed to fetch items:", error);
@@ -27,8 +28,9 @@ export function Card() {
         <div key={item.id} className="card bg-base-100 w-96 h-128 shadow-xl">
           <figure>
             <img
-              src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+              src={`http://100.89.152.5:8080${item.image_url}`}
               alt={item.name}
+              className="w-full h-64 object-cover"
             />
           </figure>
           <div className="card-body">
