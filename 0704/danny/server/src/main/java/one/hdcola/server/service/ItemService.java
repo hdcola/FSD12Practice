@@ -21,20 +21,12 @@ public class ItemService {
     }
 
 
-    public ItemResponseDto uploadItemImage(Long id, MultipartFile file) throws IOException {
-        Item item = itemRespository.findById(id).orElseThrow(() -> new RuntimeException("Item not found"));
-        item.setImage(file.getBytes());
-        item.setImageType(file.getContentType());
-        item.setImageFileName(file.getOriginalFilename());
-        Item newItem = itemRespository.save(item);
-        return new ItemResponseDto(newItem);
-    }
-
     public ItemResponseDto createItem(ItemRequestDto itemRequestDto) {
         Item item = new Item();
         item.setName(itemRequestDto.getName());
         item.setDescription(itemRequestDto.getDescription());
         item.setPrice(itemRequestDto.getPrice());
+        item.setImageUrl(itemRequestDto.getImageUrl());
         Item newItem = itemRespository.save(item);
         return new ItemResponseDto(newItem);
     }
@@ -55,15 +47,12 @@ public class ItemService {
         item.setName(itemRequestDto.getName());
         item.setDescription(itemRequestDto.getDescription());
         item.setPrice(itemRequestDto.getPrice());
+        item.setImageUrl(itemRequestDto.getImageUrl());
         Item newItem = itemRespository.save(item);
         return new ItemResponseDto(newItem);
     }
 
     public void deleteItem(Long id) {
         itemRespository.deleteById(id);
-    }
-
-    public Item getItemEntity(Long id) {
-        return itemRespository.findById(id).orElseThrow(() -> new RuntimeException("Item not found"));
     }
 }

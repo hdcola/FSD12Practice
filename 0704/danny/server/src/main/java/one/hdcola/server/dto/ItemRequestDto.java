@@ -1,5 +1,6 @@
 package one.hdcola.server.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +14,6 @@ public class ItemRequestDto {
     private String name;
     private String description;
     private Float price;
+    @JsonProperty("image_url")
+    private String imageUrl;
 }

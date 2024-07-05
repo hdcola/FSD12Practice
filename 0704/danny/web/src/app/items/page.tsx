@@ -4,10 +4,12 @@ import { ItemType } from "../lib/data/definitions";
 import { getItems, deleteItem } from "../lib/data/item";
 import Link from "next/link";
 import { set } from "zod";
+import Image from "next/image";
 
 export default function Page() {
   const [items, setItems] = useState<ItemType[]>([]);
   const [reload, setReload] = useState(false);
+  const api_url = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     getItems().then((items) => setItems(items));
@@ -42,7 +44,18 @@ export default function Page() {
             <tbody className="bg-white">
               {items.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.name}</td>
+                  <td>
+                    {item.image_url && (
+                      <Image
+                        src={`${api_url}${item.image_url}`}
+                        width={50}
+                        height={50}
+                        alt="Item preview"
+                      />
+                    )}
+
+                    {item.name}
+                  </td>
                   <td>{item.description}</td>
                   <td>{item.price}</td>
                   <td>

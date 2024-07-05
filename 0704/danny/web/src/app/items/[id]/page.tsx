@@ -1,24 +1,25 @@
 "use client";
-import { ItemType } from "@/app/lib/data/definitions";
-import { getItem, updateItem } from "@/app/lib/data/item";
+import { getItem, updateItem, uploadImage } from "@/app/lib/data/item";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function Page({ params }: { params: { id: number } }) {
-  const [item, setItem] = useState<ItemType | null>(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [image_url, setImageUrl] = useState("");
+  const api_url = process.env.NEXT_PUBLIC_API_URL;
 
   const router = useRouter();
 
   useEffect(() => {
     getItem(params.id)
       .then((item) => {
-        setItem(item);
         setName(item.name);
         setDescription(item.description);
         setPrice(item.price.toString());
+        setImageUrl(item.image_url);
       })
       .catch((error) => console.error(error));
   }, [params.id]);
@@ -31,6 +32,21 @@ export default function Page({ params }: { params: { id: number } }) {
       router.push(`/items`);
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const formData = new FormData();
+      formData.append("file", event.target.files[0]);
+      try {
+        const url = await uploadImage(formData);
+        setImageUrl(url);
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -47,7 +63,7 @@ export default function Page({ params }: { params: { id: number } }) {
           <input
             id="name"
             name="name"
-            className="input input-bordered flex items-center"
+            className="input input-bordered flex w-full items-center"
             type="text"
             placeholder="Enter name of item"
             value={name}
@@ -61,13 +77,37 @@ export default function Page({ params }: { params: { id: number } }) {
           <input
             id="description"
             name="description"
-            className="input input-bordered flex items-center"
+            className="input input-bordered flex w-full items-center"
             type="text"
             placeholder="Enter description of item"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
+
+        <div>
+          <label htmlFor="image" className="label label-text">
+            Image
+          </label>
+          <input
+            id="image"
+            name="image"
+            className="file-input file-input-bordered w-full max-w-xs"
+            type="file"
+            onChange={handleImageChange}
+          />
+          {image_url && (
+            <Image
+              src={`${api_url}${image_url}`}
+              width={80}
+              height={80}
+              alt="Preview"
+              className="mt-4 w-20 h-20 object-cover"
+            />
+          )}
+        </div>
+        <input type="hidden" name="image_url" value={image_url} />
+
         <div>
           <label htmlFor="price" className="label label-text">
             Price
@@ -75,7 +115,7 @@ export default function Page({ params }: { params: { id: number } }) {
           <input
             id="price"
             name="price"
-            className="input input-bordered flex items-center"
+            className="input input-bordered flex w-full items-center"
             type="number"
             placeholder="Enter price of item"
             value={price}
