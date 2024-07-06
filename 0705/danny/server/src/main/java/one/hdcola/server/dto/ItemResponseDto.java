@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import one.hdcola.server.entity.Item;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -21,6 +22,7 @@ public class ItemResponseDto {
     private Float price;
     @JsonProperty("image_url")
     private String imageUrl;
+    private List<OptionCategoryResponseDto> optionCategories;
 
     public ItemResponseDto(Item item) {
         this.id = item.getId();
@@ -28,6 +30,11 @@ public class ItemResponseDto {
         this.description = item.getDescription();
         this.price = item.getPrice();
         this.imageUrl = item.getImageUrl();
+        if(item.getOptionCategories() != null) {
+            this.optionCategories = OptionCategoryResponseDto.fromOptionCategories(item.getOptionCategories());
+        }else {
+            this.optionCategories = new ArrayList<>();
+        }
     }
 
     public static List<ItemResponseDto> fromItems(List<Item> items) {

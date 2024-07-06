@@ -2,6 +2,7 @@ package one.hdcola.server.service;
 
 import one.hdcola.server.dto.ItemRequestDto;
 import one.hdcola.server.dto.ItemResponseDto;
+import one.hdcola.server.dto.OptionCategoryRequestDto;
 import one.hdcola.server.entity.Item;
 import one.hdcola.server.repository.ItemRespository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.cert.CertPathBuilder;
 import java.util.List;
 
 @Service
@@ -20,6 +22,10 @@ public class ItemService {
         this.itemRespository = itemRespository;
     }
 
+    public Item findById(Long itemId) {
+        return itemRespository.findById(itemId).orElseThrow(() -> new RuntimeException("Item not found"));
+    }
+
 
     public ItemResponseDto createItem(ItemRequestDto itemRequestDto) {
         Item item = new Item();
@@ -27,7 +33,13 @@ public class ItemService {
         item.setDescription(itemRequestDto.getDescription());
         item.setPrice(itemRequestDto.getPrice());
         item.setImageUrl(itemRequestDto.getImageUrl());
+        if ( itemRequestDto.getOptionCategories() != null ) {
+            for (OptionCategoryRequestDto optionCategoryRequestDto : itemRequestDto.getOptionCategories()) {
+                //item.addOptionCategory(optionCategoryRequestDto.toEntity()
+            }
+        }
         Item newItem = itemRespository.save(item);
+
         return new ItemResponseDto(newItem);
     }
 
