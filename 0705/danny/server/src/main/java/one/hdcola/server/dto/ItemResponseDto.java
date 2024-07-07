@@ -1,12 +1,10 @@
 package one.hdcola.server.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Lob;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import one.hdcola.server.entity.Item;
 
 import java.util.ArrayList;
@@ -15,6 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @Builder
+@Log4j2
 public class ItemResponseDto {
     private Long id;
     private String name;
@@ -31,6 +30,7 @@ public class ItemResponseDto {
         this.price = item.getPrice();
         this.imageUrl = item.getImageUrl();
         if(item.getOptionCategories() != null) {
+            log.info("Option Categories: " + item.getOptionCategories());
             this.optionCategories = OptionCategoryResponseDto.fromOptionCategories(item.getOptionCategories());
         }else {
             this.optionCategories = new ArrayList<>();

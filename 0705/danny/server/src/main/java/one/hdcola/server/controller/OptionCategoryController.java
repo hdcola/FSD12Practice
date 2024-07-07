@@ -21,9 +21,4 @@ public class OptionCategoryController {
     public ResponseEntity<List<OptionCategoryResponseDto>> findAll() {
         return ResponseEntity.ok(optionCategoryService.findAll());
     }
-
-    @PostMapping
-    public ResponseEntity<OptionCategoryResponseDto> create(@RequestBody OptionCategoryRequestDto optionCategoryRequestDto) {
-        return ResponseEntity.ok(optionCategoryService.create(optionCategoryRequestDto));
-    }
 }

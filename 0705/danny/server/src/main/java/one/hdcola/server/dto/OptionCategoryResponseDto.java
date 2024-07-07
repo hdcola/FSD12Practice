@@ -7,7 +7,6 @@ import lombok.Data;
 import one.hdcola.server.entity.OptionCategory;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -25,8 +24,6 @@ public class OptionCategoryResponseDto {
     private Boolean allowCustom;
     @JsonProperty("allow_quantity")
     private Boolean allowQuantity;
-    @JsonProperty("item_id")
-    private Long itemId;
 
     public OptionCategoryResponseDto(OptionCategory optionCategory){
         this.id = optionCategory.getId();
@@ -37,10 +34,9 @@ public class OptionCategoryResponseDto {
         this.multiple = optionCategory.getMultiple();
         this.allowCustom = optionCategory.getAllowCustom();
         this.allowQuantity = optionCategory.getAllowQuantity();
-        this.itemId = optionCategory.getItem().getId();
     }
 
-    public static List<OptionCategoryResponseDto> fromOptionCategories(Set<OptionCategory> optionCategories) {
+    public static List<OptionCategoryResponseDto> fromOptionCategories(List<OptionCategory> optionCategories) {
         return optionCategories.stream().map(OptionCategoryResponseDto::new).toList();
     }
 }

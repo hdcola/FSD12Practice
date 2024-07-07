@@ -3,7 +3,9 @@ package one.hdcola.server.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Set;
+import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,6 +20,6 @@ public class Item {
     private Float price;
     private String imageUrl;
     private Boolean available;
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<OptionCategory> optionCategories;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<OptionCategory> optionCategories=new ArrayList<>();
 }

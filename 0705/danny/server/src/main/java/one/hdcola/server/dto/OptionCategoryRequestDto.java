@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import one.hdcola.server.entity.OptionCategory;
 
 @Data
 @AllArgsConstructor
@@ -21,6 +22,17 @@ public class OptionCategoryRequestDto {
     private Boolean allowCustom;
     @JsonProperty("allow_quantity")
     private Boolean allowQuantity;
-    @JsonProperty("item_id")
-    private Long itemId;
+
+    public OptionCategory toEntity() {
+        return OptionCategory.builder()
+                .id(id)
+                .name(name)
+                .maxSelection(maxSelection)
+                .minSelection(minSelection)
+                .required(required)
+                .multiple(multiple)
+                .allowCustom(allowCustom)
+                .allowQuantity(allowQuantity)
+                .build();
+    }
 }

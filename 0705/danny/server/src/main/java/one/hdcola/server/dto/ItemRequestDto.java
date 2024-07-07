@@ -17,5 +17,6 @@ public class ItemRequestDto {
     private Float price;
     @JsonProperty("image_url")
     private String imageUrl;
+    @JsonProperty("option_categories")
     private List<OptionCategoryRequestDto> optionCategories;
 }
