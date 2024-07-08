@@ -41,4 +41,17 @@ public class OptionCategoryRequestDto {
                 .extraOptions(extraOptions == null ? new ArrayList<>() : extraOptions.stream().map(ExtraOptionRequestDto::toEntity).toList())
                 .build();
     }
+
+    public OptionCategory toNewEntity() {
+        return OptionCategory.builder()
+                .name(name)
+                .maxSelection(maxSelection)
+                .minSelection(minSelection)
+                .required(required)
+                .multiple(multiple)
+                .allowCustom(allowCustom)
+                .allowQuantity(allowQuantity)
+                .extraOptions(extraOptions == null ? new ArrayList<>() : extraOptions.stream().map(ExtraOptionRequestDto::toNewEntity).toList())
+                .build();
+    }
 }

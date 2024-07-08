@@ -34,4 +34,16 @@ public class ItemRequestDto {
                         optionCategories == null ? new ArrayList<>() :  optionCategories.stream().map(OptionCategoryRequestDto::toEntity).toList())
                 .build();
     }
+
+    public Item toNewEntity() {
+        return Item.builder()
+                .id(id)
+                .name(name)
+                .description(description)
+                .price(price)
+                .imageUrl(imageUrl)
+                .optionCategories(
+                        optionCategories == null ? new ArrayList<>() :  optionCategories.stream().map(OptionCategoryRequestDto::toNewEntity).toList())
+                .build();
+    }
 }

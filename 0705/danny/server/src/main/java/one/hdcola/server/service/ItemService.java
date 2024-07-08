@@ -51,7 +51,7 @@ public class ItemService {
             List<OptionCategory> ocs =  item.getOptionCategories();
             ocs.clear();
             for(OptionCategoryRequestDto ocrd : itemRequestDto.getOptionCategories()) {
-                OptionCategory oc = ocrd.toEntity();
+                OptionCategory oc = ocrd.toNewEntity();
                 ocs.add(oc);
             }
         }

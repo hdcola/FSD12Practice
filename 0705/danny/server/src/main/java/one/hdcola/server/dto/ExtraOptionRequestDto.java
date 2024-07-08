@@ -21,4 +21,11 @@ public class ExtraOptionRequestDto {
                 .price(price)
                 .build();
     }
+
+    public ExtraOption toNewEntity() {
+        return ExtraOption.builder()
+                .name(name)
+                .price(price)
+                .build();
+    }
 }
