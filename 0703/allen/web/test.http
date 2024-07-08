@@ -18,3 +18,7 @@ DELETE  http://100.89.152.5:8080/api/items/2
 
 ### Get the image of item
 http://100.89.152.5:8080/api/items/4
+
+### Get all Option Categories
+
+http://100.89.152.5:8080/api/optionCategories

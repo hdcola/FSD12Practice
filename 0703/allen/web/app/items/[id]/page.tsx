@@ -56,7 +56,11 @@ export default function Page({ params }: { params: { id: number } }) {
   };
 
   if (!item) {
-    return <div>Loading...</div>;
+    return (
+      <main className="flex justify-center items-center h-screen">
+        <span className="loading loading-spinner text-success"></span>
+      </main>
+    );
   }
 
   return (
@@ -64,7 +68,11 @@ export default function Page({ params }: { params: { id: number } }) {
       <div className="card bg-base-100 w-96 h-128 shadow-xl">
         <figure>
           <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
+            src={
+              item.image_url
+                ? `http://100.89.152.5:8080${item.image_url}`
+                : "/sample.webp"
+            }
             alt="item image"
           />
         </figure>
@@ -104,6 +112,9 @@ export default function Page({ params }: { params: { id: number } }) {
               onClick={handleSubmit}
             >
               Submit
+            </Link>
+            <Link type="button" className="btn btn-neutral" href="/">
+              Back
             </Link>
           </div>
         </div>
