@@ -2,7 +2,9 @@ package one.hdcola.server.service;
 
 import one.hdcola.server.dto.ItemRequestDto;
 import one.hdcola.server.dto.ItemResponseDto;
+import one.hdcola.server.dto.OptionCategoryRequestDto;
 import one.hdcola.server.entity.Item;
+import one.hdcola.server.entity.OptionCategory;
 import one.hdcola.server.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +47,14 @@ public class ItemService {
         item.setDescription(itemRequestDto.getDescription());
         item.setPrice(itemRequestDto.getPrice());
         item.setImageUrl(itemRequestDto.getImageUrl());
+        if(itemRequestDto.getOptionCategories() != null) {
+            List<OptionCategory> ocs =  item.getOptionCategories();
+            ocs.clear();
+            for(OptionCategoryRequestDto ocrd : itemRequestDto.getOptionCategories()) {
+                OptionCategory oc = ocrd.toEntity();
+                ocs.add(oc);
+            }
+        }
         Item newItem = itemRepository.save(item);
         return new ItemResponseDto(newItem);
     }

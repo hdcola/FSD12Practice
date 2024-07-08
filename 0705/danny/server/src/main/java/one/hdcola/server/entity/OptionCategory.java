@@ -28,5 +28,6 @@ public class OptionCategory {
     private Boolean allowCustom;
     private Boolean allowQuantity;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "option_category_id")
     private List<ExtraOption> extraOptions = new ArrayList<>();
 }

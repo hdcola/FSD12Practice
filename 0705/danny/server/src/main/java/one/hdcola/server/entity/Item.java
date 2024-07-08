@@ -27,5 +27,6 @@ public class Item {
     private String imageUrl;
     private Boolean available;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
     private List<OptionCategory> optionCategories=new ArrayList<>();
 }

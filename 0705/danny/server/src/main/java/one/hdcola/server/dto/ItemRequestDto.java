@@ -31,7 +31,7 @@ public class ItemRequestDto {
                 .price(price)
                 .imageUrl(imageUrl)
                 .optionCategories(
-                        optionCategories == null ? new ArrayList<>() :  optionCategories.stream().map(OptionCategoryRequestDto::toEntity).collect(Collectors.toList()))
+                        optionCategories == null ? new ArrayList<>() :  optionCategories.stream().map(OptionCategoryRequestDto::toEntity).toList())
                 .build();
     }
 }
