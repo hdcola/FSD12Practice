@@ -1,19 +1,17 @@
 package one.hdcola.server.service;
 
-import one.hdcola.server.dto.OptionCategoryRequestDto;
 import one.hdcola.server.dto.OptionCategoryResponseDto;
-import one.hdcola.server.entity.Item;
 import one.hdcola.server.entity.OptionCategory;
-import one.hdcola.server.repository.OptionCategoryRespository;
+import one.hdcola.server.repository.OptionCategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class OptionCategoryService {
-    private final OptionCategoryRespository optionCategoryRepository;
+    private final OptionCategoryRepository optionCategoryRepository;
 
-    public OptionCategoryService(OptionCategoryRespository optionCategoryRepository) {
+    public OptionCategoryService(OptionCategoryRepository optionCategoryRepository) {
         this.optionCategoryRepository = optionCategoryRepository;
     }
 

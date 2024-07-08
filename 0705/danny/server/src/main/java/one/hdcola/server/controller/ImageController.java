@@ -1,7 +1,6 @@
 package one.hdcola.server.controller;
 
 import one.hdcola.server.dto.ImageResponseDto;
-import one.hdcola.server.dto.ItemResponseDto;
 import one.hdcola.server.entity.Image;
 import one.hdcola.server.service.ImageService;
 import org.springframework.http.MediaType;

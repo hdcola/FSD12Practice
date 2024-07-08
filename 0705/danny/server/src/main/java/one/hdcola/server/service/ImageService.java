@@ -1,9 +1,8 @@
 package one.hdcola.server.service;
 
 import one.hdcola.server.dto.ImageResponseDto;
-import one.hdcola.server.dto.ItemResponseDto;
 import one.hdcola.server.entity.Image;
-import one.hdcola.server.repository.ImageRespository;
+import one.hdcola.server.repository.ImageRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,10 +10,10 @@ import java.io.IOException;
 
 @Service
 public class ImageService {
-    private final ImageRespository imageRespository;
+    private final ImageRepository imageRepository;
 
-    public ImageService(ImageRespository imageRespository) {
-        this.imageRespository = imageRespository;
+    public ImageService(ImageRepository imageRepository) {
+        this.imageRepository = imageRepository;
     }
 
     public ImageResponseDto uploadItemImage(MultipartFile file) throws IOException{
@@ -22,17 +21,17 @@ public class ImageService {
         image.setImageType(file.getContentType());
         image.setImageFileName(file.getOriginalFilename());
         image.setImage(file.getBytes());
-        Image newImage = imageRespository.save(image);
+        Image newImage = imageRepository.save(image);
         return new ImageResponseDto(newImage);
     }
 
     public Image getImageEntity(Long id) {
-        return imageRespository.findById(id).orElseThrow();
+        return imageRepository.findById(id).orElseThrow();
     }
 
     public ImageResponseDto deleteItemImage(Long id) {
-        Image image = imageRespository.findById(id).orElseThrow();
-        imageRespository.delete(image);
+        Image image = imageRepository.findById(id).orElseThrow();
+        imageRepository.delete(image);
         return new ImageResponseDto(image);
     }
 }

@@ -30,7 +30,6 @@ public class ItemResponseDto {
         this.price = item.getPrice();
         this.imageUrl = item.getImageUrl();
         if(item.getOptionCategories() != null) {
-            log.info("Option Categories: " + item.getOptionCategories());
             this.optionCategories = OptionCategoryResponseDto.fromOptionCategories(item.getOptionCategories());
         }else {
             this.optionCategories = new ArrayList<>();

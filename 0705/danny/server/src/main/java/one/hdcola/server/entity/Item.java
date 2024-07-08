@@ -1,14 +1,20 @@
 package one.hdcola.server.entity;
 
 import jakarta.persistence.*;
+import jdk.jshell.Snippet;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "item")
 public class Item {
     @Id
