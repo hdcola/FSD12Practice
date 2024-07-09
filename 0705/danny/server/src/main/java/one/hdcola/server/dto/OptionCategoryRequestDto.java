@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import one.hdcola.server.entity.OptionCategory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @Builder
@@ -22,6 +25,8 @@ public class OptionCategoryRequestDto {
     private Boolean allowCustom;
     @JsonProperty("allow_quantity")
     private Boolean allowQuantity;
+    @JsonProperty("extra_options")
+    private List<ExtraOptionRequestDto> extraOptions;
 
     public OptionCategory toEntity() {
         return OptionCategory.builder()
@@ -33,6 +38,20 @@ public class OptionCategoryRequestDto {
                 .multiple(multiple)
                 .allowCustom(allowCustom)
                 .allowQuantity(allowQuantity)
+                .extraOptions(extraOptions == null ? new ArrayList<>() : extraOptions.stream().map(ExtraOptionRequestDto::toEntity).toList())
+                .build();
+    }
+
+    public OptionCategory toNewEntity() {
+        return OptionCategory.builder()
+                .name(name)
+                .maxSelection(maxSelection)
+                .minSelection(minSelection)
+                .required(required)
+                .multiple(multiple)
+                .allowCustom(allowCustom)
+                .allowQuantity(allowQuantity)
+                .extraOptions(extraOptions == null ? new ArrayList<>() : extraOptions.stream().map(ExtraOptionRequestDto::toNewEntity).toList())
                 .build();
     }
 }

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import one.hdcola.server.entity.OptionCategory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,6 +25,8 @@ public class OptionCategoryResponseDto {
     private Boolean allowCustom;
     @JsonProperty("allow_quantity")
     private Boolean allowQuantity;
+    @JsonProperty("extra_options")
+    private List<ExtraOptionResponseDto> extraOptions;
 
     public OptionCategoryResponseDto(OptionCategory optionCategory){
         this.id = optionCategory.getId();
@@ -34,6 +37,11 @@ public class OptionCategoryResponseDto {
         this.multiple = optionCategory.getMultiple();
         this.allowCustom = optionCategory.getAllowCustom();
         this.allowQuantity = optionCategory.getAllowQuantity();
+        if(optionCategory.getExtraOptions() != null) {
+            this.extraOptions = ExtraOptionResponseDto.fromExtraOptions(optionCategory.getExtraOptions());
+        }else {
+            this.extraOptions = new ArrayList<>();
+        }
     }
 
     public static List<OptionCategoryResponseDto> fromOptionCategories(List<OptionCategory> optionCategories) {
