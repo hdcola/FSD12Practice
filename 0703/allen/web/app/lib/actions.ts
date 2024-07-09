@@ -22,9 +22,9 @@ export async function fetchItems(): Promise<Item[]> {
     return [
       {
         id: 1,
-        name: "All Dressed Baguette",
+        name: "Sample Dish",
         description:
-          "All dressed baguette topped with choice of chipotle, Thai, marinara, sub-marine, or meat sauce.",
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
         price: 16.43,
         image_url: "",
       },
