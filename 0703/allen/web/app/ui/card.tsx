@@ -28,7 +28,11 @@ export function Card() {
         <div key={item.id} className="card bg-base-100 w-96 h-128 shadow-xl">
           <figure>
             <img
-              src={`http://100.89.152.5:8080${item.image_url}`}
+              src={
+                item.image_url
+                  ? `http://100.89.152.5:8080${item.image_url}`
+                  : "/sample.webp"
+              }
               alt={item.name}
               className="w-full h-64 object-cover"
             />
