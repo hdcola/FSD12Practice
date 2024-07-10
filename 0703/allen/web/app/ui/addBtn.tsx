@@ -8,6 +8,23 @@ export function AddButton() {
     description: "",
     price: "",
   });
+  const [optionCategories, setOptionCategories] = useState([
+    {
+      name: "",
+      max_selection: 1,
+      min_selection: 0,
+      required: false,
+      multiple: false,
+      allow_custom: false,
+      allow_quantity: false,
+      extra_options: [
+        {
+          name: "",
+          price: 0,
+        },
+      ],
+    },
+  ]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
@@ -32,6 +49,59 @@ export function AddButton() {
     } else {
       setPreviewUrl(null);
     }
+  };
+
+  const handleOptionCategoryChange = (
+    index: number,
+    field: keyof (typeof optionCategories)[0],
+    value: any
+  ) => {
+    const updatedCategories = [...optionCategories];
+    updatedCategories[index] = { ...updatedCategories[index], [field]: value };
+    setOptionCategories(updatedCategories);
+  };
+
+  const handleExtraOptionChange = (
+    catIndex: number,
+    optIndex: number,
+    field: keyof (typeof optionCategories)[0]["extra_options"][0],
+    value: any
+  ) => {
+    const updatedCategories = [...optionCategories];
+    const updatedOptions = [...updatedCategories[catIndex].extra_options];
+    updatedOptions[optIndex] = { ...updatedOptions[optIndex], [field]: value };
+    updatedCategories[catIndex].extra_options = updatedOptions;
+    setOptionCategories(updatedCategories);
+  };
+
+  const addOptionCategory = () => {
+    setOptionCategories([
+      ...optionCategories,
+      {
+        name: "",
+        max_selection: 1,
+        min_selection: 0,
+        required: false,
+        multiple: false,
+        allow_custom: false,
+        allow_quantity: false,
+        extra_options: [
+          {
+            name: "",
+            price: 0,
+          },
+        ],
+      },
+    ]);
+  };
+
+  const addExtraOption = (catIndex: number) => {
+    const updatedCategories = [...optionCategories];
+    updatedCategories[catIndex].extra_options.push({
+      name: "",
+      price: 0,
+    });
+    setOptionCategories(updatedCategories);
   };
 
   const uploadImage = async (): Promise<string | null> => {
@@ -85,8 +155,14 @@ export function AddButton() {
     const itemToSubmit = {
       ...item,
       price: parseFloat(item.price),
-      imageUrl,
+      image_url: imageUrl,
+      option_categories: optionCategories,
     };
+
+    console.log(
+      "Final JSON to be sent to server:",
+      JSON.stringify(itemToSubmit, null, 2)
+    );
 
     try {
       const response = await fetch("http://100.89.152.5:8080/api/items", {
@@ -107,6 +183,23 @@ export function AddButton() {
         });
         setSelectedFile(null);
         setPreviewUrl(null);
+        setOptionCategories([
+          {
+            name: "",
+            max_selection: 1,
+            min_selection: 0,
+            required: false,
+            multiple: false,
+            allow_custom: false,
+            allow_quantity: false,
+            extra_options: [
+              {
+                name: "",
+                price: 0,
+              },
+            ],
+          },
+        ]);
       } else {
         const errorText = await response.text();
         console.error("Failed to add item:", errorText);
@@ -164,7 +257,64 @@ export function AddButton() {
           />
         )}
       </div>
-      <button className="btn" onClick={addItem}>
+      <div className="w-full max-w-xs">
+        <h3>Option Categories</h3>
+        {optionCategories.map((category, catIndex) => (
+          <div key={catIndex} className="mb-4">
+            <input
+              type="text"
+              value={category.name}
+              onChange={(e) =>
+                handleOptionCategoryChange(catIndex, "name", e.target.value)
+              }
+              placeholder="Category Name"
+              className="input input-bordered w-full mb-2"
+            />
+            {category.extra_options.map((option, optIndex) => (
+              <div key={optIndex} className="flex items-center gap-2 mb-2">
+                <input
+                  type="text"
+                  value={option.name}
+                  onChange={(e) =>
+                    handleExtraOptionChange(
+                      catIndex,
+                      optIndex,
+                      "name",
+                      e.target.value
+                    )
+                  }
+                  placeholder="Option Name"
+                  className="input input-bordered w-full"
+                />
+                <input
+                  type="text"
+                  value={option.price}
+                  onChange={(e) =>
+                    handleExtraOptionChange(
+                      catIndex,
+                      optIndex,
+                      "price",
+                      e.target.value
+                    )
+                  }
+                  placeholder="Price"
+                  className="input input-bordered w-full"
+                />
+              </div>
+            ))}
+            <button
+              className="btn btn-secondary mb-2"
+              onClick={() => addExtraOption(catIndex)}
+            >
+              Add Extra Option
+            </button>
+          </div>
+        ))}
+        <button className="btn btn-secondary" onClick={addOptionCategory}>
+          Add Option Category
+        </button>
+      </div>
+      <button className="btn btn-primary mt-4" onClick={addItem}>
         Add Item
       </button>
     </div>

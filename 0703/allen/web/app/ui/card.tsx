@@ -45,12 +45,6 @@ export function Card() {
               <Link href={`/items/${item.id}`} className="btn btn-primary">
                 Edit
               </Link>
-              <Link
-                href={`/items/${item.id}/options`}
-                className="btn btn-accent"
-              >
-                Options
-              </Link>
               <Delete id={item.id} onDelete={fetchAndSetItems} />
             </div>
           </div>
