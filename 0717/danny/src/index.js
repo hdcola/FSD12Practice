@@ -1,0 +1,14 @@
+const { fetchContent } = require("./fetchContent");
+const { htmlToNode, createPage } = require("./telegraph");
+
+const main = async () => {
+  const url =
+    "https://www.lapresse.ca/actualites/2024-07-16/programme-cycliste-averti/quand-l-ecole-fait-pedaler-les-jeunes.php";
+  const { title, summary, content } = await fetchContent(url);
+  const formattedContent = htmlToNode("<body>" + content + "</body>");
+  // console.log(formattedContent);
+  const telegraphUrl = await createPage(title, formattedContent);
+  console.log(telegraphUrl);
+};
+
+main();
