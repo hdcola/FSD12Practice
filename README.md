@@ -37,3 +37,4 @@ FSD12 Practices
 * [0703 Pizza Order001](https://hdcola.github.io/FSD12Practice/0703/)
 * [0704 Pizza Order002](https://hdcola.github.io/FSD12Practice/0704/)
 * [0705 Pizza Order003](https://hdcola.github.io/FSD12Practice/0705/)
+* [0717 Post a url to Telegraph](https://hdcola.github.io/FSD12Practice/0717/)
