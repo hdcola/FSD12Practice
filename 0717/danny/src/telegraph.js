@@ -4,70 +4,60 @@ const ph = new api();
 const config = require("./config.js");
 
 const htmlToNode = (html) => {
-  const $ = cheerio.load(html);
+  const $ = cheerio.load(html, { decodeEntities: false });
   const content = [];
 
-  // Helper function to convert an element to Telegraph content
   function convertElement(element) {
     const tag = element.tagName;
-    const children = $(element)
+    let children = $(element)
       .contents()
       .map((_, el) => convertElement(el))
-      .get();
-    const text = $(element).text();
+      .get()
+      .filter((child) => child !== ""); // 过滤掉空字符串
+
+    const text = $(element).text().trim();
+
+    if (!tag) {
+      return text || "";
+    }
 
     switch (tag) {
       case "p":
-        return { tag: "p", children: children.length ? children : [text] };
       case "h3":
-        return { tag: "h3", children: children.length ? children : [text] };
+      case "figcaption":
+      case "figure":
+      case "b":
+      case "i":
+      case "u":
+      case "s":
+      case "blockquote":
+        return {
+          tag,
+          children: children.length ? children : text ? [text] : [],
+        };
       case "img":
         return { tag: "img", attrs: { src: $(element).attr("src") } };
-      case "figcaption":
-        return {
-          tag: "figcaption",
-          children: children.length ? children : [text],
-        };
-      case "figure":
-        return {
-          tag: "figure",
-          children: children.length ? children : [text],
-        };
       case "a":
         return {
           tag: "a",
           attrs: { href: $(element).attr("href") },
-          children: children.length ? children : [text],
-        };
-      case "b":
-        return { tag: "b", children: children.length ? children : [text] };
-      case "i":
-        return { tag: "i", children: children.length ? children : [text] };
-      case "u":
-        return { tag: "u", children: children.length ? children : [text] };
-      case "s":
-        return { tag: "s", children: children.length ? children : [text] };
-      case "blockquote":
-        return {
-          tag: "blockquote",
-          children: children.length ? children : [text],
+          children: children.length ? children : text ? [text] : [],
         };
       default:
-        return text;
+        return text || "";
     }
   }
 
-  // Convert each top-level element in the body
   $("body")
     .contents()
     .each((_, element) => {
       const convertedElement = convertElement(element);
-      if (convertedElement) {
+      if (convertedElement && convertedElement !== "") {
         content.push(convertedElement);
       }
     });
 
-  return content;
+  return content.filter((item) => item !== ""); // 最后再次过滤掉任何空字符串
 };
 
 const createPage = async (title, content) => {
@@ -105,5 +95,5 @@ module.exports = { createPage, htmlToNode };
 // </body>
 // `;
 
-// // Test the function
-// console.log(htmlToNode(html));
+// const { printArray } = require("./util");
+// printArray(htmlToNode(html));
