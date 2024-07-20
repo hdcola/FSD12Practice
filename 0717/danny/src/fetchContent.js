@@ -8,12 +8,17 @@ const fetchContent = async (url) => {
   const summary = $(
     "div.articleBody .lead.textModule.textModule--type-lead"
   ).text();
-  const content = $(
-    "p.paragraph.textModule.textModule--type-paragraph,img.photoModule__visual,figcaption.caption"
-  )
-    .map((_, element) => $.html(element))
-    .get()
-    .join("");
+  const preContent = $(
+    "p.paragraph.textModule.textModule--type-paragraph,figure[itemscope][itemprop='associatedMedia']"
+  ).clone();
+
+  preContent.find("source").remove();
+  // move <img> to <figure> and remove <picture>
+  preContent.find("picture").each(function () {
+    const img = $(this).find("img");
+    $(this).replaceWith(img);
+  });
+  const content = $.html(preContent);
   return { title, summary, content };
 };
 
