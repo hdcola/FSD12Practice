@@ -1,6 +1,5 @@
 const { fetchContent } = require("./fetchContent");
 const { htmlToNode, createPage } = require("./telegraph");
-const cheerio = require("cheerio");
 
 const main = async () => {
   const url =
