@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-4">
+    <h1 class="text-3xl">Enroll in Web Development Bootcamp</h1>
+    <p class="mt-4">Select the time slot available for camp enrollment</p>
+    <from action="">
+        <label class="input input-bordered flex items-center gap-2">
+            Name
+            <input type="text" class="grow" placeholder="Daisy" />
+        </label>
+        <label class="input input-bordered flex items-center gap-2">
+            Email
+            <input type="text" class="grow" placeholder="daisy@site.com" />
+        </label>
+        <div class="form-control">
+            <label class="cursor-pointer label">
+                <span class="label-text">Remember me</span>
+                <input type="checkbox" checked="checked" class="checkbox checkbox-primary" />
+            </label>
+        </div>
+    </from>
+</div>
+{% endblock %}
