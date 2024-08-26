@@ -20,11 +20,12 @@
 </head>
 
 <body>
-  <div class="font-sans w-full">
+
+  <div class="font-sans w-full" id="app">
     {% block content %}{% endblock %}
   </div>
 
-  <script type="text/javascript" src="{{ url_for('static', filename='main.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename=vueapp) }}"></script>
 </body>
 
 </html>
