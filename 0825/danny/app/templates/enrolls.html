@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-4">
+    <h1 class="text-3xl">Enroll in Web Development Bootcamp</h1>
+
+    <div class="flex flex-row gap-4">
+        <div v-for="enroll, index in enrolls" :key="index">
+            <span>
+                Name: { enroll.name }
+            </span>
+            <span>
+                Email: { enroll.email }
+            </span>
+        </div>
+    </div>
+</div>
+{% endblock %}

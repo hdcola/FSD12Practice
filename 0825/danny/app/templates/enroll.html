@@ -4,15 +4,15 @@
 <div class="p-4">
     <h1 class="text-3xl">Enroll in Web Development Bootcamp</h1>
 
-    <h1>{ message } </h1>
+    <h1>{ enroll.name } </h1>
     <from action="" class="flex flex-col gap-4">
         <label class="input input-bordered flex items-center gap-2">
             Name
-            <input type="text" class="grow" placeholder="Your name" v-model="message" />
+            <input type="text" name="name" class="grow" placeholder="Your name" v-model="enroll.name" />
         </label>
         <label class="input input-bordered flex items-center gap-2">
             Email
-            <input type="text" class="grow" placeholder="your@email.address" />
+            <input type="text" name="email" class="grow" placeholder="your@email.address" v-model="enroll.email" />
         </label>
         <div>
             <p class="mt-4">Select the time slot available for camp enrollment</p>
