@@ -4,6 +4,7 @@ const EnrollApp = {
   data() {
     return {
       enrolls: [],
+      errors: {},
     };
   },
   async created() {
@@ -12,7 +13,7 @@ const EnrollApp = {
   methods: {
     async getEnrolls() {
       const response = await fetch(window.location, {
-        methos: "GET",
+        method: "GET",
         headers: {
           "X-Requested-With": "XMLHttpRequest",
         },

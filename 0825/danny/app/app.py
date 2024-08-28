@@ -4,11 +4,13 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify, request, url_for, redirect
 import forms
+from flask_wtf.csrf import CSRFProtect
 
 load_dotenv()
 
 app = Flask(__name__)
 app.config.from_object(Config)
+csrf = CSRFProtect(app)
 
 db = SQLAlchemy(app)
 import models  # noqa: E402
@@ -19,20 +21,23 @@ async def hello():
     return render_template('index.html', vueapp="main.js")
 
 
-@app.route('/enroll')
+@app.route('/enroll', methods=['GET', 'POST'])
 async def enroll():
-    return render_template('enroll.html', vueapp="enroll.js")
+    form = forms.EnrollForm()
+    return render_template('enroll.html', vueapp="enroll.js", form=form)
 
 
-@app.route('/create', methods=['POST'])
+@app.route('/api/enroll', methods=['POST'])
 async def create():
-    form = forms.EnrollForm(request.form)
+    json_data = request.get_json()
+    form = forms.EnrollForm(data=json_data)
     if form.validate_on_submit():
         enroll = models.Enroll(name=form.name.data, email=form.email.data)
         db.session.add(enroll)
         db.session.commit()
-        return redirect(url_for('/api/enrolls'))
-    return jsonify({'status': 'error', 'errors': form.errors})
+        print(enroll)
+        return redirect(url_for('/enrolls'))
+    return jsonify({'status': 'error', 'errors': form.errors}), 400
 
 
 @app.route('/enrolls', methods=['GET'])

@@ -4,26 +4,35 @@ const EnrollApp = {
   data() {
     return {
       enroll: {
-        naem: "",
+        name: "",
         email: "",
       },
+      errors: {},
     };
   },
-  async created() {
-    await this.getEnrolls();
-  },
+  async created() {},
   methods: {
     async createEnroll() {
-      const response = await fetch(windows.location, {
-        methos: "POST",
+      const baseUrl = window.location.origin;
+      const apiUrl = `${baseUrl}/api/enroll`;
+      const csrfToken = document.querySelector(
+        'input[name="csrf_token"]'
+      ).value;
+      const response = await fetch(apiUrl, {
+        method: "POST",
         headers: {
           "X-Requested-With": "XMLHttpRequest",
           "Content-Type": "application/json",
+          "X-CSRFToken": csrfToken,
         },
-        body: JSON.stringify({ enroll: this.enroll }),
+        body: JSON.stringify(this.enroll),
       });
-
-      this.enrolls = await response.json();
+      if (response.ok) {
+        window.location.href = `${baseUrl}/enrolls`;
+      } else {
+        const data = await response.json();
+        this.errors = data.errors || {};
+      }
     },
   },
   delimiters: ["{", "}"],

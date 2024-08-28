@@ -2,3 +2,4 @@ python-dotenv
 flask[async]
 flask_sqlalchemy
 Flask-WTF
+email-validator

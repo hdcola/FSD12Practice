@@ -3,17 +3,18 @@
 {% block content %}
 <div class="p-4">
     <h1 class="text-3xl">Enroll in Web Development Bootcamp</h1>
-
-    <h1>{ enroll.name } </h1>
-    <from action="" class="flex flex-col gap-4">
+    <form @submit.prevent="createEnroll" class="flex flex-col gap-4">
+        {{ form.hidden_tag() }}
         <label class="input input-bordered flex items-center gap-2">
             Name
-            <input type="text" name="name" class="grow" placeholder="Your name" v-model="enroll.name" />
+            <input type="text" class="grow" placeholder="Your name" v-model="enroll.name" />
         </label>
+        <div v-if="errors.name" class="text-red-500">{ errors.name[0] }</div>
         <label class="input input-bordered flex items-center gap-2">
             Email
-            <input type="text" name="email" class="grow" placeholder="your@email.address" v-model="enroll.email" />
+            <input type="text" class="grow" placeholder="your@email.address" v-model="enroll.email" />
         </label>
+        <div v-if="errors.email" class="text-red-500">{ errors.email[0] }</div>
         <div>
             <p class="mt-4">Select the time slot available for camp enrollment</p>
             <div class="form-control">
@@ -24,6 +25,6 @@
             </div>
         </div>
         <button class="btn btn-primary" type="submit">Enroll</button>
-    </from>
+    </form>
 </div>
 {% endblock %}
