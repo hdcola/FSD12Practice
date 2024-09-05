@@ -10,7 +10,7 @@ public class Main {
     static DataStorage dataStorage = new FileStorage();
 
     public static void main(String[] args) {
-        loadDataFromFile();
+        loadData();
         int option = 5;
         while (option != 0){
             option = inputMainMenu();
@@ -29,7 +29,7 @@ public class Main {
                     break;
                 case 0:
                     System.out.println("Exiting. Good bye!");
-                    saveDataToFile();
+                    saveData();
                     System.exit(0);
                 default:
                     System.out.println("Invalid option. Please try again.");
@@ -38,12 +38,12 @@ public class Main {
     }
 
 
-    static void loadDataFromFile(){
+    static void loadData(){
         todoList = dataStorage.loadData();
     }
 
 
-    static void saveDataToFile(){
+    static void saveData(){
         dataStorage.saveData(todoList);
     }
 
