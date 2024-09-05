@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -21,7 +22,7 @@ public class FileStorage implements DataStorage {
                     System.out.println("Invalid data: " + dataLine);
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Read data error: " + filename);
         }
         return todoList;
@@ -37,7 +38,7 @@ public class FileStorage implements DataStorage {
             for (Todo todo : todoList) {
                 fileWriter.println(todo.toDataString());
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Write data error: " + filename);
         }
     }
