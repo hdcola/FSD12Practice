@@ -28,6 +28,13 @@ public class Todo {
         this.setStatus(status);
     }
 
+    public Todo(String task, String dueDate, int hoursOfWork, String status) throws IllegalArgumentException {
+        this.setTask(task);
+        this.setDueDate(dueDate);
+        this.setHoursOfWork(hoursOfWork);
+        this.setDueDate(status);
+    }
+
     public void setTask(String task) throws IllegalArgumentException {
         // 2-50 characters long, must NOT contain a semicolon or | or ` (reverse single quote) characters
         if (task.length() < 2 || task.length() > 50) {

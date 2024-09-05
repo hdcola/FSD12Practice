@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Main {
     static ArrayList<Todo> todoList = new ArrayList<>();
     static Scanner input = new Scanner(System.in);
+    static DataStorage dataStorage = new SQLiteStorage();
 
     public static void main(String[] args) {
         loadDataFromFile();
@@ -39,42 +40,14 @@ public class Main {
 
 
     static void loadDataFromFile(){
-        loadDataFromFile("todos.txt");
+        todoList = dataStorage.loadData();
     }
 
-    static void loadDataFromFile(String filename) {
-        try {
-            Scanner fileScanner = new Scanner(new File(filename));
-            while (fileScanner.hasNextLine()) {
-                String dataLine = fileScanner.nextLine();
-                try{
-                    Todo todo = new Todo(dataLine);
-                    todoList.add(todo);
-                }catch (IllegalArgumentException e){
-                    System.out.println("Invalid data: " + dataLine);
-                }
-            }
-            fileScanner.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + filename);
-        }
-    }
 
     static void saveDataToFile(){
-        saveDataToFile("todos.txt");
+        dataStorage.saveData(todoList);
     }
 
-    static void saveDataToFile(String filename) {
-        try {
-            java.io.PrintWriter fileWriter = new java.io.PrintWriter(filename);
-            for (Todo todo : todoList) {
-                fileWriter.println(todo.toDataString());
-            }
-            fileWriter.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + filename);
-        }
-    }
 
     public static void deleteTodo(){
         if(todoList.isEmpty()){
