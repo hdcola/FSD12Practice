@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ public class Main {
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
+        loadDataFromFile();
         int option = 5;
         while (option != 0){
             option = inputMainMenu();
@@ -24,9 +27,54 @@ public class Main {
                 case 4:
                     modifyTodo();
                     break;
+                case 0:
+                    System.out.println("Exiting. Good bye!");
+                    saveDataToFile();
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid option. Please try again.");
             }
         }
 
+    }
+
+
+    static void loadDataFromFile(){
+        loadDataFromFile("todos.txt");
+    }
+
+    static void loadDataFromFile(String filename) {
+        try {
+            Scanner fileScanner = new Scanner(new File(filename));
+            while (fileScanner.hasNextLine()) {
+                String dataLine = fileScanner.nextLine();
+                try{
+                    Todo todo = new Todo(dataLine);
+                    todoList.add(todo);
+                }catch (IllegalArgumentException e){
+                    System.out.println("Invalid data: " + dataLine);
+                }
+            }
+            fileScanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + filename);
+        }
+    }
+
+    static void saveDataToFile(){
+        saveDataToFile("todos.txt");
+    }
+
+    static void saveDataToFile(String filename) {
+        try {
+            java.io.PrintWriter fileWriter = new java.io.PrintWriter(filename);
+            for (Todo todo : todoList) {
+                fileWriter.println(todo.toDataString());
+            }
+            fileWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + filename);
+        }
     }
 
     public static void deleteTodo(){
@@ -84,6 +132,7 @@ public class Main {
 
     public static void addTodo(){
         String task = inputString(input, "Enter task description: ");
+        System.out.println(task);
         LocalDate dueDate = inputDate(input, "Enter due date (yyyy/mm/dd): ");
         int hoursOfWork = inputNumber(input, "Enter hours of work (integer): ");
         try {
@@ -106,13 +155,7 @@ public class Main {
             System.out.println("0. Exit");
             System.out.print("Pick an option: ");
             if(input.hasNextInt()){
-                int option = input.nextInt();
-                if(option >= 1 && option <= 4){
-                    return option;
-                }else if(option == 0) {
-                    System.out.println("Exiting. Good bye!");
-                    System.exit(0);
-                }
+                return input.nextInt();
             }else{
                 input.next();
             }
@@ -127,7 +170,7 @@ public class Main {
             String dateString = scanner.next();
             try {
                 return LocalDate.parse(dateString, formatter);
-            } catch (Exception e) {
+            } catch (java.time.format.DateTimeParseException e) {
                 System.out.println("Invalid date. Please enter a valid date in the format yyyy/mm/dd.");
             }
         }
@@ -153,7 +196,7 @@ public class Main {
         while (true) {
             System.out.print(prompt);
             if (scanner.hasNext()) {
-                string = scanner.next();
+                string = scanner.nextLine();
                 break;
             } else {
                 System.out.println("Invalid input. Please enter a string.");

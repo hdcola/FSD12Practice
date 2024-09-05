@@ -10,9 +10,9 @@ public class Todo {
 
     public Todo(String dataLine){
         String[] data = dataLine.split(";");
-        this.task = data[0];
-        this.dueDate = LocalDate.parse(data[1]);
-        this.hoursOfWork = Integer.parseInt(data[2]);
+        setTask(data[0]);
+        setDueDate(data[1]);
+        setHoursOfWork(Integer.parseInt(data[2]));
     }
 
     public String toDataString(){
@@ -38,6 +38,15 @@ public class Todo {
             throw new IllegalArgumentException("Task must NOT contain a semicolon or | or ` (reverse single quote) characters");
         }
         this.task = task;
+    }
+
+    public void setDueDate(String dueDate) throws IllegalArgumentException {
+        try{
+        DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy/M/d");
+        setDueDate(LocalDate.parse(dueDate, formatter));
+        }catch (java.time.format.DateTimeParseException e){
+            throw new IllegalArgumentException("Invalid date format. Please use yyyy/mm/dd");
+        }
     }
 
     public void setDueDate(LocalDate dueDate) throws IllegalArgumentException {
