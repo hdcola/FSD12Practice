@@ -1,4 +1,3 @@
-import java.io.File;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -53,7 +52,7 @@ public class Main {
             System.out.println("There are no todos to delete.");
         }else{
             listTodos();
-            int todoIndex = inputNumber(input, "Deleting a todo. Which todo # would you like to delete? ");
+            int todoIndex = inputNumber("Deleting a todo. Which todo # would you like to delete? ");
             if(todoIndex >= 1 && todoIndex <= todoList.size()){
                 Todo todo = todoList.remove(todoIndex - 1);
                 System.out.println("Deleted todo #"+ todoIndex +" successfully.");
@@ -68,13 +67,13 @@ public class Main {
             System.out.println("There are no todos to modify.");
         }else{
             listTodos();
-            int todoIndex = inputNumber(input, "Modifying a todo. Which todo # would you like to modify? ");
+            int todoIndex = inputNumber("Modifying a todo. Which todo # would you like to modify? ");
             if(todoIndex >= 1 && todoIndex <= todoList.size()){
                 Todo todo = todoList.get(todoIndex - 1);
                 System.out.println("Modifying todo " + todo);
-                String task = inputString(input, "Enter new task description: ");
-                LocalDate dueDate = inputDate(input, "Enter new due date (yyyy/mm/dd): ");
-                int hoursOfWork = inputNumber(input, "Enter new hours of work (integer): ");
+                String task = inputString("Enter new task description: ");
+                LocalDate dueDate = inputDate("Enter new due date (yyyy/mm/dd): ");
+                int hoursOfWork = inputNumber("Enter new hours of work (integer): ");
                 Todo.TaskStatus status = inputEnum(input, "Enter if task is 'Done' or 'Pending': ", Todo.TaskStatus.class);
                 try {
                     todo.setTask(task);
@@ -103,9 +102,9 @@ public class Main {
     }
 
     public static void addTodo(){
-        String task = inputString(input, "Enter task description: ");
-        LocalDate dueDate = inputDate(input, "Enter due date (yyyy/mm/dd): ");
-        int hoursOfWork = inputNumber(input, "Enter hours of work (integer): ");
+        String task = inputString("Enter task description: ");
+        LocalDate dueDate = inputDate("Enter due date (yyyy/mm/dd): ");
+        int hoursOfWork = inputNumber("Enter hours of work (integer): ");
         Todo.TaskStatus status = Todo.TaskStatus.Pending;
         try {
             Todo todo = new Todo(task, dueDate, hoursOfWork, status);
@@ -137,11 +136,11 @@ public class Main {
         }
     }
 
-    public static LocalDate inputDate(Scanner scanner, String prompt) {
+    public static LocalDate inputDate( String prompt) {
         DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy/M/d");
         while (true) {
             System.out.print(prompt);
-            String dateString = scanner.nextLine();
+            String dateString = input.nextLine();
             try {
                 return LocalDate.parse(dateString, formatter);
             } catch (java.time.format.DateTimeParseException e) {
@@ -150,32 +149,32 @@ public class Main {
         }
     }
 
-    public static int inputNumber(Scanner scanner, String prompt) {
+    public static int inputNumber(String prompt) {
         int number;
         while (true) {
             System.out.print(prompt);
-            if (scanner.hasNextInt()) {
-                number = scanner.nextInt();
-                scanner.nextLine();
+            if (input.hasNextInt()) {
+                number = input.nextInt();
+                input.nextLine();
                 break;
             } else {
                 System.out.println("Invalid input. Please enter an integer.");
-                scanner.next();
+                input.next();
             }
         }
         return number;
     }
 
-    public static String inputString(Scanner scanner, String prompt) {
+    public static String inputString(String prompt) {
         String string;
         while (true) {
             System.out.print(prompt);
-            if (scanner.hasNextLine()) {
-                string = scanner.nextLine();
+            if (input.hasNextLine()) {
+                string = input.nextLine();
                 break;
             } else {
                 System.out.println("Invalid input. Please enter a string.");
-                scanner.next();
+                input.next();
             }
         }
         return string;

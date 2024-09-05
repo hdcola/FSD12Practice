@@ -18,7 +18,7 @@ public class FileStorage implements DataStorage {
                 try{
                     Todo todo = new Todo(dataLine);
                     todoList.add(todo);
-                }catch (IllegalArgumentException e){
+                }catch (IllegalArgumentException  | ArrayIndexOutOfBoundsException e){
                     System.out.println("Invalid data: " + dataLine);
                 }
             }
