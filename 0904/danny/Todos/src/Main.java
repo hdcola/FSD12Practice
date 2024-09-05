@@ -30,7 +30,7 @@ public class Main {
                 case 0:
                     System.out.println("Exiting. Good bye!");
                     saveData();
-                    System.exit(0);
+                    break;
                 default:
                     System.out.println("Invalid option. Please try again.");
             }
