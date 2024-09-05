@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,8 +21,8 @@ public class FileStorage implements DataStorage {
                     System.out.println("Invalid data: " + dataLine);
                 }
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + filename);
+        } catch (Exception e) {
+            System.out.println("Read data error: " + filename);
         }
         return todoList;
     }
@@ -38,8 +37,8 @@ public class FileStorage implements DataStorage {
             for (Todo todo : todoList) {
                 fileWriter.println(todo.toDataString());
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found: " + filename);
+        } catch (Exception e) {
+            System.out.println("Write data error: " + filename);
         }
     }
 }
