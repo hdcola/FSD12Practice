@@ -2,27 +2,30 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Todo {
+    public enum TaskStatus { Pending, Done };
+
     String task;
     LocalDate dueDate;
     int hoursOfWork;
-    // Part3: TaskStatus status;
-    // Part3: enum TaskStatus { Pending, Done };
+    TaskStatus status;
 
     public Todo(String dataLine){
         String[] data = dataLine.split(";");
         setTask(data[0]);
         setDueDate(data[1]);
         setHoursOfWork(Integer.parseInt(data[2]));
+        setStatus(data[3]);
     }
 
     public String toDataString(){
-        return task + ";" + getDueDateFormatted() + ";" + hoursOfWork;
+        return task + ";" + getDueDateFormatted() + ";" + hoursOfWork + ";" + status;
     }
 
-    public Todo(String task, LocalDate dueDate, int hoursOfWork) throws IllegalArgumentException {
+    public Todo(String task, LocalDate dueDate, int hoursOfWork, TaskStatus status) throws IllegalArgumentException {
         this.setTask(task);
         this.setDueDate(dueDate);
         this.setHoursOfWork(hoursOfWork);
+        this.setStatus(status);
     }
 
     public void setTask(String task) throws IllegalArgumentException {
@@ -65,6 +68,20 @@ public class Todo {
         this.hoursOfWork = hoursOfWork;
     }
 
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public void setStatus(String status) {
+        if (status.equals("Pending")) {
+            this.status = TaskStatus.Pending;
+        } else if (status.equals("Done")) {
+            this.status = TaskStatus.Done;
+        } else {
+            throw new IllegalArgumentException("Invalid status. Please use Pending or Done");
+        }
+    }
+
     public String getTask() {
         return task;
     }
@@ -81,9 +98,13 @@ public class Todo {
         return hoursOfWork;
     }
 
+    public TaskStatus getStatus() {
+        return status;
+    }
+
     // format all fields of this Todo item for display exactly as specified below in the example interactions
     @Override
     public String toString() {
-        return task + " , " + getDueDateFormatted() + " , will take " + hoursOfWork + " hour(s) of work";
+        return task + " , " + getDueDateFormatted() + " , will take " + hoursOfWork + " hour(s) of work, " + status;
     }
 }

@@ -35,7 +35,6 @@ public class Main {
                     System.out.println("Invalid option. Please try again.");
             }
         }
-
     }
 
 
@@ -104,11 +103,12 @@ public class Main {
                 String task = inputString(input, "Enter new task description: ");
                 LocalDate dueDate = inputDate(input, "Enter new due date (yyyy/mm/dd): ");
                 int hoursOfWork = inputNumber(input, "Enter new hours of work (integer): ");
-                String status = inputString(input, "Enter if task is 'Done' or 'Pending': ");
+                Todo.TaskStatus status = inputEnum(input, "Enter if task is 'Done' or 'Pending': ", Todo.TaskStatus.class);
                 try {
                     todo.setTask(task);
                     todo.setDueDate(dueDate);
                     todo.setHoursOfWork(hoursOfWork);
+                    todo.setStatus(status);
                     System.out.println("You've modified todo #"+ todoIndex +" as follows:");
                     System.out.println(todo);
                 } catch (IllegalArgumentException e) {
@@ -132,11 +132,11 @@ public class Main {
 
     public static void addTodo(){
         String task = inputString(input, "Enter task description: ");
-        System.out.println(task);
         LocalDate dueDate = inputDate(input, "Enter due date (yyyy/mm/dd): ");
         int hoursOfWork = inputNumber(input, "Enter hours of work (integer): ");
+        Todo.TaskStatus status = Todo.TaskStatus.Pending;
         try {
-            Todo todo = new Todo(task, dueDate, hoursOfWork);
+            Todo todo = new Todo(task, dueDate, hoursOfWork, status);
             todoList.add(todo);
             System.out.println("You've created the following todo:");
             System.out.println(todo);
@@ -155,7 +155,9 @@ public class Main {
             System.out.println("0. Exit");
             System.out.print("Pick an option: ");
             if(input.hasNextInt()){
-                return input.nextInt();
+                int number = input.nextInt();
+                input.nextLine();
+                return number;
             }else{
                 input.next();
             }
@@ -167,7 +169,7 @@ public class Main {
         DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy/M/d");
         while (true) {
             System.out.print(prompt);
-            String dateString = scanner.next();
+            String dateString = scanner.nextLine();
             try {
                 return LocalDate.parse(dateString, formatter);
             } catch (java.time.format.DateTimeParseException e) {
@@ -182,6 +184,7 @@ public class Main {
             System.out.print(prompt);
             if (scanner.hasNextInt()) {
                 number = scanner.nextInt();
+                scanner.nextLine();
                 break;
             } else {
                 System.out.println("Invalid input. Please enter an integer.");
@@ -195,7 +198,7 @@ public class Main {
         String string;
         while (true) {
             System.out.print(prompt);
-            if (scanner.hasNext()) {
+            if (scanner.hasNextLine()) {
                 string = scanner.nextLine();
                 break;
             } else {
@@ -206,4 +209,18 @@ public class Main {
         return string;
     }
 
+    public static <T extends Enum<T>> T inputEnum(Scanner scanner, String prompt, Class<T> enumType) {
+        while (true) {
+            System.out.print(prompt);
+            try {
+                if (scanner.hasNextLine()) {
+                    String statusString = scanner.nextLine();
+                    return Enum.valueOf(enumType, statusString);
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid input. Please enter a valid value for " + enumType.getSimpleName() + ".");
+            }
+
+        }
+    }
 }
