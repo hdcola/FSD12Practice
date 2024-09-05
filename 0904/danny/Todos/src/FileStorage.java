@@ -12,8 +12,7 @@ public class FileStorage implements DataStorage {
 
     ArrayList<Todo> loadDataFromFile(String filename) {
         ArrayList<Todo> todoList = new ArrayList<>();
-        try {
-            Scanner fileScanner = new Scanner(new File(filename));
+        try(Scanner fileScanner = new Scanner(new File(filename))) {
             while (fileScanner.hasNextLine()) {
                 String dataLine = fileScanner.nextLine();
                 try{
@@ -23,7 +22,6 @@ public class FileStorage implements DataStorage {
                     System.out.println("Invalid data: " + dataLine);
                 }
             }
-            fileScanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + filename);
         }
@@ -36,12 +34,10 @@ public class FileStorage implements DataStorage {
     }
 
     void saveDataToFile(String filename, ArrayList<Todo> todoList) {
-        try {
-            java.io.PrintWriter fileWriter = new java.io.PrintWriter(filename);
+        try (java.io.PrintWriter fileWriter = new java.io.PrintWriter(filename);){
             for (Todo todo : todoList) {
                 fileWriter.println(todo.toDataString());
             }
-            fileWriter.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + filename);
         }

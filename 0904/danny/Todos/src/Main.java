@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,7 +7,7 @@ import java.util.Scanner;
 public class Main {
     static ArrayList<Todo> todoList = new ArrayList<>();
     static Scanner input = new Scanner(System.in);
-    static DataStorage dataStorage = new SQLiteStorage();
+    static DataStorage dataStorage = new FileStorage();
 
     public static void main(String[] args) {
         loadDataFromFile();

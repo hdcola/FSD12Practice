@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class SQLiteStorage implements DataStorage {
     public SQLiteStorage() {
         try {
-            Class.forName("org.sqlite.JDBC");
+            // Class.forName("org.sqlite.JDBC");
 
             Connection connection = DriverManager.getConnection("jdbc:sqlite:todos.db");
             Statement statement = connection.createStatement();
