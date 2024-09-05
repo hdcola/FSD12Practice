@@ -55,7 +55,7 @@ public class Todo {
         DateTimeFormatter formatter =DateTimeFormatter.ofPattern("yyyy/M/d");
         setDueDate(LocalDate.parse(dueDate, formatter));
         }catch (java.time.format.DateTimeParseException e){
-            throw new IllegalArgumentException("Invalid date format. Please use yyyy/mm/dd");
+            throw new IllegalArgumentException("Invalid date format. Please use yyyy/mm/dd", e);
         }
     }
 
