@@ -1,4 +1,3 @@
-import java.util.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -9,6 +8,16 @@ public class Todo {
     // Part3: TaskStatus status;
     // Part3: enum TaskStatus { Pending, Done };
 
+    public Todo(String dataLine){
+        String[] data = dataLine.split(";");
+        this.task = data[0];
+        this.dueDate = LocalDate.parse(data[1]);
+        this.hoursOfWork = Integer.parseInt(data[2]);
+    }
+
+    public String toDataString(){
+        return task + ";" + getDueDateFormatted() + ";" + hoursOfWork;
+    }
 
     public Todo(String task, LocalDate dueDate, int hoursOfWork) throws IllegalArgumentException {
         this.setTask(task);
@@ -22,6 +31,10 @@ public class Todo {
             throw new IllegalArgumentException("Task must be between 2 and 50 characters long");
         }
         if (task.contains(";") || task.contains("|") || task.contains("`")) {
+            throw new IllegalArgumentException("Task must NOT contain a semicolon or | or ` (reverse single quote) characters");
+        }
+        // use regular expression to check for invalid characters | or `
+        if (task.matches(".*[|`].*")) {
             throw new IllegalArgumentException("Task must NOT contain a semicolon or | or ` (reverse single quote) characters");
         }
         this.task = task;

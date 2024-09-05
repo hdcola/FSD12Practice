@@ -1,9 +1,6 @@
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -11,7 +8,78 @@ public class Main {
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
-        addTodo();
+        int option = 5;
+        while (option != 0){
+            option = inputMainMenu();
+            switch (option){
+                case 1:
+                    addTodo();
+                    break;
+                case 2:
+                    listTodos();
+                    break;
+                case 3:
+                    deleteTodo();
+                    break;
+                case 4:
+                    modifyTodo();
+                    break;
+            }
+        }
+
+    }
+
+    public static void deleteTodo(){
+        if(todoList.isEmpty()){
+            System.out.println("There are no todos to delete.");
+        }else{
+            listTodos();
+            int todoIndex = inputNumber(input, "Deleting a todo. Which todo # would you like to delete? ");
+            if(todoIndex >= 1 && todoIndex <= todoList.size()){
+                Todo todo = todoList.remove(todoIndex - 1);
+                System.out.println("Deleted todo #"+ todoIndex +" successfully.");
+            }else{
+                System.out.println("Invalid todo number.");
+            }
+        }
+    }
+
+    public static void modifyTodo(){
+        if(todoList.isEmpty()){
+            System.out.println("There are no todos to modify.");
+        }else{
+            listTodos();
+            int todoIndex = inputNumber(input, "Modifying a todo. Which todo # would you like to modify? ");
+            if(todoIndex >= 1 && todoIndex <= todoList.size()){
+                Todo todo = todoList.get(todoIndex - 1);
+                System.out.println("Modifying todo " + todo);
+                String task = inputString(input, "Enter new task description: ");
+                LocalDate dueDate = inputDate(input, "Enter new due date (yyyy/mm/dd): ");
+                int hoursOfWork = inputNumber(input, "Enter new hours of work (integer): ");
+                String status = inputString(input, "Enter if task is 'Done' or 'Pending': ");
+                try {
+                    todo.setTask(task);
+                    todo.setDueDate(dueDate);
+                    todo.setHoursOfWork(hoursOfWork);
+                    System.out.println("You've modified todo #"+ todoIndex +" as follows:");
+                    System.out.println(todo);
+                } catch (IllegalArgumentException e) {
+                    System.out.println(e.getMessage());
+                }
+            }else{
+                System.out.println("Invalid todo number.");
+            }
+        }
+    }
+
+    public static void listTodos(){
+        if(todoList.isEmpty()){
+            System.out.println("There are no todos.");
+        }else{
+            for(int i = 0; i < todoList.size(); i++) {
+                System.out.println("#" + (i + 1) + ": " + todoList.get(i));
+            }
+        }
     }
 
     public static void addTodo(){
@@ -30,7 +98,7 @@ public class Main {
 
     public static int inputMainMenu(){
         while(true){
-            System.out.println("Please make a choice [0-4]:");
+            System.out.println("\nPlease make a choice [0-4]:");
             System.out.println("1. Add a todo");
             System.out.println("2. List all todos (numbered)");
             System.out.println("3. Delete a todo");
@@ -39,9 +107,10 @@ public class Main {
             System.out.print("Pick an option: ");
             if(input.hasNextInt()){
                 int option = input.nextInt();
-                if(option >= 1 && option <= 3){
+                if(option >= 1 && option <= 4){
                     return option;
                 }else if(option == 0) {
+                    System.out.println("Exiting. Good bye!");
                     System.exit(0);
                 }
             }else{
