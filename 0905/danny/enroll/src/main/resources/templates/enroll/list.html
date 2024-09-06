@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:include="~{common-head :: commonHead}"></th:block>
+    <title>Home</title>
+</head>
+<body>
+<div class="font-sans w-full" id="app">
+    <div>
+        <div class="p-4">
+            <h1 class="text-3xl">Enroll List</h1>
+            <div class="overflow-x-auto">
+                <table class="table table-zebra">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Course</th>
+                        <th>Message</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="enroll: ${enrolls}">
+                        <td th:text="${enroll.name}"></td>
+                        <td th:text="${enroll.email}"></td>
+                        <td th:text="${enroll.phone}"></td>
+                        <td th:text="${enroll.course}"></td>
+                        <td th:text="${enroll.message}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

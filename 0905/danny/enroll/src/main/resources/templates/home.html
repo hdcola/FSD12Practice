@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:include="~{common-head :: commonHead}"></th:block>
+    <title>Home</title>
+</head>
+<body>
+<div class="font-sans w-full" id="app">
+    <div>
+        <div class="p-4">
+            <h1 class="text-3xl">Welecom to BootCamp</h1>
+            <p className="mt-4">
+                We are a group of developers who actively embrace new technologies, and this is our bootcamp where we share
+                our learning and achievements. By participating in the bootcamp, you can learn about the latest art,
+                computer technology and also share your learning experience. Join us now!
+            </p>
+            <div class="flex flex-row flex-wrap">
+                <div class="card bg-base-100 w-96 shadow-xl mx-2">
+                    <div class="card-body">
+                        <h2 class="card-title">Web Development BootCamp</h2>
+                        <p>Learn how to develop up-to-date websites and apps and get them out there for everyone to use.</p>
+                        <div class="card-actions justify-end">
+                            <a th:href="@{/enroll?course=webdev}" class="btn btn-primary">Enroll</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-base-100 w-96 shadow-xl mx-2">
+                    <div class="card-body">
+                        <h2 class="card-title">Web Development BootCamp</h2>
+                        <p>Learn how to develop up-to-date websites and apps and get them out there for everyone to use.</p>
+                        <div class="card-actions justify-end">
+                            <a th:href="@{/enroll?course=webdev}" class="btn btn-primary">Enroll</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
