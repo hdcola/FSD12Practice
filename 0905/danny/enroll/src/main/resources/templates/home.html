@@ -33,6 +33,15 @@
                         </div>
                     </div>
                 </div>
+                <div class="card bg-base-100 w-96 shadow-xl mx-2" id="test" th:fragment="test">
+                    <div class="card-body">
+                        <h2 class="card-title">Web Development BootCamp</h2>
+                        <p th:text="${message}">Learn how to develop up-to-date websites and apps and get them out there for everyone to use.</p>
+                        <div class="card-actions justify-end">
+                            <a hx-get="/test" hx-target="#test" hx-swap="outerHTML" class="btn btn-primary">Enroll</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
