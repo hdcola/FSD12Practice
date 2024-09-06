@@ -3,6 +3,7 @@
 <head>
     <th:block th:include="~{common-head :: commonHead}"></th:block>
     <title>Home</title>
+    <link href="https://cdn.datatables.net/v/dt/dt-2.1.6/datatables.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="font-sans w-full" id="app">
@@ -10,14 +11,14 @@
         <div class="p-4">
             <h1 class="text-3xl">Enroll List</h1>
             <div class="overflow-x-auto">
-                <table class="table table-zebra">
+                <table class="table table-zebra" id="enroll-table">
                     <thead>
                     <tr>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Course</th>
-                        <th>Message</th>
+                        <th>Actions</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -26,7 +27,10 @@
                         <td th:text="${enroll.email}"></td>
                         <td th:text="${enroll.phone}"></td>
                         <td th:text="${enroll.course}"></td>
-                        <td th:text="${enroll.message}"></td>
+                        <td>
+                            <a th:href="@{/enroll/edit(id=${enroll.id})}" class="btn btn-sm btn-info">Edit</a>
+                            <a th:href="@{/enroll/delete(id=${enroll.id})}" class="btn btn-sm btn-error ml-2">Delete</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -34,5 +38,17 @@
         </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-2.1.6/datatables.min.js"></script>
+<script>
+    $(document).ready( function () {
+        let table = new DataTable( '#enroll-table' , {
+            columnDefs: [
+                { targets: [4], orderable: false }
+            ]
+        });
+        // $('#enroll-table').DataTable();
+    } );
+</script>
 </body>
 </html>

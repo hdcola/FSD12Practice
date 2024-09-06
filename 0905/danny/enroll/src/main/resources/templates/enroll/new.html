@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:include="~{common-head :: commonHead}"></th:block>
+    <title>Home</title>
+</head>
+<body>
+<div class="font-sans w-full" id="app">
+    <div class="p-4">
+        <h1 class="text-3xl">Enroll in Web Development Bootcamp</h1>
+        <form class="flex flex-col gap-4" method="POST" th:action="@{/enroll/new}" th:object="${enroll}">
+            <input type="hidden" th:field="*{id}" />
+            <label class="input input-bordered flex items-center gap-2">
+                Name
+                <input type="text" class="grow" placeholder="Your name" th:field="*{name}" />
+            </label>
+            <label class="input input-bordered flex items-center gap-2">
+                Email
+                <input type="text" class="grow" placeholder="your@email.address" th:field="*{email}" />
+            </label>
+            <label class="input input-bordered flex items-center gap-2">
+                Phone
+                <input type="text" class="grow" placeholder="your@email.address" th:field="*{phone}" />
+            </label>
+            <input type="hidden" th:field="*{course}" />
+            <button class="btn btn-primary" type="submit">Enroll</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

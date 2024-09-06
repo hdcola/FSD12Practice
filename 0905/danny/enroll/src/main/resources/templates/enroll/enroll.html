@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:include="~{common-head :: commonHead}"></th:block>
+    <title>Home</title>
+</head>
+<body>
+<div class="font-sans w-full" id="app">
+    <div class="p-4">
+        <h1 class="text-3xl">Enroll in Web Development Bootcamp</h1>
+        <form @submit.prevent="createEnroll" class="flex flex-col gap-4">
+            {{ form.hidden_tag() }}
+            <label class="input input-bordered flex items-center gap-2">
+                Name
+                <input type="text" class="grow" placeholder="Your name" v-model="enroll.name" />
+            </label>
+            <div v-if="errors.name" class="text-red-500">{ errors.name[0] }</div>
+            <label class="input input-bordered flex items-center gap-2">
+                Email
+                <input type="text" class="grow" placeholder="your@email.address" v-model="enroll.email" />
+            </label>
+            <div v-if="errors.email" class="text-red-500">{ errors.email[0] }</div>
+            <div>
+                <p class="mt-4">Select the time slot available for camp enrollment</p>
+                <div class="form-control">
+                    <label class="cursor-pointer label">
+                        <span class="label-text">Tue 3:00PM-5:00PM</span>
+                        <input type="checkbox" checked="checked" class="checkbox checkbox-primary" />
+                    </label>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Enroll</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
