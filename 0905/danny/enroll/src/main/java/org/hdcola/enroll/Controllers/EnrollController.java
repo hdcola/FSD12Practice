@@ -1,10 +1,13 @@
 package org.hdcola.enroll.Controllers;
 
+import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.hdcola.enroll.Entities.Enroll;
 import org.hdcola.enroll.Repositories.EnrollRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,7 +31,12 @@ public class EnrollController {
     }
 
     @PostMapping("/new")
-    public String create(@ModelAttribute Enroll enroll) {
+    public String create(@Valid @ModelAttribute Enroll enroll, Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            model.addAttribute("enroll", enroll);
+            model.addAttribute("errors", errors);
+            return "enroll/new";
+        }
         enrollRepository.save(enroll);
         return "redirect:/enroll/list";
     }

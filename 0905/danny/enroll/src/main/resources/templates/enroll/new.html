@@ -13,10 +13,12 @@
             <label class="input input-bordered flex items-center gap-2">
                 Name
                 <input type="text" class="grow" placeholder="Your name" th:field="*{name}" />
+                <span class="text-red-500" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</span>
             </label>
             <label class="input input-bordered flex items-center gap-2">
                 Email
                 <input type="text" class="grow" placeholder="your@email.address" th:field="*{email}" />
+                <span class="text-red-500" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
             </label>
             <label class="input input-bordered flex items-center gap-2">
                 Phone
