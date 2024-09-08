@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="en">
+<head>
+    <th:block th:include="~{common-head :: commonHead}"></th:block>
+    <title>HDBlog System Home</title>
+</head>
+<body>
+<div class="font-sans w-full" id="app">
+    <div>
+        <div class="p-4">
+            <h1 class="text-3xl">Welecom to HDBlog System</h1>
+            <sec:authorize access="isAuthenticated()">
+                <span th:if="${#authentication.name != 'anonymousUser'}" th:remove="tag" sec:authentication="name">thymeleaf</span>!
+            </sec:authorize>
+            <sec:authorize access="!isAuthenticated()">
+                <a th:href="@{/login}">Login</a>
+            </sec:authorize>
+        </div>
+    </div>
+</div>
+</body>
+</html>
