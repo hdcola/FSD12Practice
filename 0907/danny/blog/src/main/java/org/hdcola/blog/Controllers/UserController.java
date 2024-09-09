@@ -2,6 +2,7 @@ package org.hdcola.blog.Controllers;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.hdcola.blog.DTOs.UserSettingsDTO;
 import org.hdcola.blog.Entities.User;
 import org.hdcola.blog.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Slf4j
@@ -59,10 +61,26 @@ public class UserController {
 
     @GetMapping("/settings")
     public String settings(Authentication authentication, Model model) {
-        log.debug("open settings page");
-        log.debug("User: " + authentication.getName());
-        log.debug("Authorities: " + authentication.isAuthenticated());
-        return "index";
+        User user = userRepository.findByEmail(authentication.getName());
+        UserSettingsDTO userSettingsDTO = UserSettingsDTO.fromUser(user);
+        log.debug(userSettingsDTO.toString());
+        model.addAttribute("user", userSettingsDTO);
+        return "settings";
     }
 
+    @PostMapping("/settings")
+    public String update(Authentication authentication, @Valid @ModelAttribute("user") UserSettingsDTO userDto, Errors errors, Model model) {
+        log.debug(userDto.toString());
+        if (errors.hasErrors()) {
+            log.debug(errors.toString());
+            return "settings";
+        }
+        User user = userRepository.findByEmail(authentication.getName());
+        if(!userDto.getPassword().trim().isBlank()) {
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        }
+        user.setName(userDto.getName());
+        userRepository.save(user);
+        return "redirect:/";
+    }
 }

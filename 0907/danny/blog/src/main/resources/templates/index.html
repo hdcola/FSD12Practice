@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="en">
 <head>
-    <th:block th:include="~{common-head :: commonHead}"></th:block>
+    <th:block th:insert="~{common-head :: commonHead}"></th:block>
     <title>HDBlog System Home</title>
 </head>
 <body>
@@ -9,12 +9,15 @@
     <div>
         <div class="p-4">
             <h1 class="text-3xl">Welecom to HDBlog System</h1>
-            <sec:authorize access="isAuthenticated()">
-                <span th:if="${#authentication.name != 'anonymousUser'}" th:remove="tag" sec:authentication="name">thymeleaf</span>!
-            </sec:authorize>
-            <sec:authorize access="!isAuthenticated()">
-                <a th:href="@{/login}">Login</a>
-            </sec:authorize>
+            <div sec:authorize="isAuthenticated()">
+                <p>Welcome, <span sec:authentication="principal.name"></span>!</p>
+                <a th:href="@{/settings}" class="btn btn-secondary">Settings</a>
+                <a th:href="@{/logout}" class="btn btn-secondary">Logout</a>
+            </div>
+
+            <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/login}" class="btn btn-primary">Login</a>
+            </div>
         </div>
     </div>
 </div>
