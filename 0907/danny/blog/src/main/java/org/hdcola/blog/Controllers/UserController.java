@@ -38,6 +38,7 @@ public class UserController {
     public String create(@Valid User user, Errors errors, Model model) {
         // Check if email is already in use
         if (userRepository.findByEmail(user.getEmail()) != null) {
+            log.info("Email is already in use:" + user.getEmail());
             errors.rejectValue("email", "email.exists", "Email is already in use.");
         }
         if (errors.hasErrors()) {
