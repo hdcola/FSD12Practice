@@ -6,18 +6,11 @@
 </head>
 <body>
 <div class="font-sans w-full" id="app">
+    <div th:insert="~{common-menu :: commonMenu}"></div>
     <div>
         <div class="p-4">
             <h1 class="text-3xl">Welecom to HDBlog System</h1>
-            <div sec:authorize="isAuthenticated()">
-                <p>Welcome, <span sec:authentication="principal.name"></span>!</p>
-                <a th:href="@{/settings}" class="btn btn-secondary">Settings</a>
-                <a th:href="@{/logout}" class="btn btn-secondary">Logout</a>
-            </div>
 
-            <div sec:authorize="!isAuthenticated()">
-                <a th:href="@{/login}" class="btn btn-primary">Login</a>
-            </div>
         </div>
     </div>
 </div>

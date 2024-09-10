@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:insert="~{common-head :: commonHead}"></th:block>
+    <title>New a Blog</title>
+</head>
+<body>
+<div class="font-sans w-full" id="app">
+    <div th:insert="~{common-menu :: commonMenu}"></div>
+    <div class="p-4">
+        <h1 class="text-3xl">New a blog</h1>
+        <form class="flex flex-col gap-4" method="POST" th:action="@{/article/new}" th:object="${article}">
+            <input type="hidden" th:field="*{id}" />
+            <label class="input input-bordered flex items-center gap-2">
+                Title
+                <input type="text" class="grow" placeholder="Title" th:field="*{title}" />
+                <span class="text-red-500" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</span>
+            </label>
+            <label class="input input-bordered flex items-center gap-2">
+                Body
+                <input type="text" class="grow" placeholder="Body" th:field="*{body}" />
+                <span class="text-red-500" th:if="${#fields.hasErrors('body')}" th:errors="*{body}">Body Error</span>
+            </label>
+            <button class="btn btn-primary" type="submit">Save</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

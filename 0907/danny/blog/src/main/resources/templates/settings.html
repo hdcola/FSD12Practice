@@ -6,6 +6,7 @@
 </head>
 <body>
 <div class="font-sans w-full" id="app">
+    <div th:insert="~{common-menu :: commonMenu}"></div>
     <div class="p-4">
         <h1 class="text-3xl">Settings</h1>
         <form class="flex flex-col gap-4" method="POST" th:action="@{/settings}" th:object="${user}">

@@ -69,7 +69,7 @@ public class UserController {
     }
 
     @PostMapping("/settings")
-    public String update(Authentication authentication, @Valid @ModelAttribute("user") UserSettingsDTO userDto, Errors errors, Model model) {
+    public String update(Authentication authentication, @Valid @ModelAttribute("user") UserSettingsDTO userDto, Errors errors) {
         log.debug(userDto.toString());
         if (errors.hasErrors()) {
             log.debug(errors.toString());

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:insert="~{common-head :: commonHead}"></th:block>
+    <title>Blog list</title>
+</head>
+<body>
+<div class="font-sans w-full" id="app">
+    <div th:insert="~{common-menu :: commonMenu}"></div>
+    <div>
+        <div class="p-4">
+            <h1 class="text-3xl">Article List</h1>
+            <div class="overflow-x-auto">
+                <table class="table table-zebra" id="article-table">
+                    <thead>
+                    <tr>
+                        <td>Title</td>
+                        <td>Creation Time</td>
+                        <td>Action</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="article: ${articles}">
+                            <td th:text="${article.title}"></td>
+                            <td th:text="${#temporals.format(article.creationTime, 'yyyy/MM/dd HH:mm')}"></td>
+                            <td>
+                                <a th:href="@{/article/edit/${article.id}}" class="btn btn-sm btn-info">Edit</a>
+                                <a th:href="@{/article/delete/${article.id}}" class="btn btn-sm btn-error ml-2">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a th:href="@{/article/new}" class="btn btn-primary mt-4">Create a article</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.datatables.net/v/dt/dt-2.1.6/datatables.min.js"></script>
+<script>
+    $(document).ready( function () {
+        let table = new DataTable( '#article-table' , {
+            columnDefs: [
+                { targets: [-1], orderable: false }
+            ]
+        });
+        // $('#enroll-table').DataTable();
+    } );
+</script>
+</body>
+</html>
