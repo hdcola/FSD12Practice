@@ -10,7 +10,25 @@
     <div>
         <div class="p-4">
             <h1 class="text-3xl">Welecom to HDBlog System</h1>
-
+            <div class="overflow-x-auto" th:fragment="article-list">
+                <table class="table table-zebra" id="article-table">
+                    <thead>
+                    <tr>
+                        <td>Title</td>
+                        <td>Author</td>
+                        <td>Creation Time</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="article: ${articles}" class="hover"
+                        th:onclick="'window.location.href=\'' + @{/show/{id}(id=${article.id})} + '\''">
+                        <td th:text="${article.title}"></td>
+                        <td th:text="${article.user.name}"></td>
+                        <td th:text="${#temporals.format(article.creationTime, 'yyyy/MM/dd HH:mm')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

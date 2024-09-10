@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.hdcola.blog.DTOs.UserSettingsDTO;
 import org.hdcola.blog.Entities.User;
+import org.hdcola.blog.Repositories.ArticleRepository;
 import org.hdcola.blog.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,14 +23,9 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserController(UserRepository userRepository, PasswordEncoder passwordEncoder, ArticleRepository articleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-    }
-
-    @GetMapping("/")
-    public String index(Authentication authentication) {
-        return "index";
     }
 
     @GetMapping("/register")

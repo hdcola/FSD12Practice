@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:insert="~{common-head :: commonHead}"></th:block>
+    <title>New a Blog</title>
+</head>
+<body>
+<div class="font-sans w-full" id="app">
+    <div th:insert="~{common-menu :: commonMenu}"></div>
+    <div class="p-4">
+        <h1 class="text-3xl" th:text="${article.title}">Blog Title</h1>
+        <div class="flex flex-col gap-4"  >
+            <p th:text="${article.user.name} + ' ' + ${#temporals.format(article.creationTime, 'yyyy/MM/dd HH:mm')}"></p>
+            <p th:text="${article.body}"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

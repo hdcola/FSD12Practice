@@ -6,7 +6,8 @@
 <div th:fragment="commonMenu">
     <div sec:authorize="isAuthenticated()">
         <ul class="menu menu-horizontal bg-base-200">
-            <li><a th:href="@{/article/list}">Blog List</a></li>
+            <li><a th:href="@{/}">Home</a></li>
+            <li><a th:href="@{/article/list}">My Blog List</a></li>
             <li><a th:href="@{/article/new}">New blog</a></li>
             <li><a th:href="@{/settings}">Settings</a></li>
             <li><a th:href="@{/logout}">Logout</a></li>
@@ -15,6 +16,7 @@
 
     <div sec:authorize="!isAuthenticated()">
         <ul class="menu menu-horizontal bg-base-200">
+            <li><a th:href="@{/}">Home</a></li>
             <li><a th:href="@{/register}">Register</a> </li>
             <li><a th:href="@{/login}">Login</a></li>
         </ul>
