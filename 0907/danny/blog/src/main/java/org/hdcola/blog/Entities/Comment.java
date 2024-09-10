@@ -21,9 +21,7 @@ public class Comment {
     @CreationTimestamp
     private LocalDateTime creationTime;
 
-    @Lob
-    @Basic(fetch = FetchType.EAGER)
-    @Column(name = "body")
+    @Column(name = "body", columnDefinition = "TEXT")
     private String body;
 
     @ManyToOne

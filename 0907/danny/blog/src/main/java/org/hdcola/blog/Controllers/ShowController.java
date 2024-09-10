@@ -23,7 +23,7 @@ public class ShowController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("articles", articleRepository.findAll());
+        model.addAttribute("articles", articleRepository.findAll().reversed());
         return "index";
     }
 

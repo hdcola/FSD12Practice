@@ -24,9 +24,8 @@ public class Article {
     private String title;
     @CreationTimestamp
     private LocalDateTime creationTime;
-    @Lob
     @Basic(fetch = FetchType.LAZY)
-    @Column(name = "body")
+    @Column(name = "body", columnDefinition = "TEXT")
     private String body;
 
     @ManyToOne
