@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class CommentController {
@@ -26,11 +27,17 @@ public class CommentController {
     }
 
     @PostMapping("/comment/new/{articleId}")
-    public String newComment(Authentication authentication, @PathVariable Long articleId, Comment comment) {
+    public String newComment(
+            Authentication authentication,
+            @PathVariable Long articleId,
+            Comment comment,
+            RedirectAttributes redirectAttributes
+    ) {
         User user = userRepository.findByEmail(authentication.getName());
         comment.setUser(user);
         comment.setArticle(articleRepository.findById(articleId).get());
         commentRepository.save(comment);
+        redirectAttributes.addFlashAttribute("message", "Comment added.");
         return "redirect:/show/" + articleId;
     }
 }

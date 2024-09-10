@@ -12,9 +12,21 @@
             <li><a th:href="@{/settings}">Settings</a></li>
             <li><a th:href="@{/logout}">Logout</a></li>
         </ul>
-        <div th:if="${message}" class="alert alert-success">
+        <div id="flash-message" th:if="${message}"
+             class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded shadow-md transition-opacity duration-500 opacity-100">
             <p th:text="${message}"></p>
         </div>
+        <script>
+            window.onload = function() {
+                var flashMessage = document.getElementById('flash-message');
+                setTimeout(function() {
+                    flashMessage.classList.add('opacity-0');
+                }, 3000);
+                setTimeout(function() {
+                    flashMessage.remove();
+                }, 4000);
+            };
+        </script>
     </div>
 
     <div sec:authorize="!isAuthenticated()">
