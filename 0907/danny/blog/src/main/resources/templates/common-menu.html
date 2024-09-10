@@ -12,6 +12,9 @@
             <li><a th:href="@{/settings}">Settings</a></li>
             <li><a th:href="@{/logout}">Logout</a></li>
         </ul>
+        <div th:if="${message}" class="alert alert-success">
+            <p th:text="${message}"></p>
+        </div>
     </div>
 
     <div sec:authorize="!isAuthenticated()">

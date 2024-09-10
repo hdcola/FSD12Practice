@@ -20,11 +20,13 @@ public class Article {
     @Id
     @GeneratedValue
     private Long id;
+
     @Column(nullable = false, length = 100)
     private String title;
+
     @CreationTimestamp
     private LocalDateTime creationTime;
-    @Basic(fetch = FetchType.LAZY)
+
     @Column(name = "body", columnDefinition = "TEXT")
     private String body;
 

@@ -21,16 +21,19 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-    @Column(nullable = false,unique = true,length = 50)
+
+    @Column(nullable = false,unique = true,length = 320)
     @Email(message = "Email is not valid.")
     @NotBlank(message = "Email is required.")
     private String email;
-    @Column(nullable = false,length = 64)
+
+    @Column(nullable = false,length = 256)
     @Pattern(
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$",
             message = "Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, and one number."
     )
     private String password;
+
     @Column(nullable = false,length = 50)
     @NotBlank(message = "Name is required.")
     private String name;

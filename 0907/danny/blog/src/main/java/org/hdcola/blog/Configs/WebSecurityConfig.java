@@ -30,7 +30,8 @@ public class WebSecurityConfig {
         http
             .authorizeHttpRequests(
                     (requests) -> requests
-                            .requestMatchers("/settings/**","/article/**", "/comment/**").authenticated()
+                            .requestMatchers("/settings/**","/article/**", "/comment/**")
+                            .authenticated()
                             .anyRequest().permitAll()
             )
 

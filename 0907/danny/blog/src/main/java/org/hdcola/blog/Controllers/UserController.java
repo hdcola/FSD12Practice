@@ -15,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String create(@Valid User user, Errors errors, Model model) {
+    public String create(@Valid User user, Errors errors, Model model, RedirectAttributes redirectAttributes) {
         // Check if email is already in use
         if (userRepository.findByEmail(user.getEmail()) != null) {
             log.info("Email is already in use:" + user.getEmail());
@@ -47,6 +48,7 @@ public class UserController {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
+        redirectAttributes.addFlashAttribute("message", "Registration successful.");
         return "redirect:/";
     }
 
@@ -70,7 +72,12 @@ public class UserController {
     }
 
     @PostMapping("/settings")
-    public String update(Authentication authentication, @Valid @ModelAttribute("user") UserSettingsDTO userDto, Errors errors) {
+    public String update(
+            Authentication authentication,
+            @Valid @ModelAttribute("user") UserSettingsDTO userDto,
+            Errors errors,
+            RedirectAttributes redirectAttributes
+    ) {
         log.debug(userDto.toString());
         if (errors.hasErrors()) {
             log.debug(errors.toString());
@@ -82,6 +89,7 @@ public class UserController {
         }
         user.setName(userDto.getName());
         userRepository.save(user);
+        redirectAttributes.addFlashAttribute("message", "Settings updated.");
         return "redirect:/";
     }
 }
