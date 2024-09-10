@@ -24,8 +24,8 @@
                             <td th:text="${article.title}"></td>
                             <td th:text="${#temporals.format(article.creationTime, 'yyyy/MM/dd HH:mm')}"></td>
                             <td>
-                                <a th:href="@{/article/edit/${article.id}}" class="btn btn-sm btn-info">Edit</a>
-                                <a th:href="@{/article/delete/${article.id}}" class="btn btn-sm btn-error ml-2">Delete</a>
+                                <a th:href="@{/article/edit/{id}(id=${article.id})}" class="btn btn-sm btn-info">Edit</a>
+                                <a th:href="@{/article/delete/{id}(id=${article.id})}" class="btn btn-sm btn-error ml-2">Delete</a>
                             </td>
                         </tr>
                     </tbody>

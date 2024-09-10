@@ -11,6 +11,7 @@
         <h1 class="text-3xl">New a blog</h1>
         <form class="flex flex-col gap-4" method="POST" th:action="@{/article/new}" th:object="${article}">
             <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:field="*{creationTime}" />
             <label class="input input-bordered flex items-center gap-2">
                 Title
                 <input type="text" class="grow" placeholder="Title" th:field="*{title}" />
