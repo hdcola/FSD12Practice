@@ -36,6 +36,10 @@ public class UserController {
 
     @PostMapping("/register")
     public String create(@Valid User user, Errors errors, Model model) {
+        // Check if email is already in use
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            errors.rejectValue("email", "email.exists", "Email is already in use.");
+        }
         if (errors.hasErrors()) {
             return "register";
         }
