@@ -17,10 +17,11 @@
                 <input type="text" class="grow" placeholder="Title" th:field="*{title}" />
                 <span class="text-red-500" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</span>
             </label>
-            <label class="input input-bordered flex items-center gap-2">
-                Body
-                <input type="text" class="grow" placeholder="Body" th:field="*{body}" />
-                <span class="text-red-500" th:if="${#fields.hasErrors('body')}" th:errors="*{body}">Body Error</span>
+            <label class="form-control">
+                <div class="label">
+                    <span class="label-text">Body</span>
+                </div>
+                <textarea class="textarea textarea-bordered h-24" placeholder="Blog Body" th:field="*{body}"></textarea>
             </label>
             <button class="btn btn-primary" type="submit">Save</button>
         </form>

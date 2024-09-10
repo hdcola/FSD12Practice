@@ -1,9 +1,12 @@
 package org.hdcola.blog.Controllers;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hdcola.blog.Entities.Article;
+import org.hdcola.blog.Entities.Comment;
 import org.hdcola.blog.Repositories.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,8 +28,13 @@ public class ShowController {
     }
 
     @GetMapping("/show/{id}")
+    @Transactional(readOnly = true)
     public String show(@PathVariable Long id, Model model) {
-        model.addAttribute("article", articleRepository.findById(id).get());
+        Article article = articleRepository.findById(id).get();
+        model.addAttribute("article", article);
+        Comment comment = new Comment();
+        comment.setArticle(article);
+        model.addAttribute("comment", comment);
         return "show/blog";
     }
 }

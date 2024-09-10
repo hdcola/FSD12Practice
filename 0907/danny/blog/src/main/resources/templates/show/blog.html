@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5" lang="en">
 <head>
     <th:block th:insert="~{common-head :: commonHead}"></th:block>
     <title>New a Blog</title>
@@ -12,6 +12,23 @@
         <div class="flex flex-col gap-4"  >
             <p th:text="${article.user.name} + ' ' + ${#temporals.format(article.creationTime, 'yyyy/MM/dd HH:mm')}"></p>
             <p th:text="${article.body}"></p>
+        </div>
+        <hr class="border-t border-gray-300">
+        <div class="flex flex-col gap-4">
+            <h2 class="text-2xl">Comments</h2>
+            <form sec:authorize="isAuthenticated()" th:action="@{/comment/new/{id}(id=${article.id})}" th:object="${comment}" method="POST">
+                <label class="form-control">
+                    <textarea class="textarea textarea-bordered h-24" placeholder="Blog Body" th:field="*{body}"></textarea>
+                </label>
+                <input type="hidden" th:field="*{article.id}" />
+                <button class="btn btn-primary btn-sm" type="submit">Create comment</button>
+            </form>
+            <div class="flex flex-col gap-4">
+                <div th:each="comment : ${article.comments}">
+                    <p th:text="${comment.user.name} + ' ' + ${#temporals.format(comment.creationTime, 'yyyy/MM/dd HH:mm')}"></p>
+                    <p th:text="${comment.body}"></p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
