@@ -22,7 +22,7 @@ public class Comment {
     private LocalDateTime creationTime;
 
     @Lob
-    @Basic(fetch = FetchType.LAZY)
+    @Basic(fetch = FetchType.EAGER)
     @Column(name = "body")
     private String body;
 
