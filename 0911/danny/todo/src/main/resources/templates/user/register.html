@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:insert="~{common-head :: commonHead}"></th:block>
+    <title>HDBlog System Home | Register</title>
+</head>
+<body>
+<div class="font-sans w-full" id="app">
+    <th:block th:replace="~{common-menu :: commonMenu}"></th:block>
+    <div class="p-4">
+        <h1 class="text-3xl">Register</h1>
+        <form class="flex flex-col gap-4" method="POST" th:action="@{/register}" th:object="${user}">
+            <label class="input input-bordered flex items-center gap-2">
+                Username
+                <input type="text" class="grow" placeholder="your user name" th:field="*{username}" />
+            </label>
+            <span class="text-red-500" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+            <label class="input input-bordered flex items-center gap-2">
+                Password
+                <input type="password" class="grow" placeholder="your password" th:field="*{password}" />
+            </label>
+            <span class="text-red-500" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</span>
+            <label class="input input-bordered flex items-center gap-2">
+                Confirm Password
+                <input type="password" class="grow" placeholder="comfirm your password" th:field="*{password2}" />
+            </label>
+            <span class="text-red-500" th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}">Error</span>
+            <button class="btn btn-primary" type="submit">Register</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

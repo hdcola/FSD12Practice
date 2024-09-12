@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6" lang="en">
+<head>
+    <th:block th:replace="~{common-head :: commonHead}"></th:block>
+    <title>HDBlog System Home</title>
+</head>
+<body>
+<div class="font-sans w-full" id="app">
+    <div th:replace="~{common-menu :: commonMenu}"></div>
+    <div>
+        <div class="p-4">
+            <h1 class="text-3xl">Todo Lists</h1>
+            <div class="overflow-x-auto" th:fragment="article-list">
+                <table class="table table-zebra" id="article-table">
+                    <thead>
+                    <tr>
+                        <td>task</td>
+                        <td>Due Date</td>
+                        <td>Is Done</td>
+                        <td>Action</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="todo: ${todos}" class="hover">
+                        <td th:text="${todo.task}"></td>
+                        <td th:text="${#temporals.format(todo.dueDate, 'MM/dd/yyyy')}"></td>
+                        <td th:text="${todo.isDone}"></td>
+                        <td>
+                            <a class="btn btn-info btn-sm" th:href="@{/edit/{id}(id=${todo.id})}">Edit</a>
+                            <a class="btn btn-info btn-sm" th:href="@{/delete/{id}(id=${todo.id})}">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

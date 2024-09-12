@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <th:block th:insert="~{common-head :: commonHead}"></th:block>
+    <title>Todo Task</title>
+</head>
+<body>
+<div class="font-sans w-full" id="app">
+    <th:block th:replace="~{common-menu :: commonMenu}"></th:block>
+    <div class="p-4">
+        <h1 class="text-3xl">Register</h1>
+        <form class="flex flex-col gap-4" method="POST" th:action="@{/add}" th:object="${todo}">
+            <input type="hidden" th:field="*{id}" />
+            <label class="input input-bordered flex items-center gap-2">
+                Task
+                <input type="text" class="grow" placeholder="task" th:field="*{task}" />
+            </label>
+            <span class="text-red-500" th:if="${#fields.hasErrors('task')}" th:errors="*{task}"></span>
+            <label class="input input-bordered flex items-center gap-2">
+                Due Date
+                <input type="date" class="grow" th:field="*{dueDate}" />
+            </label>
+            <span class="text-red-500" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></span>
+            <label class="input input-bordered flex items-center gap-2">
+                Status
+                <select class="grow" th:field="*{isDone}">
+                    <option th:value="Pending" th:text="'Pending'"></option>
+                    <option th:value="Done" th:text="'Done'"></option>
+                </select>
+            </label>
+            <span class="text-red-500" th:if="${#fields.hasErrors('isDone')}" th:errors="*{isDone}"></span>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
