@@ -24,7 +24,7 @@ It privides the following libraries:
 
 Unit testing is a functional testing where individual units of a software are tested. The purpose is to validate that each unit of the software performs as designed.
 
-It's a Unit Test use JUnit and AssertJ that [test StatusConverter class](https://github.com/hdcola/FSD12Practice/blob/ff99e508a334999ef4fc99ead560f5b137d53e4b/0911/danny/todo/src/test/java/org/hdcola/todo/Entities/StatusConverterTest.java#L1-L21).
+It's a Unit Test use JUnit and AssertJ that [test StatusConverter class](https://github.com/hdcola/FSD12Practice/blob/ff99e508a334999ef4fc99ead560f5b137d53e4b/0911/danny/todo/src/test/java/org/hdcola/todo/Entities/StatusConverterTest.java).
 
 ```java
 package org.hdcola.todo.Entities;
@@ -54,7 +54,7 @@ public class StatusConverterTest {
 
 Mocking is a process used in unit testing when the unit being tested has external dependencies. The purpose of mocking is to isolate and focus on the code being tested and not on the behavior or state of external dependencies.
 
-It's a Test use Mockito that [mock UserRepository for test CustomUserDetailsService class]().
+It's a Test use Mockito that [mock UserRepository for test CustomUserDetailsService class](https://github.com/hdcola/FSD12Practice/blob/main/0911/danny/todo/src/test/java/org/hdcola/todo/Services/CustomUserDetailsServiceTest.java).
 
 ```java
 package org.hdcola.todo.Services;
@@ -120,3 +120,4 @@ public class CustomUserDetailsServiceTest {
 
 }
 ```
+
