@@ -53,6 +53,7 @@ public class UserController {
             log.info("Validation errors found:"+ result);
             return "user/register";
         }
+
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
