@@ -17,6 +17,10 @@ public class Main {
             while(scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] parts = line.split(":");
+                if(parts.length != 2) {
+                    System.out.println("Invalid line: " + line);
+                    continue;
+                }
                 String team = parts[0];
                 String[] players = parts[1].split(",");
                 playersByTeams.put(team, new ArrayList<>(Arrays.asList(players)));

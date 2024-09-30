@@ -1,6 +1,7 @@
 package org.hdcola;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -23,18 +24,24 @@ public class Main {
                 parking.forEach(System.out::println);
 
         // sort parking by engineSizeL
-        parking.sort(new EngineSizeComparator());
+        parking.sort(Car.sortByEngineSize);
         System.out.println("\nSorted by engineSizeL:");
         parking.forEach(System.out::println);
 
         // use lambda expression sort parking by prodYear
-        parking.sort((o1, o2) -> Integer.compare(o1.getProdYear(), o2.getProdYear()));
+        parking.sort((o1, o2) -> o1.getProdYear()- o2.getProdYear());
         System.out.println("\nSorted by prodYear:");
         parking.forEach(System.out::println);
 
         //use Comparator::CONSTANT to sort parking by prodYear
         parking.sort(Comparator.comparingInt(Car::getProdYear));
         System.out.println("\nSorted by prodYear:");
+        parking.forEach(System.out::println);
+
+        Comparator<Car> compProdYearMakeModel = Comparator
+                .comparingInt(Car::getProdYear).thenComparing(Car::getMakeModel).reversed();
+        parking.sort(compProdYearMakeModel);
+        System.out.println("\nSorted by prodYear and makeModel:");
         parking.forEach(System.out::println);
     }
 
@@ -44,6 +51,10 @@ public class Main {
             while (scanner.hasNext()){
                 String line = scanner.nextLine();
                 String[] parts = line.split(";");
+                if (parts.length != 3){
+                    System.out.println("Invalid data in file: " + line);
+                    continue;
+                }
                 String makeModel = parts[0];
                 String engineSizeL = parts[1];
                 String prodYear = parts[2];
@@ -53,8 +64,8 @@ public class Main {
                     System.out.println("Invalid data in file: " + line);
                 }
             }
-        }catch (Exception e){
-            e.printStackTrace();
+        }catch (IOException e){
+            System.out.println("Error reading file: " + e);
         }
     }
 }
