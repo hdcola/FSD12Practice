@@ -1,0 +1,23 @@
+Audi A8;2.2;2012
+Toyota Corolla;1.8;2020
+BMW 320i;2.0;2018
+Mercedes-Benz C300;2.0;2019
+Volkswagen Passat;1.8;2017
+Hyundai Elantra;2.0;2021
+Kia Optima;2.4;2018
+Mazda 3;2.5;2020
+Subaru Impreza;2.0;2016
+Lexus IS 250;2.5;2015
+Infiniti Q50;3.0;2018
+Acura TLX;2.4;2019
+Cadillac ATS;2.0;2017
+Jaguar XE;2.0;2018
+Alfa Romeo Giulia;2.0;2019
+Volvo S60;2.0;2020
+Lincoln MKZ;2.0;2016
+Genesis G70;2.0;2021
+Buick Regal;2.0;2018
+Chrysler 300;3.6;2017
+Dodge Charger;3.6;2019
+Tesla Model 3;0.0;2021
+Porsche Panamera;3.0;2018
