@@ -2,22 +2,74 @@ package org.hdcola;
 
 public class Main {
     public static void main(String[] args) {
-        int[][] data = {{1, 2, 3, 4, 5}, {6, 7, 8, 9}, {10, 11, 12}};
-        printArray(data);
-        System.out.printf("%d row %d col getIfExists return %d\n", 1, 3, getIfExists(data, 1, 3));
-        System.out.printf("%d row %d col getIfExists return %d\n", 2, 4, getIfExists(data, 2, 4));
-        System.out.println("====================================");
+        int[][] data2D = {
+                {1, 3, 6, 8},
+                {7, 1, 2, 3},
+                {8, 3, 2, 1},
+                {1, 7, 1, 9},
+        };
+
+        int[][] data2Djagged = {
+                {1, 3, 6, 8, 9, 1},
+                {7, 1, 2, 3},
+                {8, 3, 2},
+                {1, 7, 1, 9},
+        };
+
+        int[] smallestItem = findSmallestItemSumOfCross(data2D);
+        printArray(data2D);
+        System.out.printf("Smallest item is %d at (%d, %d)\n", smallestItem[0], smallestItem[1], smallestItem[2]);
+        System.out.println("=====================================");
+
+        int[] smallestItem2 = findSmallestItemSumOfCross(data2Djagged);
+        printArray(data2Djagged);
+        System.out.printf("Smallest item is %d at (%d, %d)\n", smallestItem2[0], smallestItem2[1], smallestItem2[2]);
+        System.out.println("=====================================");
 
 
-        printArray(data);
-        System.out.printf("sum of cross at %d row %d col is %d\n", 1, 3,  sumOfCross(data, 1, 3));
-        System.out.printf("sum of cross at %d row %d col is %d\n", 1, 1, sumOfCross(data, 1, 1));
-        System.out.println("====================================");
+        printArray(data2D);
+        System.out.println("-------------------------------------");
+        printArray(getSumOfCrossArray(data2D));
+        System.out.println("=====================================");
+
+        printArray(data2Djagged);
+        System.out.println("-------------------------------------");
+        printArray(getSumOfCrossArray(data2Djagged));
+        System.out.println("=====================================");
 
     }
 
+    static int[][] getSumOfCrossArray(int[][] data) {
+        int[][] sumOfCrossArray = new int[data.length][];
+        for (int i = 0; i < data.length; i++) {
+            sumOfCrossArray[i] = new int[data[i].length];
+            for (int j = 0; j < data[i].length; j++) {
+                sumOfCrossArray[i][j] = sumOfCross(data, i, j);
+            }
+        }
+        return sumOfCrossArray;
+    }
+
+    static int[] findSmallestItemSumOfCross(int[][] data) {
+        if (data.length == 0) {
+            return new int[] {0, -1, -1};
+        }
+        int[] smallestItem = {data[0][0], 0, 0};
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[i].length; j++) {
+                int sum = sumOfCross(data, i, j) + data[i][j];
+                if (sum < smallestItem[0]) {
+                    smallestItem[0] = sum;
+                    smallestItem[1] = i;
+                    smallestItem[2] = j;
+                }
+            }
+        }
+        return smallestItem;
+    }
+
     static int getIfExists(int[][] data, int row, int col) {
-        if (row < data.length && col < data[row].length) {
+        if (row >= 0 && col >= 0 && row < data.length && col < data[row].length) {
             return data[row][col];
         } else {
             return 0;
@@ -26,23 +78,19 @@ public class Main {
 
     static int sumOfCross(int[][] data, int row, int col) {
         int sum = 0;
-        if (isAvailable(data, row-1, col)) {
-            sum += data[row-1][col];
-        }
-        if (isAvailable(data, row+1, col)) {
-            sum += data[row+1][col];
-        }
-        if (isAvailable(data, row, col-1)) {
-            sum += data[row][col-1];
-        }
-        if (isAvailable(data, row, col+1)) {
-            sum += data[row][col+1];
-        }
+        sum = getIfExists(data, row-1, col);
+        sum += getIfExists(data, row, col-1);
+        sum += getIfExists(data, row+1, col);
+        sum += getIfExists(data, row, col+1);
         return sum;
     }
 
-    static boolean isAvailable(int[][] data, int row, int col) {
-        return row < data.length && col < data[row].length && row >= 0 && col >= 0;
+    static int[][] duplicateEmptyArray2D(int[][] orig2d){
+        int[][] newArray = new int[orig2d.length][];
+        for (int i = 0; i < orig2d.length; i++) {
+            newArray[i] = new int[orig2d[i].length];
+        }
+        return newArray;
     }
 
     static void printArray(int [] data) {
