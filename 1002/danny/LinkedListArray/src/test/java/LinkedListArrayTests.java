@@ -1,16 +1,16 @@
-import org.hdcola.LinkedListArrayOfStrings;
+import org.hdcola.LinkedListArray;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class LinkedListArrayOfStringsTests {
+public class LinkedListArrayTests {
 
-    LinkedListArrayOfStrings list;
+    LinkedListArray<String> list;
 
     @BeforeEach
     void setUp() {
-        list = new LinkedListArrayOfStrings();
+        list = new LinkedListArray<>();
     }
 
     @AfterEach
@@ -274,4 +274,5 @@ public class LinkedListArrayOfStringsTests {
 
         Assertions.assertFalse(list.deleteByValue("C++"));
     }
+
 }
