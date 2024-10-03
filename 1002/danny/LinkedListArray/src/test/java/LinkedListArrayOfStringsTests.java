@@ -18,6 +18,7 @@ public class LinkedListArrayOfStringsTests {
         list = null;
     }
 
+
     @Test
     void TestAdd() {
         list.add("Hello");
@@ -78,6 +79,23 @@ public class LinkedListArrayOfStringsTests {
                 ()-> Assertions.assertThrows(IndexOutOfBoundsException.class, ()-> list.get(6)),
                 ()-> Assertions.assertThrows(IndexOutOfBoundsException.class, ()-> list.get(-1)),
                 () -> Assertions.assertEquals("[C++,Hello,Java,World,!,Python]", list.toString())
+        );
+    }
+
+    @Test
+    void TestInsertValueAtIndex_WhenIndexOutOfBounds_ThenThrowsException() {
+        list.add("Hello");
+        Assertions.assertThrows(IndexOutOfBoundsException.class, ()-> list.insertValueAtIndex("Java", 2));
+        Assertions.assertThrows(IndexOutOfBoundsException.class, ()-> list.insertValueAtIndex("Java", -1));
+    }
+
+    @Test
+    void TestInsertValueAtIndex_WhenEmptyListAndIndexIsZero_ThenAddIsWell() {
+        list.insertValueAtIndex("Hello", 0);
+        Assertions.assertAll(
+                ()-> Assertions.assertEquals(1, list.getSize()),
+                ()-> Assertions.assertEquals("Hello", list.get(0)),
+                ()-> Assertions.assertEquals("[Hello]", list.toString())
         );
     }
 

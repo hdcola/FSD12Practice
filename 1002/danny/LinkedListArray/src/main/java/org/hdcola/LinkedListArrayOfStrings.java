@@ -37,8 +37,20 @@ public class LinkedListArrayOfStrings {
     }
 
     public void insertValueAtIndex(String value, int index) throws IndexOutOfBoundsException {
+
+        if( index <0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        }
+
         Container container = new Container();
         container.value = value;
+
+        // if the list is empty and index is 0, add the value
+        if(size==0 && index==0) {
+            add(value);
+            return;
+        }
+
         if (index == 0){
             container.next = start;
             start = container;
@@ -50,7 +62,7 @@ public class LinkedListArrayOfStrings {
         size++;
     }
 
-    public void replaceValueAtIndex(String value, int index) {
+    public void replaceValueAtIndex(String value, int index) throws IndexOutOfBoundsException{
         Container traversal = getContainer(index);
         traversal.value = value;
     } // put
@@ -73,6 +85,7 @@ public class LinkedListArrayOfStrings {
         }
         size--;
     }
+
     public boolean deleteByValue(String value) {
         Container traversal = start;
         Container previous = null;
