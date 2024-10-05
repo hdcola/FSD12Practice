@@ -1,6 +1,9 @@
 package org.hdcola;
 
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class CustomHashMap<K,V> {
 
     static class Container<K,V> {
@@ -18,7 +21,8 @@ public class CustomHashMap<K,V> {
     private static final int GROWTH_FACTOR = 2;
 
     // size must be a prime number always
-    private Container<K,V>[] hashTable ;
+    @SuppressWarnings("unchecked")
+    private Container<K,V>[] hashTable = (Container<K,V>[]) new Container[INITIAL_SIZE];;
 
     private int totalItems;
 
@@ -47,16 +51,16 @@ public class CustomHashMap<K,V> {
         int newSize = hashTable.length * GROWTH_FACTOR;
         @SuppressWarnings("unchecked")
         Container<K,V>[] newHashTable = (Container<K,V>[])new Container[newSize];
-        for(Container container : hashTable) {
+        for(Container<K,V> container : hashTable) {
             if(container != null) {
-                Container traversal = container;
+                Container<K,V> traversal = container;
                 while(traversal != null) {
                     int newBucketIndex = getBucketIndex(traversal.hash);
-                    Container newBucket = newHashTable[newBucketIndex];
+                    Container<K,V> newBucket = newHashTable[newBucketIndex];
                     if(newBucket == null) {
                         newHashTable[newBucketIndex]=traversal;
                     } else {
-                        Container newTraversal = newBucket;
+                        Container<K,V> newTraversal = newBucket;
                         while(newTraversal.next != null) {
                             newTraversal = newTraversal.next;
                         }
@@ -69,42 +73,37 @@ public class CustomHashMap<K,V> {
         hashTable = newHashTable;
     }
 
-    public CustomHashMap() {
-        hashTable =(Container<K,V>[]) new Container[INITIAL_SIZE];
-    }
 
     public void putValue(K key, V value) {
         int bucketIndex = getBucketIndex(key);
 
-        Container newContainer = new Container();
+        Container<K, V> newContainer = new Container();
         newContainer.key = key;
         newContainer.value = value;
         newContainer.hash = computeHashValue(key);
 
         resizeHashTable();
 
-        Container bucket = hashTable[bucketIndex];
+        Container<K, V> bucket = hashTable[bucketIndex];
         if (bucket == null) {
-            // hashTable[bucketIndex] = newContainer;
             hashTable[bucketIndex] = newContainer;
+            totalItems++;
         } else {
-            Container traversal = bucket;
-            while (traversal != null) {
+            Container<K, V> traversal = bucket;
+            while (true) {
                 if (traversal.key.equals(key)) {
                     traversal.value = value;
                     return;
                 }
                 if (traversal.next == null) {
                     traversal.next = newContainer;
+                    totalItems++;
                     return;
                 }
                 traversal = traversal.next;
             }
         }
-        totalItems++;
-
     }
-    // LATER: expand hashTable by about *2 when totalItems > 3*hashTable.length
 
     public boolean hasKey(K key) {
         int bucketIndex = getBucketIndex(key);
@@ -137,7 +136,7 @@ public class CustomHashMap<K,V> {
     // throw custom unchecked KeyNotFoundException
     public void deleteByKey(K key) {
         int bucketIndex = getBucketIndex(key);
-        Container bucket = hashTable[bucketIndex];
+        Container<K, V> bucket = hashTable[bucketIndex];
 
         // if bucket is null, key does not exist
         if(bucket == null) return;
@@ -149,7 +148,7 @@ public class CustomHashMap<K,V> {
             return;
         }
 
-        Container traversal = bucket;
+        Container<K, V> traversal = bucket;
         while(traversal.next != null) {
             if(traversal.next.key.equals(key)) {
                 traversal.next = traversal.next.next;
@@ -160,43 +159,40 @@ public class CustomHashMap<K,V> {
         }
     }
 
-    // the keys must be sorted
-//    public K[] getAllKeys() {
-//        @SuppressWarnings("unchecked")
-//        K[] result = (K[]) new Object[totalItems];
-//        int index = 0;
-//        for(Container container : hashTable) {
-//            if(container != null) {
-//                Container traversal = container;
-//                while(traversal != null) {
-//                    result[index++] = traversal.key;
-//                    traversal = traversal.next;
-//                }
-//            }
-//        }
-//        return result;
-//    }
-    // Generic version: public K[] getAllKeys(K[] template) { ... }
+    @SuppressWarnings("unchecked")
+    public K[] getAllKeys() {
+        if(totalItems == 0) {
+            return (K[]) Array.newInstance(Object.class, 0);
+        }
+
+        K[] result = (K[]) Array.newInstance(Object.class, totalItems);
+        int index = 0;
+        for(Container<K,V> container : hashTable) {
+            if(container != null) {
+                Container<K,V> traversal = container;
+                while(traversal != null) {
+                    result[index++] = traversal.key;
+                    traversal = traversal.next;
+                }
+            }
+        }
+        Arrays.sort(result);
+        return result;
+    }
 
 
-//    public Pair<K,V>[] getAllKeyValPairs() {
-//        @SuppressWarnings("unchecked")
-//        Pair<K,V> [] result = (Pair<K, V>[]) new Pair[totalItems];
-//        int index = 0;
-//        for(Container container : hashTable) {
-//            if(container != null) {
-//                Container traversal = container;
-//                while(traversal != null) {
-//                    Pair<K,V> pair = new Pair<>();
-//                    pair.key = traversal.key;
-//                    pair.val = traversal.value;
-//                    result[index++] = pair;
-//                    traversal = traversal.next;
-//                }
-//            }
-//        }
-//        return result;
-//    }
+    public Pair<K,V>[] getAllKeyValPairs() {
+        K[] keys = getAllKeys();
+        Pair<K,V> [] result = (Pair<K, V>[]) new Pair[totalItems];
+        for (int i = 0; i < keys.length; i++) {
+            try {
+                result[i] = new Pair<>(keys[i], getValue(keys[i]));
+            } catch (KeyNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
 
 
     public int getSize() { return totalItems; }
@@ -207,22 +203,21 @@ public class CustomHashMap<K,V> {
     // sort keys and return comma-separated list
     @Override
     public String toString() {
+
+        K[] keys = getAllKeys();
+
         StringBuilder sb = new StringBuilder();
         sb.append("[");
-        int index = 0;
-        for(Container container : hashTable) {
-            if(container != null) {
-                Container traversal = container;
-                while(traversal != null) {
-                    sb.append(traversal.key);
-                    sb.append("=>");
-                    sb.append(traversal.value);
-                    if(index < totalItems - 1) {
-                        sb.append(", ");
-                    }
-                    traversal = traversal.next;
-                    index++;
-                }
+        for(int i=0; i<keys.length; i++) {
+            sb.append(keys[i]);
+            sb.append("=>");
+            try {
+                sb.append(getValue(keys[i]));
+            }catch (KeyNotFoundException e) {
+                sb.append("null");
+            }
+            if(i < keys.length - 1) {
+                sb.append(", ");
             }
         }
         sb.append("]");

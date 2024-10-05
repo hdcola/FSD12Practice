@@ -47,6 +47,24 @@ public class CustomHashMapTests {
     }
 
     @Test
+    void testPutValue_WhenPutFiveItems() throws KeyNotFoundException {
+        customHashMap.putValue("key1", "value1");
+        customHashMap.putValue("key2", "value2");
+        customHashMap.putValue("key3", "value3");
+        customHashMap.putValue("key4", "value4");
+        customHashMap.putValue("key5", "value5");
+        assertAll(
+                () -> assertEquals("value1", customHashMap.getValue("key1")),
+                () -> assertEquals("value2", customHashMap.getValue("key2")),
+                () -> assertEquals("value3", customHashMap.getValue("key3")),
+                () -> assertEquals("value4", customHashMap.getValue("key4")),
+                () -> assertEquals("value5", customHashMap.getValue("key5")),
+                ()-> assertArrayEquals(new String[]{"key1", "key2", "key3", "key4", "key5"}, customHashMap.getAllKeys()),
+                () -> assertEquals("[key1=>value1, key2=>value2, key3=>value3, key4=>value4, key5=>value5]", customHashMap.toString())
+        );
+    }
+
+    @Test
     void testPutValue_WhenHashMapHasKey() throws KeyNotFoundException {
         customHashMap.putValue("key1", "value1");
         customHashMap.putValue("key1", "value2");
@@ -54,14 +72,42 @@ public class CustomHashMapTests {
         assertEquals(customHashMap.toString(), "[key1=>value2]");
     }
 
-//    @Test
-//    void testPutValue_WhenHashMapHasFourKeys() throws KeyNotFoundException {
-//        customHashMap.putValue("key1", "value1");
-//        customHashMap.putValue("key2", "value2");
-//        customHashMap.putValue("key3", "value3");
-//        customHashMap.putValue("key4", "value4");
-//
-//        assertEquals("value1", customHashMap.getValue("key1"));
-//        assertEquals("[key1=>value1, key2=>value2, key3=>value3, key4=>value4]", customHashMap.toString());
-//    }
+    @Test
+    void testGetAllKeys() {
+        customHashMap.putValue("key1", "value1");
+        customHashMap.putValue("key2", "value2");
+        customHashMap.putValue("key3", "value3");
+        customHashMap.putValue("key4", "value4");
+        customHashMap.putValue("key01", "value5");
+        assertArrayEquals(new String[]{"key01", "key1", "key2", "key3", "key4"}, customHashMap.getAllKeys());
+    }
+
+    @Test
+    void testGetAllKeys_WhenHashMapIsEmpty() {
+        assertArrayEquals(new String[]{}, customHashMap.getAllKeys());
+    }
+
+    @Test
+    void testToString(){
+        customHashMap.putValue("key1", "value1");
+        customHashMap.putValue("key2", "value2");
+        customHashMap.putValue("key3", "value3");
+        customHashMap.putValue("key4", "value4");
+        customHashMap.putValue("key5", "value5");
+        assertEquals("[key1=>value1, key2=>value2, key3=>value3, key4=>value4, key5=>value5]", customHashMap.toString());
+    }
+
+    @Test
+    void testGetAllKeyValPairs(){
+        customHashMap.putValue("key1", "value1");
+        customHashMap.putValue("key2", "value2");
+        Pair<String,String>[] pairs = customHashMap.getAllKeyValPairs();
+        assertAll(
+                () -> assertEquals("key1", pairs[0].getKey()),
+                () -> assertEquals("value1", pairs[0].getValue()),
+                () -> assertEquals("key2", pairs[1].getKey()),
+                () -> assertEquals("value2", pairs[1].getValue())
+        );
+
+    }
 }
