@@ -275,4 +275,13 @@ public class LinkedListArrayTests {
         Assertions.assertFalse(list.deleteByValue("C++"));
     }
 
+    @Test
+    void TestToString_WhenListIsEmpty_ThenReturnEmptyString() {
+        Assertions.assertEquals("[]", list.toString());
+    }
+
+    @Test
+    void testToArray_WhenListIsEmpty_ThenReturnEmptyArray() {
+        Assertions.assertArrayEquals(new String[]{}, list.toArray());
+    }
 }

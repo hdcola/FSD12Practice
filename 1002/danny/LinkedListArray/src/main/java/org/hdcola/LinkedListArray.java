@@ -120,7 +120,10 @@ public class LinkedListArray<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public <T>T[] toArray() {
+    public T[] toArray() {
+        if (size == 0) {
+            return (T[]) Array.newInstance(Object.class, 0);
+        }
         Class<T> clazz = (Class<T>) start.value.getClass();
         T[] array = (T[]) Array.newInstance(clazz, size);
         Container traversal = start;
