@@ -54,5 +54,15 @@ public class CustomHashMapTests {
         assertEquals("value2", customHashMap.getValue("key1"));
         assertEquals(customHashMap.toString(), "[key1=>value2]");
     }
-    
+
+    @Test
+    void testPutValue_WhenHashMapHasFourKeys() throws KeyNotFoundException {
+        customHashMap.putValue("key1", "value1");
+        customHashMap.putValue("key2", "value2");
+        customHashMap.putValue("key3", "value3");
+        customHashMap.putValue("key4", "value4");
+
+        assertEquals("value1", customHashMap.getValue("key1"));
+        assertEquals("[key1=>value1, key2=>value2, key3=>value3, key4=>value4]", customHashMap.toString());
+    }
 }

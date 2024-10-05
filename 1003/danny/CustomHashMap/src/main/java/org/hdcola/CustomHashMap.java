@@ -211,6 +211,8 @@ public class CustomHashMap<K,V> {
 
     public void printDebug() { } // print hashTable content, see example below
 
+
+    // sort keys and return comma-separated list
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
