@@ -1,17 +1,15 @@
 package org.hdcola;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CustomHashMap<K,V> {
 
-    class Container {
-        Container next;
+    static class Container<K,V> {
+        Container<K,V> next;
         K key;
         V value;
         int hash;
     }
+
 
     private static final int INITIAL_SIZE = 5;
 
@@ -20,7 +18,7 @@ public class CustomHashMap<K,V> {
     private static final int GROWTH_FACTOR = 2;
 
     // size must be a prime number always
-    private List<Container> hashTable =  new ArrayList<>(INITIAL_SIZE);
+    private Container<K,V>[] hashTable ;
 
     private int totalItems;
 
@@ -35,7 +33,7 @@ public class CustomHashMap<K,V> {
     }
 
     private int getBucketIndex(int hash) {
-        return (hash & 0x7FFFFFFF) % hashTable.size();
+        return (hash & 0x7FFFFFFF) % hashTable.length;
     }
 
     private int getBucketIndex(K key) {
@@ -45,17 +43,18 @@ public class CustomHashMap<K,V> {
     }
 
     private void resizeHashTable() {
-        if (totalItems < LOAD_FACTOR * hashTable.size()) return;
-        int newSize = hashTable.size() * GROWTH_FACTOR;
-        List<Container> newHashTable = new ArrayList<>(newSize);
+        if (totalItems < LOAD_FACTOR * hashTable.length) return;
+        int newSize = hashTable.length * GROWTH_FACTOR;
+        @SuppressWarnings("unchecked")
+        Container<K,V>[] newHashTable = (Container<K,V>[])new Container[newSize];
         for(Container container : hashTable) {
             if(container != null) {
                 Container traversal = container;
                 while(traversal != null) {
                     int newBucketIndex = getBucketIndex(traversal.hash);
-                    Container newBucket = newHashTable.get(newBucketIndex);
+                    Container newBucket = newHashTable[newBucketIndex];
                     if(newBucket == null) {
-                        newHashTable.set(newBucketIndex, traversal);
+                        newHashTable[newBucketIndex]=traversal;
                     } else {
                         Container newTraversal = newBucket;
                         while(newTraversal.next != null) {
@@ -71,10 +70,7 @@ public class CustomHashMap<K,V> {
     }
 
     public CustomHashMap() {
-        hashTable = new ArrayList<>(INITIAL_SIZE);
-        for (int i = 0; i < INITIAL_SIZE; i++) {
-            hashTable.add(null);
-        }
+        hashTable =(Container<K,V>[]) new Container[INITIAL_SIZE];
     }
 
     public void putValue(K key, V value) {
@@ -87,10 +83,10 @@ public class CustomHashMap<K,V> {
 
         resizeHashTable();
 
-        Container bucket = hashTable.get(bucketIndex);
+        Container bucket = hashTable[bucketIndex];
         if (bucket == null) {
             // hashTable[bucketIndex] = newContainer;
-            hashTable.set(bucketIndex, newContainer);
+            hashTable[bucketIndex] = newContainer;
         } else {
             Container traversal = bucket;
             while (traversal != null) {
@@ -112,10 +108,10 @@ public class CustomHashMap<K,V> {
 
     public boolean hasKey(K key) {
         int bucketIndex = getBucketIndex(key);
-        Container bucket = hashTable.get(bucketIndex);
+        Container<K, V> bucket = hashTable[bucketIndex];
 
         if(bucket == null) return false;
-        Container traversal = bucket;
+        Container<K, V> traversal = bucket;
         while(traversal != null) {
             if(traversal.key.equals(key)) return true;
             traversal = traversal.next;
@@ -127,32 +123,28 @@ public class CustomHashMap<K,V> {
 
     // throw custom unchecked KeyNotFoundException
     public V getValue(K key) throws KeyNotFoundException {
-        try {
-            int bucketIndex = getBucketIndex(key);
+        int bucketIndex = getBucketIndex(key);
 
-            Container traversal = hashTable.get(bucketIndex);
+        Container<K, V> traversal = hashTable[bucketIndex];
 
-            while(traversal != null) {
-                if(traversal.key.equals(key)) return traversal.value;
-                traversal = traversal.next;
-            }
-            return null;
-        }catch (IllegalArgumentException e) {
-            throw new KeyNotFoundException(key);
+        while(traversal != null) {
+            if(traversal.key.equals(key)) return traversal.value;
+            traversal = traversal.next;
         }
+        throw new KeyNotFoundException(key);
     }
 
     // throw custom unchecked KeyNotFoundException
     public void deleteByKey(K key) {
         int bucketIndex = getBucketIndex(key);
-        Container bucket = hashTable.get(bucketIndex);
+        Container bucket = hashTable[bucketIndex];
 
         // if bucket is null, key does not exist
         if(bucket == null) return;
 
         // if key is the first element in the bucket
         if(bucket.key.equals(key)) {
-            hashTable.set(bucketIndex, bucket.next);
+            hashTable[bucketIndex] = bucket.next;
             totalItems--;
             return;
         }
