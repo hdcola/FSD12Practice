@@ -161,16 +161,21 @@ public class CustomHashMap<K,V> {
 
     @SuppressWarnings("unchecked")
     public K[] getAllKeys() {
+        K[] result = (K[]) Array.newInstance(Object.class, 0);
+
         if(totalItems == 0) {
-            return (K[]) Array.newInstance(Object.class, 0);
+            return result;
         }
 
-        K[] result = (K[]) Array.newInstance(Object.class, totalItems);
         int index = 0;
         for(Container<K,V> container : hashTable) {
             if(container != null) {
                 Container<K,V> traversal = container;
                 while(traversal != null) {
+                    // if this is the first element, initialize the result array
+                    if(index==0){
+                        result = (K[]) Array.newInstance(traversal.key.getClass(), totalItems);
+                    }
                     result[index++] = traversal.key;
                     traversal = traversal.next;
                 }
@@ -180,9 +185,9 @@ public class CustomHashMap<K,V> {
         return result;
     }
 
-
     public Pair<K,V>[] getAllKeyValPairs() {
         K[] keys = getAllKeys();
+        @SuppressWarnings("unchecked")
         Pair<K,V> [] result = (Pair<K, V>[]) new Pair[totalItems];
         for (int i = 0; i < keys.length; i++) {
             try {

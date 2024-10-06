@@ -132,6 +132,9 @@ public class CustomHashMapTests {
         customHashMap.putValue(3, new Car("Ford"));
         customHashMap.putValue(4, new Car("Chevrolet"));
         customHashMap.putValue(5, new Car("Nissan"));
+        for(Integer key : customHashMap.getAllKeys()) {
+            System.out.println(key + "=>" + customHashMap.getValue(key));
+        }
         assertAll(
                 () -> assertEquals("Toyota", customHashMap.getValue(1).name),
                 () -> assertEquals("Honda", customHashMap.getValue(2).name),
