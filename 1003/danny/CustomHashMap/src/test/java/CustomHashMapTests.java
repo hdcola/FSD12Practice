@@ -108,6 +108,38 @@ public class CustomHashMapTests {
                 () -> assertEquals("key2", pairs[1].getKey()),
                 () -> assertEquals("value2", pairs[1].getValue())
         );
+    }
 
+    @Test
+    void testIntegerKeyCarValue() throws KeyNotFoundException {
+
+        class Car {
+            String name;
+
+            public Car(String name) {
+                this.name = name;
+            }
+
+            public String toString() {
+                return name;
+            }
+        }
+
+
+        CustomHashMap<Integer, Car> customHashMap = new CustomHashMap<>();
+        customHashMap.putValue(1, new Car("Toyota"));
+        customHashMap.putValue(2, new Car("Honda"));
+        customHashMap.putValue(3, new Car("Ford"));
+        customHashMap.putValue(4, new Car("Chevrolet"));
+        customHashMap.putValue(5, new Car("Nissan"));
+        assertAll(
+                () -> assertEquals("Toyota", customHashMap.getValue(1).name),
+                () -> assertEquals("Honda", customHashMap.getValue(2).name),
+                () -> assertEquals("Ford", customHashMap.getValue(3).name),
+                () -> assertEquals("Chevrolet", customHashMap.getValue(4).name),
+                () -> assertEquals("Nissan", customHashMap.getValue(5).name),
+                () -> assertArrayEquals(new Integer[]{1, 2, 3, 4, 5}, customHashMap.getAllKeys()),
+                () -> assertEquals("[1=>Toyota, 2=>Honda, 3=>Ford, 4=>Chevrolet, 5=>Nissan]", customHashMap.toString())
+        );
     }
 }
