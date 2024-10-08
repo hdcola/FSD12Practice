@@ -1,10 +1,47 @@
 package org.hdcola;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
-public class BinaryTreeOfInts {
+public class BinaryTreeOfInts implements Iterable<Integer>{
+    @Override
+    public Iterator<Integer> iterator() {
+        return new Iterator<Integer>() {
+
+            private Stack<NodeOfInt> stack = new Stack<>();
+            private NodeOfInt current = root;
+
+            {
+                while(current != null){
+                    stack.push(current);
+                    current = current.left;
+                }
+            }
+            @Override
+            public boolean hasNext() {
+                return !stack.isEmpty();
+            }
+
+            @Override
+            public Integer next() {
+                if(!hasNext()){
+                    throw new NoSuchElementException();
+                }
+                // get the top node from the stack
+                NodeOfInt node = stack.pop();
+                int result = node.value;
+
+                // if the node has a right child, add it to the stack
+                // the right child's left children will be added to the stack
+                current = node.right;
+                while(current != null){
+                    stack.push(current);
+                    current = current.left;
+                }
+                return result;
+            }
+        };
+    }
+
     private static class NodeOfInt {
         int value; // could also be key, value pair
         NodeOfInt left, right;

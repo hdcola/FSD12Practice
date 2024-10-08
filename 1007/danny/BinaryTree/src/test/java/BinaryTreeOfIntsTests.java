@@ -94,4 +94,21 @@ public class BinaryTreeOfIntsTests {
         tree.put(8);
         tree.printTree();
     }
+
+    @Test
+    void testIterator() {
+        tree.put(5);
+        tree.put(3);
+        tree.put(7);
+        tree.put(2);
+        tree.put(4);
+        tree.put(6);
+        tree.put(8);
+        tree.printTree();
+        int[] expected = new int[] {2, 3, 4, 5, 6, 7, 8};
+        int i = 0;
+        for (int val : tree) {
+            assertEquals(expected[i++], val);
+        }
+    }
 }
