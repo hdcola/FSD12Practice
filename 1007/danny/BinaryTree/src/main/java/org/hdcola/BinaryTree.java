@@ -1,6 +1,7 @@
 package org.hdcola;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Stack;
 
@@ -110,9 +111,12 @@ public class BinaryTree <K extends Comparable, V> implements Iterable<Pair<K, V>
 
     @SuppressWarnings("unchecked")
     public K[] getKeysInOrder(boolean isAscending) {
-        if(root == null) {
-            return (K[]) Array.newInstance(Object.class, 0);
+        if(nodesCount == 0){
+            K[] keys;
+            keys = newKeyArray(0);
+            return keys;
         }
+
         K[] keys = (K[]) Array.newInstance(root.key.getClass(), nodesCount);
         return getKeysInOrder(root, isAscending, keys);
     }
@@ -177,5 +181,12 @@ public class BinaryTree <K extends Comparable, V> implements Iterable<Pair<K, V>
         }
         System.out.println(node.key + ":" + node.value);
         printTree(node.left, level + 1);
+    }
+
+    @SafeVarargs
+    @SuppressWarnings("unchecked")
+    private K[] newKeyArray(int length, K... array){
+        // return (K[]) Array.newInstance(array.getClass().getComponentType(), length);
+        return Arrays.copyOf(array, length);
     }
 }

@@ -1,4 +1,5 @@
 import org.hdcola.BinaryTree;
+import org.hdcola.BinaryTreeOfInts;
 import org.hdcola.Pair;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -97,5 +98,11 @@ public class BinaryTreeTests {
             assertEquals(pairs[i].getValue(), pair.getValue());
             i++;
         }
+    }
+
+    @Test
+    void test_getKeysInOrder_WhenEmpty() {
+        tree = new BinaryTree<>();
+        assertArrayEquals(new String[]{}, tree.getKeysInOrder(true));
     }
 }
