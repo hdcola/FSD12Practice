@@ -19,14 +19,23 @@ function App() {
       if (compareIndex === null) {
         setCompareIndex(0);
         setSwapped(false);
+        // compare two elements
       } else if (compareIndex < newArray.length - 1 - currentIndex) {
+        // swap two elements
         if (newArray[compareIndex] > newArray[compareIndex + 1]) {
           [newArray[compareIndex], newArray[compareIndex + 1]] = [newArray[compareIndex + 1], newArray[compareIndex]];
           setSwapped(true);
         }
         setCompareIndex(compareIndex + 1);
+        // move to the next element
       } else {
         if (!swapped) {
+          // Add remaining elements to sortedIndex
+          const remainingIndices = [];
+          for (let i = 0; i < newArray.length - currentIndex; i++) {
+            remainingIndices.push(i);
+          }
+          setSortedIndex((prev) => [...prev, ...remainingIndices]);
           setIsSorted(true);
         } else {
           setSortedIndex((prev) => [...prev, newArray.length - 1 - currentIndex]);
