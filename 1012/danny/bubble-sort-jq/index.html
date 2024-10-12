@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Sort Visualization</title>
+    <style>
+        .bar {
+            width: 30px;
+            margin: 2px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+        }
+
+        .bg-blue-500 {
+            background-color: #4299e1;
+        }
+
+        .bg-green-500 {
+            background-color: #48bb78;
+        }
+
+        .bg-yellow-500 {
+            background-color: #ecc94b;
+        }
+
+        .rounded {
+            border-radius: 0.25rem;
+        }
+
+        .mt-4 {
+            margin-top: 1rem;
+        }
+
+        #bars-container {
+            display: flex;
+            align-items: flex-end;
+            height: 200px;
+            /* Adjust height as needed */
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="bars-container"></div>
+        <button id="reset-button" class="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4">Reset</button>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            let array = generateRandomArray();
+            let compareIndex = null;
+            let swapped = false;
+            let currentIndex = 0;
+            let isSorted = false;
+
+            function generateRandomArray() {
+                const length = 9;
+                const newArray = [];
+                for (let i = 0; i < length; i++) {
+                    newArray.push(Math.floor(Math.random() * 10) + 1);
+                }
+                return newArray;
+            }
+
+            function renderBars() {
+                $('#bars-container').empty();
+                array.forEach((value, index) => {
+                    const barClass = isSorted
+                        ? 'bg-green-500'
+                        : index === compareIndex || index === compareIndex + 1
+                            ? 'bg-yellow-500'
+                            : 'bg-blue-500';
+                    $('#bars-container').append(`
+                        <div class="bar ${barClass}" style="height: ${value * 20}px;">
+                            <span class="absolute bottom-0 left-0 right-0 w-full text-center text-white">${value}</span>
+                        </div>
+                    `);
+                });
+            }
+
+            renderBars(); // Initial render
+
+            function bubbleSortStep() {
+                if (compareIndex === null) {
+                    compareIndex = 0;
+                    swapped = false;
+                } else if (compareIndex < array.length - 1 - currentIndex) {
+                    if (array[compareIndex] > array[compareIndex + 1]) {
+                        [array[compareIndex], array[compareIndex + 1]] = [array[compareIndex + 1], array[compareIndex]];
+                        swapped = true;
+                    }
+                    compareIndex++;
+                } else {
+                    if (!swapped) {
+                        isSorted = true;
+                    }
+                    currentIndex++;
+                    compareIndex = null;
+                }
+                renderBars();
+            }
+
+            $('#reset-button').click(function () {
+                array = generateRandomArray();
+                compareIndex = null;
+                swapped = false;
+                currentIndex = 0;
+                isSorted = false;
+                renderBars();
+            });
+
+            setInterval(bubbleSortStep, 500); // Run bubble sort step every half second
+        });
+    </script>
+</body>
+
+</html>
