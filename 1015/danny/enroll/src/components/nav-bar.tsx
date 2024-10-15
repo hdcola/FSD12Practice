@@ -17,10 +17,20 @@ export const NavBar = () => {
   return (
     <div className="bg-blue-500 p-4 flex justify-between">
       <ul className="flex space-x-4">
-        <NavItem to="/" label="Home" />
-        {user && <NavItem to="/create-schedule" label="Create Schedule" />}
-        <NavItem to="/contact" label="Contact" />
-        <NavItem to="/about" label="About" />
+        <li>
+          <NavItem to="/" label="Home" />
+        </li>
+        {user && (
+          <li>
+            <NavItem to="/create-schedule" label="Create Schedule" />
+          </li>
+        )}
+        <li>
+          <NavItem to="/contact" label="Contact" />
+        </li>
+        <li>
+          <NavItem to="/about" label="About" />
+        </li>
       </ul>
       <ul className="flex space-x-4">
         <li className="ml-auto">
