@@ -60,6 +60,7 @@ export const CreateForm = () => {
       className="flex flex-col gap-6 p-6 bg-white shadow-md rounded-lg"
       onSubmit={handleSubmit(onSubmit)}
     >
+      <h1 className="text-2xl font-semibold text-center">Create Schedule</h1>
       <label className="flex flex-col">
         <span className="text-lg font-semibold mb-2">Name</span>
         <input
