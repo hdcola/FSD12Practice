@@ -40,3 +40,5 @@ FSD12 Practices
 * [0717 Post a url to Telegraph](https://hdcola.github.io/FSD12Practice/0717/)
 * [0825 enroll use Flask and Vue](https://hdcola.github.io/FSD12Practice/0825/)
 * [1012 Bubble Sort](https://hdcola.github.io/FSD12Practice/1012/)
+* [1014 Enroll login](https://hdcola.github.io/FSD12Practice/1014/)
+* [1015 Enroll](https://hdcola.github.io/FSD12Practice/1015/)
