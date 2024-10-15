@@ -1,9 +1,9 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
-import NavItem from './NavItem';
+import NavItem from './navitem';
 
-export const Navbar = () => {
+export const NavBar = () => {
   const [user] = useAuthState(auth);
 
   const signUserOut = async () => {
