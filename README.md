@@ -41,4 +41,4 @@ FSD12 Practices
 * [0825 enroll use Flask and Vue](https://hdcola.github.io/FSD12Practice/0825/)
 * [1012 Bubble Sort](https://hdcola.github.io/FSD12Practice/1012/)
 * [1014 Enroll login](https://hdcola.github.io/FSD12Practice/1014/)
-* [1015 Enroll](https://hdcola.github.io/FSD12Practice/1015/)
+* [1015 Enroll create schedule](https://hdcola.github.io/FSD12Practice/1015/)
