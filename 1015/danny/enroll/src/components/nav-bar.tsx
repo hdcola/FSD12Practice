@@ -1,7 +1,7 @@
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
-import NavItem from './navitem';
+import NavItem from './nav-item';
 
 export const NavBar = () => {
   const [user] = useAuthState(auth);

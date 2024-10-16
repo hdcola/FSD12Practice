@@ -7,8 +7,10 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from 'react-router-dom';
 
 interface CreateFormProps {
-  name: string;
-  datetime: string;
+  title: string;
+  date: Date;
+  startTime: string;
+  endTime: string;
   maxStudents: number;
 }
 
@@ -17,14 +19,16 @@ export const CreateForm = () => {
   const navigator = useNavigate();
 
   const schema = yup.object().shape({
-    name: yup.string().required('Name is required'),
-    datetime: yup
+    title: yup.string().required('Title is required'),
+    date: yup.date().required('Date is required'),
+    startTime: yup
       .string()
-      .required('Date and time is required')
-      .matches(
-        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/,
-        'Date and time must be in the format YYYY-MM-DDTHH:MM'
-      ),
+      .required('Start Time is required')
+      .matches(/^\d{2}:\d{2}$/, 'Start Time must be in HH:MM format'),
+    endTime: yup
+      .string()
+      .required('End Time is required')
+      .matches(/^\d{2}:\d{2}$/, 'End Time must be in HH:MM format'),
     maxStudents: yup
       .number()
       .required('Max Students is required')
@@ -40,10 +44,10 @@ export const CreateForm = () => {
     resolver: yupResolver(schema),
   });
 
-  const postRef = collection(db, 'schedules');
+  const schedulesRef = collection(db, 'schedules');
 
   const onCreateSchedule = async (data: CreateFormProps) => {
-    await addDoc(postRef, {
+    await addDoc(schedulesRef, {
       ...data,
       teacherID: user?.uid,
       enrolledStudents: [],
@@ -62,27 +66,55 @@ export const CreateForm = () => {
     >
       <h1 className="text-2xl font-semibold text-center">Create Schedule</h1>
       <label className="flex flex-col">
-        <span className="text-lg font-semibold mb-2">Name</span>
+        <span className="text-lg font-semibold mb-2">Title</span>
         <input
           className="border p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
           type="text"
           placeholder="Enter the title"
-          {...register('name')}
+          {...register('title')}
         />
-        {error.errors.name && (
-          <span className="text-red-500 mt-1">{error.errors.name.message}</span>
+        {error.errors.title && (
+          <span className="text-red-500 mt-1">
+            {error.errors.title.message}
+          </span>
         )}
       </label>
       <label className="flex flex-col">
         <span className="text-lg font-semibold mb-2">Date</span>
         <input
           className="border p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-          type="datetime-local"
-          {...register('datetime')}
+          type="date"
+          {...register('date')}
         />
-        {error.errors.datetime && (
+        {error.errors.date && (
+          <span className="text-red-500 mt-1">{error.errors.date.message}</span>
+        )}
+      </label>
+      <label className="flex flex-col">
+        <span className="text-lg font-semibold mb-2">Start Time</span>
+        <input
+          className="border p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          type="time"
+          placeholder="HH:MM"
+          {...register('startTime')}
+        />
+        {error.errors.startTime && (
           <span className="text-red-500 mt-1">
-            {error.errors.datetime.message}
+            {error.errors.startTime.message}
+          </span>
+        )}
+      </label>
+      <label className="flex flex-col">
+        <span className="text-lg font-semibold mb-2">End Time</span>
+        <input
+          className="border p-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          type="time"
+          placeholder="HH:MM"
+          {...register('endTime')}
+        />
+        {error.errors.endTime && (
+          <span className="text-red-500 mt-1">
+            {error.errors.endTime.message}
           </span>
         )}
       </label>
