@@ -1,12 +1,14 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var auctionsRouter = require('./routes/auctions');
+const indexRouter = require('./routes/index');
+const auctionsRouter = require('./routes/auctions');
 
-var app = express();
+const app = express();
+
+const db = require('./models');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -16,5 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/api/auctions', auctionsRouter);
+
+db.sequelize.sync();
 
 module.exports = app;
