@@ -34,13 +34,29 @@ interface Auction {
 }
 
 export const Home = () => {
-  const { isLoading, error, data } = useQuery<Auction[]>({
+  const { isLoading, error, data, refetch } = useQuery<Auction[]>({
     queryKey: ['auctions-list'],
     queryFn: async () => {
       const res = await axios.get('http://localhost:3000/api/auctions');
       return res.data;
     },
   });
+
+  const handleDelete = async (id: number) => {
+    try {
+      const resp = await axios.delete(
+        `http://localhost:3000/api/auctions/${id}`
+      );
+      if (resp.status === 204) {
+        refetch();
+      } else {
+        console.error('Failed to delete auction');
+        console.error(resp);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const columns = [
     { key: 'id', label: 'ID' },
@@ -75,7 +91,9 @@ export const Home = () => {
                 ) : columnKey === 'action' ? (
                   <ButtonGroup size="sm">
                     <Button>Edit</Button>
-                    <Button>Delete</Button>
+                    <Button onClick={() => handleDelete(item.id)}>
+                      Delete
+                    </Button>
                   </ButtonGroup>
                 ) : (
                   getKeyValue(item, columnKey)

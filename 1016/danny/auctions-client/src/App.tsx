@@ -3,6 +3,7 @@ import { Home } from './pages/home';
 import { NextUIProvider } from '@nextui-org/react';
 import { Menubar } from './components/menubar';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { CreateAuction } from './pages/create-auction';
 
 function App() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ function App() {
         <Menubar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/auctions/new" element={<CreateAuction />} />
         </Routes>
       </NextUIProvider>
     </QueryClientProvider>

@@ -24,4 +24,10 @@ router.patch('/:id', function (req, res, next) {
   res.send('respond with a resource');
 });
 
+router.delete('/:id', async function (req, res, next) {
+  const id = req.params.id;
+  await Auctions.destroy({ where: { id } });
+  res.status(204).end();
+});
+
 module.exports = router;
