@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Auctions } = require('../models');
+const { Sequelize } = require('sequelize');
 
 /* GET auctions listing. */
 router.get('/', async function (req, res, next) {
@@ -16,8 +17,21 @@ router.get('/:id', async function (req, res, next) {
 
 router.post('/', async function (req, res, next) {
   const auction = req.body;
-  await Auctions.create(auction);
-  res.status(201).json(auction).end();
+  try {
+    await Auctions.create(auction);
+    res.status(201).json(auction).end();
+  } catch (error) {
+    if (error instanceof Sequelize.ValidationError) {
+      const errors = error.errors.map((err) => ({
+        message: err.message,
+        field: err.path,
+      }));
+      console.log(errors);
+      return res.status(400).json(errors).end();
+    } else {
+      return res.status(500).json(error).end();
+    }
+  }
 });
 
 router.patch('/:id/bid', function (req, res, next) {

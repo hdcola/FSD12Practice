@@ -24,6 +24,7 @@ export const CreateAuction = () => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors: error },
   } = useForm<AuctionFormProps>({
     resolver: yupResolver(schema),
@@ -35,10 +36,21 @@ export const CreateAuction = () => {
       if (resp.status === 201) {
         navtigate('/');
       } else {
-        console.error('Failed to create auction' + resp.data);
+        console.error('Failed to create auction');
       }
-    } catch (error) {
-      console.error(error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: Error | any) {
+      if (error.response && error.response.status === 400) {
+        const apiErrors = error.response.data;
+        apiErrors.forEach((apiError: { field: string; message: string }) => {
+          setError(apiError.field as keyof AuctionFormProps, {
+            type: 'manual',
+            message: apiError.message,
+          });
+        });
+      } else {
+        console.error(error);
+      }
     }
   };
 

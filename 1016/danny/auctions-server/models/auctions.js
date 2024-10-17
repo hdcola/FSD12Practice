@@ -19,15 +19,24 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
         validate: {
-          len: [2, 100],
-          is: /^[a-zA-Z0-9 .,_()\-]+$/i,
+          len: {
+            args: [2, 100],
+            msg: 'Item name must be between 2 and 100 characters',
+          },
+          is: {
+            args: /^[a-z ]+$/i,
+            msg: 'Item name can only contain letters, numbers, spaces, and .,_()- characters',
+          },
         },
       },
       itemDescription: {
         type: DataTypes.STRING(10000),
         allowNull: false,
         validate: {
-          len: [2, 10000],
+          len: {
+            args: [2, 10000],
+            msg: 'Item description must be between 2 and 10000 characters',
+          },
         },
       },
       lastPrice: {
