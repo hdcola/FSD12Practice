@@ -20,8 +20,20 @@ router.post('/', async function (req, res, next) {
   res.status(201).json(auction).end();
 });
 
-router.patch('/:id', function (req, res, next) {
-  res.send('respond with a resource');
+router.patch('/:id/bid', function (req, res, next) {
+  const id = req.params.id;
+  const { lastPrice, sellerEmail } = req.body;
+  Auctions.findByPk(id).then((auction) => {
+    if (auction.lastPrice < lastPrice) {
+      auction.lastPrice = lastPrice;
+      auction.sellerEmail = sellerEmail;
+      auction.save().then(() => {
+        res.json(auction).end();
+      });
+    } else {
+      res.status(400).end();
+    }
+  });
 });
 
 router.delete('/:id', async function (req, res, next) {

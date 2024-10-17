@@ -11,29 +11,12 @@ import {
 } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-
-const formatDate = (dateString: string) => {
-  const options: Intl.DateTimeFormatOptions = {
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  };
-  return new Intl.DateTimeFormat('en-US', options).format(new Date(dateString));
-};
-
-interface Auction {
-  id: number;
-  itemName: string;
-  itemDescription: string;
-  sellerEmail: string;
-  lastBidderEmail: string;
-  lastPrice: number;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { useNavigate } from 'react-router-dom';
+import { Auction, formatDate } from '../components/types';
 
 export const Home = () => {
+  const navigator = useNavigate();
+
   const { isLoading, error, data, refetch } = useQuery<Auction[]>({
     queryKey: ['auctions-list'],
     queryFn: async () => {
@@ -90,7 +73,11 @@ export const Home = () => {
                   formatDate(getKeyValue(item, columnKey))
                 ) : columnKey === 'action' ? (
                   <ButtonGroup size="sm">
-                    <Button>Edit</Button>
+                    <Button
+                      onClick={() => navigator(`/auctions/bid/${item.id}`)}
+                    >
+                      Bid
+                    </Button>
                     <Button onClick={() => handleDelete(item.id)}>
                       Delete
                     </Button>
