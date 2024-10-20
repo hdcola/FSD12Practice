@@ -7,6 +7,7 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const errorResponse = require('./middlewares/error-response');
+const validateToken = require('./middlewares/validate-token');
 
 const app = express();
 
@@ -18,8 +19,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/api/users', usersRouter, errorResponse);
+app.use('/', validateToken, indexRouter);
+app.use('/api/users', usersRouter);
+
+app.use(errorResponse);
 
 db.sequelize.sync();
 
