@@ -6,6 +6,8 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const blogsRouter = require('./routes/blogs');
+
 const errorResponse = require('./middlewares/error-response');
 const validateToken = require('./middlewares/validate-token');
 
@@ -20,6 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/users', usersRouter);
+app.use('/api/blogs', validateToken, blogsRouter);
 app.use('/', validateToken, indexRouter);
 
 app.use(errorResponse);

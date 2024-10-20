@@ -27,3 +27,21 @@ GET {{host}}/ HTTP/1.1
 GET {{host}}/ HTTP/1.1
 Authorization:Bearer {{token}}
 
+
+###
+POST {{host}}/api/blogs HTTP/1.1
+Content-Type: application/json
+Authorization:Bearer {{token}}
+
+{
+    "title": "test1",
+    "content": "test1"
+}
+
+###
+GET {{host}}/api/blogs HTTP/1.1
+Authorization:Bearer {{token}}
+
+###
+GET {{host}}/api/blogs/user/test HTTP/1.1
+Authorization:Bearer {{token}}
