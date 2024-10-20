@@ -1,5 +1,5 @@
 @host=http://localhost:3000
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpYXQiOjE3MjkzODQzODksImV4cCI6MTczODAyNDM4OX0.1AhkgB5FqFCUpygipo7BaqsxCBNlWwgK13mtyxQojzs
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QiLCJpZCI6MSwiaWF0IjoxNzI5NDMyMjcxLCJleHAiOjE3MzgwNzIyNzF9.ialKgloQjY9eSYMFA3pahQgdqIVNUwMKuEcR6Wxm7_s
 
 
 ###

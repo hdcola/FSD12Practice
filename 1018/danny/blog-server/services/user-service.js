@@ -12,7 +12,7 @@ async function createUser({ username, password }) {
       username,
       password: hash,
     });
-    const token = generateToken({ username: newUser.username });
+    const token = generateToken({ username: newUser.username, id: newUser.id });
     return token;
   } catch (err) {
     if (err instanceof Sequelize.ValidationError) {
@@ -36,7 +36,7 @@ async function loginByUsernameAndPassword({ username, password }) {
   if (!match) {
     throw ApiError.unauthorized('Invalid username or password');
   }
-  const token = generateToken({ username: username });
+  const token = generateToken({ username: username, id: user.id });
   return token;
 }
 

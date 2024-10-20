@@ -5,7 +5,9 @@ const router = express.Router();
 router.get('/', function (req, res, next) {
   const user = req.user;
   if (user) {
-    res.json({ message: `Welcome to the blog server, ${user.username}!` });
+    res.json({
+      message: `Welcome to the blog server, ${user.id}: ${user.username} .`,
+    });
     return;
   }
   res.json({ message: 'Welcome to the blog server' });
