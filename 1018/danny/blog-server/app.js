@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -14,6 +15,8 @@ const validateToken = require('./middlewares/validate-token');
 const app = express();
 
 const db = require('./models');
+
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.json());
