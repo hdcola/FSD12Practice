@@ -8,3 +8,12 @@ export const userAlova = createAlova({
   baseURL: 'http://localhost:3000',
   statesHook: reactHook,
 });
+
+export const blogAlova = createAlova({
+  requestAdapter: adapterFetch(),
+  responded: (response) => response.json(),
+  baseURL: 'http://localhost:3000',
+  statesHook: reactHook,
+});
+
+export * from './user';

@@ -11,8 +11,8 @@ export const Menu = () => {
           </a>
         </li>
         <li>
-          <a href="/blog" className="text-white hover:text-gray-400">
-            Blog
+          <a href="/blog/new" className="text-white hover:text-gray-400">
+            Create Blog
           </a>
         </li>
       </ul>
