@@ -1,0 +1,19 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYS5jb20iLCJpZCI6MiwiaWF0IjoxNzI5NjA2NDczLCJleHAiOjE3MzA0NzA0NzN9.psEMOL6VrFfteMxKzONXfQAPf6oHCpcOQG-Xd8sc6IM
+
+### Create User
+POST http://localhost:3000/api/users/register HTTP/1.1
+content-type: application/json
+
+{
+    "email": "a@a.com",
+    "password": "abc123"
+}
+
+### Login
+POST http://localhost:3000/api/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "a@a.com",
+    "password": "abc123"
+}
