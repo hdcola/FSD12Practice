@@ -24,7 +24,17 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      username: { type: DataTypes.STRING, allowNull: false, unique: true },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: {
+          args: false,
+          msg: 'Username is required',
+        },
+        unique: {
+          args: true,
+          msg: 'Username already exists',
+        },
+      },
       password: { type: DataTypes.STRING, allowNull: false },
     },
     {

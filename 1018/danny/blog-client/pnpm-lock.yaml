@@ -14,6 +14,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.59.15
         version: 5.59.15(react@18.3.1)
+      alova:
+        specifier: ^3.1.0
+        version: 3.1.0
       axios:
         specifier: ^1.7.7
         version: 1.7.7
@@ -84,6 +87,9 @@ packages:
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
+
+  '@alova/shared@1.0.6':
+    resolution: {integrity: sha512-W89j64InjFIsW/u5YmYvpXGWz8JerBAYWyu/Fc7xfc5B+95SSA3ybW4nyHacBUW6yYQyGZwa8S8bVPePqa7bmA==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -572,6 +578,10 @@ packages:
 
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
+
+  alova@3.1.0:
+    resolution: {integrity: sha512-blccCirLgTqAJgMkQnAECiP7zs+rYLgfVHbghoIHryCXHVDbKdVsEg/PFrN04NexCN+UUFPzmKcdfaCyYCAeuw==}
+    engines: {node: '>= 18.0.0'}
 
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
@@ -1141,6 +1151,9 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
+  rate-limiter-flexible@5.0.4:
+    resolution: {integrity: sha512-ftYHrIfSqWYDIJZ4yPTrgOduByAp+86gUS9iklv0JoXVM8eQCAjTnydCj1hAT4MmhmkSw86NaFEJ28m/LC1pKA==}
+
   react-dom@18.3.1:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
     peerDependencies:
@@ -1402,6 +1415,8 @@ packages:
 snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
+
+  '@alova/shared@1.0.6': {}
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
@@ -1791,6 +1806,11 @@ snapshots:
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
       uri-js: 4.4.1
+
+  alova@3.1.0:
+    dependencies:
+      '@alova/shared': 1.0.6
+      rate-limiter-flexible: 5.0.4
 
   ansi-regex@5.0.1: {}
 
@@ -2327,6 +2347,8 @@ snapshots:
   punycode@2.3.1: {}
 
   queue-microtask@1.2.3: {}
+
+  rate-limiter-flexible@5.0.4: {}
 
   react-dom@18.3.1(react@18.3.1):
     dependencies:

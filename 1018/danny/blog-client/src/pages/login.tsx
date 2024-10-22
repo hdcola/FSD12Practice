@@ -1,14 +1,9 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import useAuthStore from '../store/useAuthStore';
 import { useNavigate } from 'react-router-dom';
-
-interface LoginFormData {
-  username: string;
-  password: string;
-}
+import { LoginFormData, userLogin } from '../api/user';
 
 const loginSchema = yup.object().shape({
   username: yup.string().required(),
@@ -28,12 +23,9 @@ export const Login = () => {
   });
 
   const onLoign = async (data: LoginFormData) => {
-    // post to http://localhost:3000/api/login
-    const response = await axios.post(
-      'http://localhost:3000/api/users/login',
-      data
-    );
-    const { token } = response.data;
+    const response = await userLogin(data);
+    console.log(response);
+    const { token } = response;
     login(token);
     navigate('/');
   };
