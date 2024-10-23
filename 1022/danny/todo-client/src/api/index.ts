@@ -13,14 +13,21 @@ export const userAlova = createAlova({
       throw new ApiError(message, status, errors);
     }
   },
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://localhost:3000/api',
   statesHook: reactHook,
 });
 
 export const todoAlova = createAlova({
   requestAdapter: adapterFetch(),
-  responded: (response) => response.json(),
-  baseURL: 'http://localhost:3000',
+  responded: async (response) => {
+    if (response.ok) {
+      return await response.json()
+    } else {
+      const { message, status, errors } = await response.json();
+      throw new ApiError(message, status, errors);
+    }
+  },
+  baseURL: 'http://localhost:3000/api',
   statesHook: reactHook,
 });
 

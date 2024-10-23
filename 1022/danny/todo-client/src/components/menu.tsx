@@ -11,7 +11,7 @@ export const Menu = () => {
           </a>
         </li>
         <li>
-          <a href="/todos/new" className="text-white hover:text-gray-400">
+          <a href="/new" className="text-white hover:text-gray-400">
             New Todo
           </a>
         </li>

@@ -1,4 +1,4 @@
-import { userAlova } from '../api';
+import { userAlova } from '.';
 
 export interface LoginFormData {
   email: string;
@@ -13,7 +13,7 @@ export interface UserLoginResponse {
 
 
 export const userLogin = async (data: LoginFormData): Promise<UserLoginResponse> => {
-  return await userAlova.Post('/api/users/login', data);
+  return await userAlova.Post('/users/login', data);
 };
 
 
@@ -24,5 +24,5 @@ export interface registerFormData {
 }
 
 export const userRegister = async (data: registerFormData): Promise<UserLoginResponse> => {
-  return await userAlova.Post('/api/users/register', data);
+  return await userAlova.Post('/users/register', data);
 };

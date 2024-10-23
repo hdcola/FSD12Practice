@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYS5jb20iLCJpZCI6MiwiaWF0IjoxNzI5NjA2NDczLCJleHAiOjE3MzA0NzA0NzN9.psEMOL6VrFfteMxKzONXfQAPf6oHCpcOQG-Xd8sc6IM
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFAYS5jb20iLCJpZCI6MiwiaWF0IjoxNzI5NjEzNDU2LCJleHAiOjE3MzA0Nzc0NTZ9.NC9HdmRRRkUOooZ8IgePjIXHWi4WzQ1NgQ9fwLeXM5Y
 
 ### Create User
 POST http://localhost:3000/api/users/register HTTP/1.1
@@ -17,3 +17,19 @@ content-type: application/json
     "email": "a@a.com",
     "password": "abc123"
 }
+
+### Get Todos
+GET http://localhost:3000/api/todos HTTP/1.1
+Authorization: Bearer {{token}}
+
+
+### Create Todo
+POST http://localhost:3000/api/todos HTTP/1.1
+Authorization: Bearer {{token}}
+content-type: application/json
+
+{
+    "task": "Todo 1",
+    "dueDate": "2021-08-20 12:00:00"
+}
+

@@ -1,17 +1,17 @@
 require('dotenv').config();
-var express = require('express');
+const express = require('express');
 const cors = require('cors');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const usersRouter = require('./routes/users');
+const todosRouter = require('./routes/todos');
 
 const errorResponse = require('./middlewares/error-response');
 const validateToken = require('./middlewares/validate-token');
 
-var app = express();
+const app = express();
 
 const db = require('./models');
 
@@ -23,6 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/users', usersRouter);
+app.use('/api/todos', validateToken, todosRouter);
 
 app.use(errorResponse);
 

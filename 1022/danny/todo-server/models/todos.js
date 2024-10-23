@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'Due date is required',
         },
       },
+      isDone: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     {
       sequelize,

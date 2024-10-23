@@ -1,8 +1,16 @@
+import useAuthStore from '../store/useAuthStore';
+import { BlogList } from '../components/blog-list';
+
 export const Home = () => {
+  const { isAuthenticated } = useAuthStore();
+
   return (
     <div>
-      <h1 className="text-4xl font-bold">Welcome to the Blog!</h1>
-      <p className="text-xl">This is the home page of the blog.</p>
+      {isAuthenticated ? (
+        <BlogList />
+      ) : (
+        <p>Please login to see the home page</p>
+      )}
     </div>
   );
 };

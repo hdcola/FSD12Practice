@@ -26,6 +26,9 @@ export const Login = () => {
     const response = await userLogin(data);
     console.log(response);
     const { token } = response;
+    if (!token) {
+      return;
+    }
     login(token);
     navigate('/');
   };
