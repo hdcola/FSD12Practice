@@ -100,13 +100,9 @@ void ReadFromFile()
                 };
                 people.Add(person);
             }
-            catch (FormatException e)
+            catch (Exception e) when (e is FormatException || e is ArgumentException || e is OverflowException)
             {
                 Console.WriteLine("Error parsing" + e.Message + $"\n{line}\n");
-            }
-            catch (ArgumentException e)
-            {
-                Console.WriteLine("Error parsing: " + e.Message + $"\n{line}\n");
             }
         }
     }
