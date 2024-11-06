@@ -89,20 +89,24 @@ void ReadFromFile()
             string[] parts = line.Split(';');
             if (parts.Length < 3) continue;
 
-            if (int.TryParse(parts[1], out int age))
+            try
             {
+                int age = int.Parse(parts[1]);
                 Person person = new Person
                 {
                     Name = parts[0],
                     Age = age,
                     City = parts[2]
                 };
-
                 people.Add(person);
             }
-            else
+            catch (FormatException e)
             {
-                Console.WriteLine($"Invalid age format: '{parts[1]}' for person '{parts[0]}'");
+                Console.WriteLine("Error parsing" + e.Message + $"\n{line}\n");
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine("Error parsing: " + e.Message + $"\n{line}\n");
             }
         }
     }
