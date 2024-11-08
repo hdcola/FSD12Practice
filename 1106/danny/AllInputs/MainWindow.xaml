@@ -1,0 +1,61 @@
+﻿<Window x:Class="AllInputs.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AllInputs"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="244" Width="393">
+    <StackPanel Margin="10" VerticalAlignment="Top">
+        <!-- Name-->
+        <StackPanel Orientation="Horizontal">
+            <Label Content="_Name:" Target="{Binding ElementName=txtName}" VerticalAlignment="Center" />
+            <TextBox Name="txtName" Width="200" VerticalAlignment="Center" Height="20" />
+        </StackPanel>
+
+        <!-- Age field -->
+        <StackPanel Orientation="Horizontal" >
+            <Label Content="_Age:" Target="{Binding ElementName=radioAge}" VerticalAlignment="Center" />
+
+            <!-- Grouped RadioButtons with center alignment -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <RadioButton Name="rbBelow18" GroupName="rdoAge" Content="below 18" IsChecked="True" Checked="RadioButton_Checked"/>
+                <RadioButton GroupName="rdoAge" Content="18-35" />
+                <RadioButton GroupName="rdoAge" Content="36 and up" />
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Pets field-->
+        <StackPanel Orientation="Horizontal" >
+            <Label Content="_Pets:" Target="{Binding ElementName=chkCat}" VerticalAlignment="Center" />
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
+                <CheckBox Name="chkCat" Content="cat" Margin="0,0,10,0"/>
+                <CheckBox Name="chkDog" Content="dog" Margin="0,0,10,0" />
+                <CheckBox Name="chkOther" Content="other" Margin="0,0,10,0" />
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Continent ot residence -->
+        <StackPanel Orientation="Horizontal" >
+            <Label Content="_Continent of residence:" Target="{Binding ElementName=cbContinent}" VerticalAlignment="Center" />
+            <ComboBox Name="cbContinent" Width="200" VerticalAlignment="Center" Height="20">
+                <ComboBoxItem Content="Africa" />
+                <ComboBoxItem Content="Antarctica" />
+                <ComboBoxItem Content="Asia" />
+                <ComboBoxItem Content="Australia" />
+                <ComboBoxItem Content="Europe" />
+                <ComboBoxItem Content="North America" />
+                <ComboBoxItem Content="South America" />
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Name field -->
+        <StackPanel Orientation="Horizontal">
+            <Label Content="_Temperature:" Target="{Binding ElementName=sliderTemp}" VerticalAlignment="Center" />
+            <TextBlock Text="{Binding ElementName=sliderTemp, Path=Minimum}" VerticalAlignment="Bottom"  />
+            <Slider Name="sliderTemp" Width="200" VerticalAlignment="Center" Height="25" Minimum="15" Maximum="35" Value="25" AutoToolTipPlacement="TopLeft" TickPlacement="BottomRight" TickFrequency="1" />
+            <TextBlock Text="{Binding ElementName=sliderTemp, Path=Maximum}" VerticalAlignment="Bottom"  />
+        </StackPanel>
+        <Button Name="btnRegister" Content="Register Me" Width="100" Height="20" Margin="0,10,0,0" Click="btnRegister_Click"/>
+    </StackPanel>
+</Window>
