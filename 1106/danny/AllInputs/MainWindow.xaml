@@ -20,8 +20,8 @@
             <!-- Grouped RadioButtons with center alignment -->
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <RadioButton Name="rbBelow18" GroupName="rdoAge" Content="below 18" IsChecked="True" Checked="RadioButton_Checked"/>
-                <RadioButton GroupName="rdoAge" Content="18-35" />
-                <RadioButton GroupName="rdoAge" Content="36 and up" />
+                <RadioButton GroupName="rdoAge" Content="18-35" Checked="RadioButton_Checked" />
+                <RadioButton GroupName="rdoAge" Content="36 and up" Checked="RadioButton_Checked"/>
             </StackPanel>
         </StackPanel>
 
