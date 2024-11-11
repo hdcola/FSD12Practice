@@ -31,10 +31,8 @@ namespace TodoEF
             db = new TodoDbContext();
             Todos = new ObservableCollection<Todo>(db.Todos.ToList());
             lvTodos.ItemsSource = Todos;
-            foreach (var todo in Todos)
-            {
-                Console.WriteLine(todo.Task);
-            }
+            // set cbState ComboBox.ItemsSource to the Status enum values
+            cbState.ItemsSource = Enum.GetValues(typeof(Todo.Status));
         }
 
         protected override void OnClosed(EventArgs e)

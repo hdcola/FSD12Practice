@@ -29,5 +29,19 @@
             </ListView>
             <Button Name="btnExport" Content="Export all to file..."  Grid.Row="1"></Button>
         </Grid>
+        <StackPanel Grid.Column="1" Margin="10,0,0,0">
+            <Label Content="Task:" />
+            <TextBox Name="txtTask" Margin="0,0,0,10" />
+            <Label Content="Difficulty:" />
+            <StackPanel>
+                <Slider Name="sldDifficulty" Minimum="1" Maximum="5" Value="2" Margin="0,0,0,10" TickFrequency="1" TickPlacement="BottomRight" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" />
+            </StackPanel>
+            <Label Content="Due Date:" />
+            <DatePicker Name="dpDueDate" Margin="0,0,0,10" />
+            <Label Content="State:" />
+            <ComboBox Name="cbState" Margin="0,0,0,10">
+            </ComboBox>
+            <Button Name="btnAdd" Content="Add" />
+        </StackPanel>
     </Grid>
 </Window>
