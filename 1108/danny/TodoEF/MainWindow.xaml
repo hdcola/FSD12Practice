@@ -6,7 +6,28 @@
         xmlns:local="clr-namespace:TodoEF"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListView Name="lvTodos" Grid.Row="0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="auto"/>
+                        <GridViewColumn Header="Task" DisplayMemberBinding="{Binding Task}" Width="auto"/>
+                        <GridViewColumn Header="Difficulty" DisplayMemberBinding="{Binding Difficulty}" Width="auto"/>
+                        <GridViewColumn Header="Due Date" DisplayMemberBinding="{Binding DueDate}" Width="auto"/>
+                        <GridViewColumn Header="State" DisplayMemberBinding="{Binding State}" Width="auto"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Button Name="btnExport" Content="Export all to file..."  Grid.Row="1"></Button>
+        </Grid>
     </Grid>
 </Window>

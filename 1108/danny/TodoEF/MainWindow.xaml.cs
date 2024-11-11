@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,25 @@ namespace TodoEF
     /// </summary>
     public partial class MainWindow : Window
     {
+        private TodoDbContext db;
+        public ObservableCollection<Todo> Todos { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            db = new TodoDbContext();
+            Todos = new ObservableCollection<Todo>(db.Todos.ToList());
+            lvTodos.ItemsSource = Todos;
+            foreach (var todo in Todos)
+            {
+                Console.WriteLine(todo.Task);
+            }
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            db.Dispose();
+            base.OnClosed(e);
         }
     }
 }

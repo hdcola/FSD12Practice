@@ -15,12 +15,16 @@ namespace TodoEF
         public TodoDbContext()
             : base("name=TodoDbContext")
         {
+            Database.SetInitializer<TodoDbContext>(new CreateDatabaseIfNotExists<TodoDbContext>());
+            //Database.SetInitializer<TodoDbContext>(new DropCreateDatabaseAlways<TodoDbContext>());
         }
 
         // Add a DbSet for each entity type that you want to include in your model. For more information 
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
+
+        public virtual DbSet<Todo> Todos { get; set; }
     }
 
     //public class MyEntity
