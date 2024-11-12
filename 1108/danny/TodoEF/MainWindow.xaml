@@ -16,34 +16,49 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ListView Name="lvTodos" Grid.Row="0">
+            <ListView Name="lvTodos" Grid.Row="0" SelectionChanged="lvTodos_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Id" DisplayMemberBinding="{Binding Id}" Width="auto"/>
                         <GridViewColumn Header="Task" DisplayMemberBinding="{Binding Task}" Width="auto"/>
                         <GridViewColumn Header="Difficulty" DisplayMemberBinding="{Binding Difficulty}" Width="auto"/>
-                        <GridViewColumn Header="Due Date" DisplayMemberBinding="{Binding DueDate}" Width="auto"/>
+                        <GridViewColumn Header="Due Date" DisplayMemberBinding="{Binding DueDate, StringFormat='yyyy/MM/dd'}" Width="auto"/>
                         <GridViewColumn Header="State" DisplayMemberBinding="{Binding State}" Width="auto"/>
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button Name="btnExport" Content="Export all to file..."  Grid.Row="1" Margin="10,10,10,10" ></Button>
+            <Button Name="btnExport" Content="Export all to file..."  Grid.Row="1" Margin="10,10,10,10" Click="btnExport_Click"/>
         </Grid>
         <StackPanel Grid.Column="1" Margin="10,0,0,0">
-            <Label Content="Task:" />
-            <TextBox Name="txtTask" Margin="0,0,0,10" TextChanged="txtTask_TextChanged"/>
-            <Label Content="Difficulty:" />
-            <StackPanel>
-                <Slider Name="sldDifficulty" Minimum="1" Maximum="5" Value="2" Margin="0,0,0,10" TickFrequency="1" TickPlacement="BottomRight" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" />
+            <DockPanel LastChildFill="True">
+                <Label Content="Task:" DockPanel.Dock="Left"/>
+                <TextBox Name="txtTask"  TextChanged="txtTask_TextChanged"  />
+            </DockPanel>
+            <TextBlock Name="tbTaskError" Text="" Margin="0,0,0,10" Foreground="Red"/>
+
+
+            <DockPanel LastChildFill="True">
+                <Label Content="Difficulty:" DockPanel.Dock="Left"/>
+                <TextBlock Text="1" DockPanel.Dock="Left"/>
+                <TextBlock Text="5" DockPanel.Dock="Right"/>
+                <Slider Name="sldDifficulty" Minimum="1" Maximum="5" Value="2" TickFrequency="1" TickPlacement="BottomRight" IsSnapToTickEnabled="True" AutoToolTipPlacement="TopLeft" />
+            </DockPanel>
+
+            <DockPanel LastChildFill="True">
+                <Label Content="Due Date:"/>
+                <DatePicker Name="dpDueDate" Margin="0,0,0,10" />
+            </DockPanel>
+
+            <DockPanel LastChildFill="True">
+                <Label Content="State:" />
+                <ComboBox Name="cbState" />
+            </DockPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Name="btnAdd" Content="Add" Margin="10,10,10,10" Click="btnAdd_Click" />
+                <Button Name="btnDelete" Content="Delete" Margin="10,10,10,10" Click="btnDelete_Click" IsEnabled="False"/>
+                <Button Name="btnUpdate" Content="Update" Margin="10,10,10,10" Click="btnUpdate_Click" IsEnabled="False"/>
             </StackPanel>
-            <Label Content="Due Date:" />
-            <DatePicker Name="dpDueDate" Margin="0,0,0,10" />
-            <Label Content="State:" />
-            <ComboBox Name="cbState" Margin="0,0,0,10">
-            </ComboBox>
-            <Button Name="btnAdd" Content="Add" Margin="10,10,10,10" Click="btnAdd_Click" />
-            <Button Name="btnDelete" Content="Delete" Margin="10,10,10,10" Click="btnDelete_Click"/>
-            <Button Name="btnUpdate" Content="Update" Margin="10,10,10,10"/>
         </StackPanel>
     </Grid>
 </Window>

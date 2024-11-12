@@ -26,11 +26,12 @@ namespace TodoEF
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime DueDate { get; set; } // 1900-2099 year required, format in GUI is whatever the OS is configured to use
+        public DateTime DueDate { get; set; } = DateTime.Now; // 1900-2099 year required, format in GUI is whatever the OS is configured to use
 
         [Required]
         [EnumDataType(typeof(Status), ErrorMessage = "Invalid status value.")]
-        public Status State { get; set; }
+        public Status State { get; set; } = Status.Pending;
+
         public enum Status { Pending, Done, Delegated }
 
         public static bool ValidateTask(Todo todo, out String[] results)
@@ -47,6 +48,11 @@ namespace TodoEF
                 results[results.Length - 1] = "Only letters, digits, space, and ./,;-+)(*! are allowed.";
             }
             return results.Length == 0;
+        }
+
+        public override string ToString()
+        {
+            return $"{Task} ({Difficulty}) due {DueDate.ToString("yyyy/MM/dd")} is {State}";
         }
     }
 }

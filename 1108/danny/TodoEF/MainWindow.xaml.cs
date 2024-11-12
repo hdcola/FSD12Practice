@@ -24,17 +24,27 @@ namespace TodoEF
         private TodoDbContext db;
         public ObservableCollection<Todo> Todos { get; set; }
 
-
+        // map xaml control names to validation methods
         private Dictionary<String, ValidationDelegate> validationMethod;
+
+        private Todo currentTodo = new Todo();
 
         public MainWindow()
         {
             InitializeComponent();
+
+            // create db context and load Todos
             db = new TodoDbContext();
+
+            // set lvTodos ListView.ItemsSource to Todos ObservableCollection
             Todos = new ObservableCollection<Todo>(db.Todos.ToList());
             lvTodos.ItemsSource = Todos;
+
             // set cbState ComboBox.ItemsSource to the Status enum values
             cbState.ItemsSource = Enum.GetValues(typeof(Todo.Status));
+
+            // set currentTodo to the first item in Todos
+            renderCurrentTodo();
 
             // map xaml control names to validation methods
             validationMethod = new Dictionary<String, ValidationDelegate>
@@ -49,36 +59,79 @@ namespace TodoEF
             base.OnClosed(e);
         }
 
+        private void updateDbAndRenderListView()
+        {
+            db.SaveChanges();
+            Todos.Clear();
+            db.Todos.ToList().ForEach(Todos.Add);
+        }
+
+        private void renderCurrentTodo()
+        {
+            txtTask.Text = currentTodo.Task;
+            cbState.SelectedValue = currentTodo.State;
+            dpDueDate.SelectedDate = currentTodo.DueDate;
+            sldDifficulty.Value = currentTodo.Difficulty;
+        }
+
+        private void newTodoAndRender()
+        {
+            currentTodo = new Todo();
+            renderCurrentTodo();
+            btnDelete.IsEnabled = false;
+            btnUpdate.IsEnabled = false;
+        }
+
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            // create new Todo from input
+            Todo todo = new Todo
+            {
+                Task = txtTask.Text,
+                State = (Todo.Status)cbState.SelectedValue,
+                DueDate = dpDueDate.SelectedDate ?? DateTime.Now,
+                Difficulty = (int)sldDifficulty.Value
+            };
+            db.Todos.Add(todo);
+            updateDbAndRenderListView();
+            newTodoAndRender();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            // remove currentTodo from db and update ListView
+            db.Todos.Remove(currentTodo);
+            updateDbAndRenderListView();
+            newTodoAndRender();
         }
 
-        private void ShowValidationError(Control control, String message)
+        private void lvTodos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // set red border
-            control.BorderBrush = Brushes.Red;
-            control.BorderThickness = new Thickness(2);
-
-            // set tooltip
-            ToolTip tt = new ToolTip();
-            tt.Content = message;
-            control.ToolTip = tt;
+            currentTodo = (Todo)lvTodos.SelectedItem;
+            if (currentTodo != null)
+            {
+                btnDelete.IsEnabled = true;
+                btnUpdate.IsEnabled = true;
+                renderCurrentTodo();
+            }
+            else
+            {
+                btnDelete.IsEnabled = false;
+                btnUpdate.IsEnabled = false;
+            }
         }
 
-        private void ClearValidationError(Control control)
+        private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            // clear border
-            control.ClearValue(Border.BorderBrushProperty);
-            control.ClearValue(Border.BorderThicknessProperty);
-
-            // clear tooltip
-            control.ClearValue(ToolTipProperty);
+            if (currentTodo != null)
+            {
+                currentTodo.Task = txtTask.Text;
+                currentTodo.State = (Todo.Status)cbState.SelectedValue;
+                currentTodo.DueDate = dpDueDate.SelectedDate ?? DateTime.Now;
+                currentTodo.Difficulty = (int)sldDifficulty.Value;
+                updateDbAndRenderListView();
+                newTodoAndRender();
+            }
         }
 
         private void txtTask_TextChanged(object sender, TextChangedEventArgs e)
@@ -94,13 +147,30 @@ namespace TodoEF
                 {
                     // showvalidationError
                     string message = String.Join("\n", results);
-                    ShowValidationError((Control)sender, message);
+                    tbTaskError.Text = message;
                 }
                 else
                 {
                     // clear validation error
-                    ClearValidationError((Control)sender);
+                    tbTaskError.Text = "";
                 }
+            }
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            // export Todos to a file
+            Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
+            {
+                FileName = "Todos",
+                DefaultExt = ".txt",
+                Filter = "Text documents (.txt)|*.txt"
+            };
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                System.IO.File.WriteAllLines(filename, Todos.Select(todo => todo.ToString()));
             }
         }
     }
