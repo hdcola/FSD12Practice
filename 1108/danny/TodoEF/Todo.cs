@@ -20,7 +20,7 @@ namespace TodoEF
         [RegularExpression(@"^[a-zA-Z0-9\s\./,;+\(\)\*!-]*$", ErrorMessage = "Only letters, digits, space, and ./,;-+)(*! are allowed.")]
         public string Task { get; set; } // 1-100 characters, only letters, digits, space ./,;-+)(*! allowed
 
-        [Range(1, 5)]
+        [Range(1, 5, ErrorMessage = "Difficulty must be between 1 and 5.")]
         public int Difficulty { get; set; } // 1-5 only front-end validation
 
         [Required]
@@ -29,6 +29,7 @@ namespace TodoEF
         public DateTime DueDate { get; set; } // 1900-2099 year required, format in GUI is whatever the OS is configured to use
 
         [Required]
+        [EnumDataType(typeof(Status), ErrorMessage = "Invalid status value.")]
         public Status State { get; set; }
         public enum Status { Pending, Done, Delegated }
     }
