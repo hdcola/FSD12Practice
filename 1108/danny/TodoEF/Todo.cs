@@ -32,5 +32,21 @@ namespace TodoEF
         [EnumDataType(typeof(Status), ErrorMessage = "Invalid status value.")]
         public Status State { get; set; }
         public enum Status { Pending, Done, Delegated }
+
+        public static bool ValidateTask(Todo todo, out String[] results)
+        {
+            results = new String[0];
+            if (todo.Task.Length < 1 || todo.Task.Length > 100)
+            {
+                Array.Resize(ref results, results.Length + 1);
+                results[results.Length - 1] = "Task must be between 1 and 100 characters.";
+            }
+            if (!System.Text.RegularExpressions.Regex.IsMatch(todo.Task, @"^[a-zA-Z0-9\s\./,;+\(\)\*!-]*$"))
+            {
+                Array.Resize(ref results, results.Length + 1);
+                results[results.Length - 1] = "Only letters, digits, space, and ./,;-+)(*! are allowed.";
+            }
+            return results.Length == 0;
+        }
     }
 }
