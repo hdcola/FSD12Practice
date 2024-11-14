@@ -39,6 +39,8 @@ namespace TodoEF
             // set lvTodos ListView.ItemsSource to Todos ObservableCollection
             Todos = new ObservableCollection<Todo>(db.Todos.ToList());
             lvTodos.ItemsSource = Todos;
+            // add GridViewColumnHeader.ClickEvent event handler
+            AddHandler(GridViewColumnHeader.ClickEvent, new RoutedEventHandler(GridViewColumnHeader_Click));
 
             // set cbState ComboBox.ItemsSource to the Status enum values
             cbState.ItemsSource = Enum.GetValues(typeof(Todo.Status));
@@ -136,23 +138,26 @@ namespace TodoEF
 
         private void txtTask_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // get sender name
-            String name = ((TextBox)sender).Name;
-            // get validation method
-            if (validationMethod.TryGetValue(name, out ValidationDelegate method))
+            if (sender is TextBox)
             {
-                // validate input
-                String[] results;
-                if (!method(new Todo { Task = ((TextBox)sender).Text }, out results))
+                // get sender name
+                String name = ((TextBox)sender).Name;
+                // get validation method
+                if (validationMethod.TryGetValue(name, out ValidationDelegate method))
                 {
-                    // showvalidationError
-                    string message = String.Join("\n", results);
-                    tbTaskError.Text = message;
-                }
-                else
-                {
-                    // clear validation error
-                    tbTaskError.Text = "";
+                    // validate input
+                    String[] results;
+                    if (!method(new Todo { Task = ((TextBox)sender).Text }, out results))
+                    {
+                        // showvalidationError
+                        string message = String.Join("\n", results);
+                        tbTaskError.Text = message;
+                    }
+                    else
+                    {
+                        // clear validation error
+                        tbTaskError.Text = "";
+                    }
                 }
             }
         }
@@ -171,6 +176,49 @@ namespace TodoEF
             {
                 string filename = dlg.FileName;
                 System.IO.File.WriteAllLines(filename, Todos.Select(todo => todo.ToString()));
+            }
+            lbStatus.Text = $"Exported {Todos.Count} Todos to {dlg.FileName}";
+        }
+
+        private void MenuIztem_Click(object sender, RoutedEventArgs e)
+        {
+            var selectItems = lvTodos.SelectedItems;
+            foreach (Todo todo in selectItems)
+            {
+                db.Todos.Remove(todo);
+            }
+            updateDbAndRenderListView();
+            newTodoAndRender();
+            lbStatus.Text = $"Deleted your selected item(s).";
+        }
+
+        private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
+        {
+            var headerClicked = e.OriginalSource as GridViewColumnHeader;
+            if (headerClicked != null)
+            {
+                string header = headerClicked.Column.Header as string;
+                if (header == "Task")
+                {
+                    lvTodos.ItemsSource = Todos.OrderBy(todo => todo.Task);
+                }
+                else if (header == "State")
+                {
+                    lvTodos.ItemsSource = Todos.OrderBy(todo => todo.State);
+                }
+                else if (header == "Due Date")
+                {
+                    lvTodos.ItemsSource = Todos.OrderBy(todo => todo.DueDate);
+                }
+                else if (header == "Difficulty")
+                {
+                    lvTodos.ItemsSource = Todos.OrderBy(todo => todo.Difficulty);
+                }
+                else if (header == "Id")
+                {
+                    lvTodos.ItemsSource = Todos.OrderBy(todo => todo.Id);
+                }
+                lbStatus.Text = $"Sorted by {header}";
             }
         }
     }
