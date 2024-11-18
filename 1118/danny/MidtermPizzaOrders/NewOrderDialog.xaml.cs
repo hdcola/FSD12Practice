@@ -47,9 +47,12 @@ namespace MidtermPizzaOrders
                 var button = (Button)sender;
                 if ((string)button.Content == "Place order")
                 {
+                    validClientName();
+                    validPostalCode();
+                    validDeliveryTime();
+
                     if (!isClientNameValid || !isClientPostalCodeValid || !isDeliveryTimeValid)
                     {
-                        MessageBox.Show("Please correct the errors before placing the order.");
                         return;
                     }
 
@@ -87,6 +90,11 @@ namespace MidtermPizzaOrders
 
         private void textClientName_TextChanged(object sender, TextChangedEventArgs e)
         {
+            validClientName();
+        }
+
+        private void validClientName()
+        {
             // validate client name should be 1-100 characters
             if (textClientName.Text.Length < 1 || textClientName.Text.Length > 100)
             {
@@ -104,6 +112,13 @@ namespace MidtermPizzaOrders
 
         private void textClientPostalCode_TextChanged(object sender, TextChangedEventArgs e)
         {
+            validPostalCode();
+        }
+
+        private void validPostalCode()
+        {
+            // change postal code to uppercase
+            textClientPostalCode.Text = textClientPostalCode.Text.ToUpper();
             // validate postal code should be in A1A 1A1 format
             if (System.Text.RegularExpressions.Regex.IsMatch(textClientPostalCode.Text, @"^[A-Z]\d[A-Z] \d[A-Z]\d$"))
             {
@@ -120,6 +135,11 @@ namespace MidtermPizzaOrders
         }
 
         private void textTime_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            validDeliveryTime();
+        }
+
+        private void validDeliveryTime()
         {
             // dpDate and textTime must be at least 45 minutes past current date/time
             if (dpDate.SelectedDate != null && textTime.Text.Length > 0)
