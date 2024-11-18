@@ -117,10 +117,8 @@ namespace MidtermPizzaOrders
 
         private void validPostalCode()
         {
-            // change postal code to uppercase
-            textClientPostalCode.Text = textClientPostalCode.Text.ToUpper();
             // validate postal code should be in A1A 1A1 format
-            if (System.Text.RegularExpressions.Regex.IsMatch(textClientPostalCode.Text, @"^[A-Z]\d[A-Z] \d[A-Z]\d$"))
+            if (System.Text.RegularExpressions.Regex.IsMatch(textClientPostalCode.Text, @"^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$"))
             {
                 textClientPostalCode.Background = Brushes.White;
                 textClientPostalCodeError.Text = "";

@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MidtermPizzaOrders"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Closing="Window_Closing">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="E_xport all to CSV..." />
+                <MenuItem Name="menuExport" Header="E_xport all to CSV..." Click="menuExport_Click"/>
                 <Separator />
-                <MenuItem Header="_Exit" />
+                <MenuItem Name="menuExit" Header="_Exit" Click="menuExit_Click"/>
             </MenuItem>
             <MenuItem Header="_Mark selected">
                 <MenuItem Header="_Placed" Click="menuPlaced_Click"/>
@@ -25,27 +25,23 @@
                 <TextBlock Name="LblStatusMessage" Text="Application started"/>
             </StatusBarItem>
         </StatusBar>
-        <ListView Name="LvOrders" SelectionMode="Extended">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Id" Width="25" DisplayMemberBinding="{Binding Id}" />
-                    <GridViewColumn Header="Client name" Width="150" DisplayMemberBinding="{Binding ClientName}" />
-                    <GridViewColumn Header="Post code" Width="65" DisplayMemberBinding="{Binding ClientPostalCode}" />
-                    <GridViewColumn Header="Deadline" Width="150" DisplayMemberBinding="{Binding DeliveryDeadline}" />
-                    <GridViewColumn Header="Size" Width="50" DisplayMemberBinding="{Binding Size}" />
-                    <GridViewColumn Header="Baking time" Width="75" DisplayMemberBinding="{Binding BakingTimeMinutes}" />
-                    <GridViewColumn Header="Extras" Width="150" DisplayMemberBinding="{Binding Extras}" />
-                    <GridViewColumn Header="Status" Width="75" DisplayMemberBinding="{Binding OrderStatus}" />
-                    <!-- you must add all the remaining columns here -->
-                </GridView>
-                <!-- you must add context menu to ListView/GridView that acts on currently selected items -->
-            </ListView.View>
-            <ListView.ContextMenu>
+        <DataGrid Name="LvOrders" AutoGenerateColumns="False" ItemsSource="{Binding Orders}" SelectionMode="Extended" CanUserSortColumns="True" IsReadOnly="True" CanUserAddRows="False" LoadingRow="LvOrders_LoadingRow" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Width="25" Binding="{Binding Id}" />
+                <DataGridTextColumn Header="Client name" Width="150" Binding="{Binding ClientName}" />
+                <DataGridTextColumn Header="Post code" Width="65" Binding="{Binding ClientPostalCode}" />
+                <DataGridTextColumn Header="Deadline" Width="150" Binding="{Binding DeliveryDeadline}" />
+                <DataGridTextColumn Header="Size" Width="50" Binding="{Binding Size}" />
+                <DataGridTextColumn Header="Baking time" Width="75" Binding="{Binding BakingTimeMinutes}" />
+                <DataGridTextColumn Header="Extras" Width="150" Binding="{Binding Extras}" />
+                <DataGridTextColumn Header="Status" Width="75" Binding="{Binding OrderStatus}" />
+            </DataGrid.Columns>
+            <DataGrid.ContextMenu>
                 <ContextMenu>
                     <MenuItem Name="menuPlaced" Header="Change to Placed" Click="menuPlaced_Click"/>
                     <MenuItem Name="menuFulfilled" Header="Change to Fulfilled" Click="menuFulfilled_Click"/>
                 </ContextMenu>
-            </ListView.ContextMenu>
-        </ListView>
+            </DataGrid.ContextMenu>
+        </DataGrid>
     </DockPanel>
 </Window>

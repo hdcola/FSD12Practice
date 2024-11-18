@@ -1,6 +1,10 @@
-﻿using System;
+﻿using CsvHelper;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -61,6 +65,8 @@ namespace MidtermPizzaOrders
             selectedOrders.ForEach(order => order.OrderStatus = PizzaOrder.OrderStatusEnum.Placed);
             // update the DB and re-render the ListView
             updateDBAndRenderListView();
+            // update the status message
+            LblStatusMessage.Text = "Order placed";
         }
 
         private void menuFulfilled_Click(object sender, RoutedEventArgs e)
@@ -71,6 +77,54 @@ namespace MidtermPizzaOrders
             selectedOrders.ForEach(order => order.OrderStatus = PizzaOrder.OrderStatusEnum.Fulfilled);
             // update the DB and re-render the ListView
             updateDBAndRenderListView();
+            // update the status message
+            LblStatusMessage.Text = "Order fulfilled";
+        }
+
+        private void LvOrders_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            // Get the DataRow
+            PizzaOrder order = (PizzaOrder)e.Row.Item;
+            // Set the background color of the row
+            e.Row.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(order.RowColor));
+        }
+
+        private void menuExit_Click(object sender, RoutedEventArgs e)
+        {
+            // display a standard dialog box asking the user "Are you sure you want to quit?" with Yes/No buttons. Only if user selects Yes the application terminates.
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to quit?", "Quit", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+                Application.Current.Shutdown();
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // display a standard dialog box asking the user "Are you sure you want to quit?" with Yes/No buttons. Only if user selects Yes the application terminates.
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to quit?", "Quit", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void menuExport_Click(object sender, RoutedEventArgs e)
+        {
+            // Show SaveFileDialog with two filters for *.csv and *.*. 
+            // If user selects a file, export the data to that file.
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                // use CsvHelper to export the data to a CSV file
+                using (var writer = new StreamWriter(saveFileDialog.FileName))
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    csv.WriteRecords(pizzaOrders);
+                }
+                LblStatusMessage.Text = "Data exported to " + saveFileDialog.FileName;
+            }
         }
     }
 }
