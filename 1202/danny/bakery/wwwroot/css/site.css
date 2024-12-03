@@ -7,7 +7,6 @@ html {
     font-size: 16px;
   }
 }
-
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -20,3 +19,19 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.input-validation-error,
+.input-validation-error:focus {
+  background: #f1aeb5;
+  color: #dc3545;
+}
+
+.input-validation-error:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.2rem #f1aeb5;
+}
+
+.field-validation-error,
+.validation-summary-errors {
+  color: #dc3545;
+}/*# sourceMappingURL=site.css.map */

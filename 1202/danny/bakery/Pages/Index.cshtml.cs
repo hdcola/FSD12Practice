@@ -1,19 +1,24 @@
+using bakery.Data;
+using bakery.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace bakery.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly BakeryContext _context;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(BakeryContext context)
     {
-        _logger = logger;
+        _context = context;
     }
 
-    public void OnGet()
-    {
+    public List<Product> Products { get; set; } = new();
 
+    public async Task OnGetAsync()
+    {
+        Products = await _context.Products.ToListAsync();
     }
 }
