@@ -3,6 +3,7 @@ using bakery.Data;
 using bakery.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json;
 
 namespace bakery.Pages;
 
@@ -38,14 +39,36 @@ public class OrderModel : PageModel
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var product = await context.Products.FindAsync(Id);
-        if (product == null) return NotFound();
-        Product = product;
         if (ModelState.IsValid)
         {
-            Confirmation = @$"You have ordered {Quantity} x {Product.Name} 
-                        at a total cost of {Quantity * UnitPrice:c}";
-            return RedirectToPage("/OrderSuccess");
+            Basket basket = new();
+            if (Request.Cookies[nameof(Basket)] is not null)
+            {
+                var basketJson = Request.Cookies[nameof(Basket)];
+                if (basketJson is not null)
+                {
+                    basket = JsonSerializer.Deserialize<Basket>(basketJson) ?? new Basket();
+                }
+            }
+            basket.Items.Add(new OrderItem
+            {
+                ProductId = Id,
+                UnitPrice = UnitPrice,
+                Quantity = Quantity
+            });
+            var json = JsonSerializer.Serialize(basket);
+            var cookieOptions = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(30)
+            };
+            Response.Cookies.Append(nameof(Basket), json, cookieOptions);
+
+            return RedirectToPage("/Index");
+        }
+        var product = await context.Products.FindAsync(Id);
+        if (product != null)
+        {
+            Product = product;
         }
         return Page();
     }
