@@ -9,35 +9,17 @@ public class ApplicationDbContext : IdentityDbContext
         : base(options)
     {
     }
-    public DbSet<Models.Blog> Blogs { get; set; }
+
+    public DbSet<Article> Articles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Models.Blog>()
-            .HasOne(b => b.User)
+        modelBuilder.Entity<Article>()
+            .HasOne(a => a.User)
             .WithMany()
             .OnDelete(DeleteBehavior.Cascade)
-            .HasForeignKey(b => b.UserId);
-    }
-
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        var entries = ChangeTracker
-            .Entries()
-            .Where(e => e.Entity is Models.Blog && (e.State == EntityState.Added || e.State == EntityState.Modified));
-
-        foreach (var entry in entries)
-        {
-            var blog = (Models.Blog)entry.Entity;
-            if (entry.State == EntityState.Added)
-            {
-                blog.CreatedAt = DateTime.UtcNow;
-            }
-            blog.UpdatedAt = DateTime.UtcNow;
-        }
-
-        return await base.SaveChangesAsync(cancellationToken);
+            .HasForeignKey(a => a.UserId);
     }
 }
