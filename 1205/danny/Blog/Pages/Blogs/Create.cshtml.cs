@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Blog.Data;
+using System.Security.Claims;
 
 namespace Blog.Pages.Blogs
 {
@@ -20,7 +21,7 @@ namespace Blog.Pages.Blogs
 
         public IActionResult OnGet()
         {
-        ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return Page();
         }
 
@@ -30,10 +31,15 @@ namespace Blog.Pages.Blogs
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+
             if (!ModelState.IsValid)
             {
                 return Page();
             }
+
+            Article.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Article.CreatedAt = DateTime.Now;
+            Article.UpdatedAt = DateTime.Now;
 
             _context.Articles.Add(Article);
             await _context.SaveChangesAsync();
