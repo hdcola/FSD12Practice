@@ -11,10 +11,8 @@ public class Article
     public string Content { get; set; } = "";
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-
-    [Required(ErrorMessage = "User is required")]
-    public required string UserId { get; set; }
+    public string? UserId { get; set; }
 
     [ForeignKey("UserId")]
-    public required IdentityUser User { get; set; }
+    public IdentityUser? User { get; set; }
 }
