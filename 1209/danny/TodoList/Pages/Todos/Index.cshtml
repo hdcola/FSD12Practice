@@ -29,9 +29,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Todo[0].IsDone)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Todo[0].Owner)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -48,9 +45,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.IsDone)
                 </td>
-                <td>
+                @* <td>
                     @Html.DisplayFor(modelItem => item.Owner.UserName)
-                </td>
+                </td> *@
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                     @* <a asp-page="./Details" asp-route-id="@item.Id">Details</a> | *@

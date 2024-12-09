@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TodoList.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace TodoList.Pages.Todos
 {
     public class IndexModel : PageModel
     {
         private readonly TodoList.Data.ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public IndexModel(TodoList.Data.ApplicationDbContext context)
+        public IndexModel(TodoList.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [TempData]
@@ -25,8 +28,14 @@ namespace TodoList.Pages.Todos
 
         public async Task OnGetAsync()
         {
-            Todo = await _context.Todos
-                .Include(t => t.Owner).ToListAsync();
+            var currentUser = await _userManager.GetUserAsync(User);
+            if (currentUser != null)
+            {
+                Todo = await _context.Todos
+                    .Include(t => t.Owner)
+                    .Where(t => t.UserId == currentUser.Id)
+                    .ToListAsync();
+            }
         }
     }
 }
