@@ -22,6 +22,9 @@ namespace TodoList.Pages.Todos
         [BindProperty]
         public Todo Todo { get; set; } = default!;
 
+        [TempData]
+        public string? Confirmation { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -29,13 +32,12 @@ namespace TodoList.Pages.Todos
                 return NotFound();
             }
 
-            var todo =  await _context.Todos.FirstOrDefaultAsync(m => m.Id == id);
+            var todo = await _context.Todos.FirstOrDefaultAsync(m => m.Id == id);
             if (todo == null)
             {
                 return NotFound();
             }
             Todo = todo;
-           ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return Page();
         }
 
@@ -43,16 +45,32 @@ namespace TodoList.Pages.Todos
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            // Add date validation
+            if (Todo.DueDate.Year < 2000 || Todo.DueDate.Year > 2099)
+            {
+                ModelState.AddModelError("Todo.DueDate", "Date must be between 2000 and 2099");
+                return Page();
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Todo).State = EntityState.Modified;
+            var existingTodo = await _context.Todos.FindAsync(Todo.Id);
+            if (existingTodo == null)
+            {
+                return NotFound();
+            }
+
+            existingTodo.Task = Todo.Task;
+            existingTodo.DueDate = Todo.DueDate;
+            existingTodo.IsDone = Todo.IsDone;
 
             try
             {
                 await _context.SaveChangesAsync();
+                Confirmation = "Todo item updated successfully!";
             }
             catch (DbUpdateConcurrencyException)
             {

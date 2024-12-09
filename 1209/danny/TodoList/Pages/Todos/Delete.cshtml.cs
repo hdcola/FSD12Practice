@@ -21,6 +21,9 @@ namespace TodoList.Pages.Todos
         [BindProperty]
         public Todo Todo { get; set; } = default!;
 
+        [TempData]
+        public string? Confirmation { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -54,6 +57,7 @@ namespace TodoList.Pages.Todos
                 Todo = todo;
                 _context.Todos.Remove(Todo);
                 await _context.SaveChangesAsync();
+                Confirmation = "Todo item deleted successfully!";
             }
 
             return RedirectToPage("./Index");

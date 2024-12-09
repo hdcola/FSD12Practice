@@ -18,7 +18,10 @@ namespace TodoList.Pages.Todos
             _context = context;
         }
 
-        public IList<Todo> Todo { get;set; } = default!;
+        [TempData]
+        public string? Confirmation { get; set; }
+
+        public IList<Todo> Todo { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

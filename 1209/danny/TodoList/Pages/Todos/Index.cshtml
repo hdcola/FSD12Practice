@@ -7,6 +7,13 @@
 
 <h1>Index</h1>
 
+@if (!string.IsNullOrEmpty(Model.Confirmation))
+{
+    <div class="alert alert-success">
+    @Model.Confirmation
+</div>
+}
+
 <p>
     <a asp-page="Create">Create New</a>
 </p>
@@ -29,26 +36,27 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Todo) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Task)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DueDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Owner.Id)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Todo)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Task)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Owner.UserName)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    @* <a asp-page="./Details" asp-route-id="@item.Id">Details</a> | *@
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
