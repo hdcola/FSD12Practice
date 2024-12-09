@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TodoList.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace TodoList.Pages.Todos
 {
@@ -14,11 +15,13 @@ namespace TodoList.Pages.Todos
     {
         private readonly TodoList.Data.ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ILogger<CreateModel> _logger;
 
-        public CreateModel(TodoList.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public CreateModel(TodoList.Data.ApplicationDbContext context, UserManager<IdentityUser> userManager, ILogger<CreateModel> logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
         public IActionResult OnGet()
@@ -57,6 +60,8 @@ namespace TodoList.Pages.Todos
             _context.Todos.Add(Todo);
             await _context.SaveChangesAsync();
             Confirmation = "Todo item created successfully!";
+            _logger.LogInformation("Todo item created successfully - Task: {Task}, DueDate: {DueDate}, IsDone: {IsDone}, UserId: {UserId}",
+                Todo.Task, Todo.DueDate, Todo.IsDone, Todo.UserId);
 
             return RedirectToPage("./Index");
         }

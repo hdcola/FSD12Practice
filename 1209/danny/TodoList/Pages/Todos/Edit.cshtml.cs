@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TodoList.Data;
+using Microsoft.Extensions.Logging;
 
 namespace TodoList.Pages.Todos
 {
     public class EditModel : PageModel
     {
         private readonly TodoList.Data.ApplicationDbContext _context;
+        private readonly ILogger<EditModel> _logger;
 
-        public EditModel(TodoList.Data.ApplicationDbContext context)
+        public EditModel(TodoList.Data.ApplicationDbContext context, ILogger<EditModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -71,6 +74,8 @@ namespace TodoList.Pages.Todos
             {
                 await _context.SaveChangesAsync();
                 Confirmation = "Todo item updated successfully!";
+                _logger.LogInformation("Todo item updated successfully - Task: {Task}, DueDate: {DueDate}, IsDone: {IsDone}, Id: {Id}",
+                    Todo.Task, Todo.DueDate, Todo.IsDone, Todo.Id);
             }
             catch (DbUpdateConcurrencyException)
             {
